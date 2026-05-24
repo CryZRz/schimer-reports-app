@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.schimer.reportsapp.controllers.auth.LoginController"
+      stylesheets="@../../styles/auth/login.css"
+>
+    <VBox HBox.hgrow="ALWAYS" styleClass="login-container">
+        <VBox styleClass="login-form-container">
+            <VBox>
+                <ImageView>
+                    <Image url="@../../assets/images/schimer-logo-blue.png"/>
+                </ImageView>
+                <Label styleClass="title-form">Bienvenido</Label>
+                <Label styleClass="subtitle-form">Inicia sesión con tu cuenta para acceder</Label>
+            </VBox>
+            <VBox>
+                <Label text="Correo" styleClass="input-label"/>
+                <TextField fx:id="email" promptText="Correo" styleClass="input-form"/>
+            </VBox>
+            <VBox>
+                <Label text="Contraseña" styleClass="input-label"/>
+                <PasswordField fx:id="password" promptText="Contraseña" styleClass="input-form"/>
+                <Label
+                        text="¿Olvidaste tu contraseña?"
+                        styleClass="forgot-password-label"
+                        onMouseClicked="#onClickGoForgotPassword"
+                />
+            </VBox>
+            <Button
+                    HBox.hgrow="ALWAYS"
+                    maxWidth="Infinity"
+                    styleClass="login-button"
+                    onAction="#onClickLogin"
+            >
+                Iniciar
+            </Button>
+        </VBox>
+    </VBox>
+    <VBox HBox.hgrow="ALWAYS" styleClass="login-image"/>
+</HBox>

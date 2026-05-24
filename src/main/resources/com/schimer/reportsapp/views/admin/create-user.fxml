@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane
+        stylesheets="@../../styles/admin/create-user.css"
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="com.schimer.reportsapp.controllers.admin.CreateUserController"
+>
+    <left>
+        <fx:include source="sidebar-admin.fxml" />
+    </left>
+
+    <center>
+        <VBox>
+            <fx:include source="header-module-info.fxml"/>
+            <Separator opacity="0.3"/>
+
+            <ScrollPane
+                    fitToWidth="true"
+                    hbarPolicy="NEVER"
+            >
+                <VBox styleClass="main-section-container">
+                    <HBox alignment="CENTER_LEFT">
+                        <Label styleClass="title-section" text="Crear usuario"/>
+                    </HBox>
+
+                    <VBox>
+                        <HBox styleClass="input-form-section">
+                            <VBox HBox.hgrow="ALWAYS">
+                                <Label text="Nombre" styleClass="input-label"/>
+                                <TextField fx:id="namesProperty" promptText="Nombres" styleClass="input-form"/>
+                            </VBox>
+                            <VBox HBox.hgrow="ALWAYS">
+                                <Label text="Apellidos" styleClass="input-label"/>
+                                <TextField fx:id="lastNameProperty" promptText="Apellidos" styleClass="input-form"/>
+                            </VBox>
+                        </HBox>
+                        <HBox styleClass="input-form-section">
+                            <VBox HBox.hgrow="ALWAYS">
+                                <Label text="Correo" styleClass="input-label"/>
+                                <TextField fx:id="emailProperty" promptText="Correo" styleClass="input-form"/>
+                            </VBox>
+                        </HBox>
+                        <HBox styleClass="input-form-section">
+                            <VBox HBox.hgrow="ALWAYS">
+                                <Label text="Contraseña" styleClass="input-label"/>
+                                <PasswordField fx:id="passwordProperty" promptText="Contraseña" styleClass="input-form"/>
+                            </VBox>
+                            <VBox HBox.hgrow="ALWAYS">
+                                <Label text="Contraseña" styleClass="input-label"/>
+                                <PasswordField fx:id="passwordConfirmProperty" promptText="Contraseña" styleClass="input-form"/>
+                            </VBox>
+                        </HBox>
+                        <HBox styleClass="input-form-section">
+                            <VBox HBox.hgrow="ALWAYS">
+                                <Label text="¿Cual fue tu primer trabajo?" styleClass="input-label"/>
+                                <TextField fx:id="questionOneProperty" promptText="Pregunta" styleClass="input-form"/>
+                            </VBox>
+                            <VBox HBox.hgrow="ALWAYS">
+                                <Label text="¿Cual es nombre de tu primer mascota?" styleClass="input-label"/>
+                                <TextField fx:id="questionTwoProperty" promptText="Pregunta" styleClass="input-form"/>
+                            </VBox>
+                        </HBox>
+                        <HBox styleClass="input-form-section">
+                            <VBox HBox.hgrow="ALWAYS">
+                                <Label text="¿Cual es tu comida favorita?" styleClass="input-label"/>
+                                <TextField fx:id="questionTreeProperty" promptText="Pregunta" styleClass="input-form"/>
+                            </VBox>
+                            <VBox HBox.hgrow="ALWAYS">
+                                <Label text="Departamento" styleClass="input-label"/>
+                                <ComboBox fx:id="departmentProperty" maxWidth="Infinity" styleClass="input-combo-box"/>
+                            </VBox>
+                        </HBox>
+                        <HBox styleClass="input-form-section">
+                            <VBox HBox.hgrow="ALWAYS">
+                                <Label text="Puesto" styleClass="input-label"/>
+                                <TextField fx:id="jobPositionProperty" promptText="Puesto" styleClass="input-form"/>
+                            </VBox>
+                        </HBox>
+                        <HBox styleClass="input-form-section">
+                            <VBox HBox.hgrow="ALWAYS">
+                                <Label text="Firma" styleClass="input-label"/>
+                                <TextField fx:id="signatureProperty" promptText="Firma" styleClass="input-form"/>
+                            </VBox>
+                        </HBox>
+                        <HBox styleClass="input-form-section">
+                            <VBox HBox.hgrow="ALWAYS">
+                                <Label text="Servidor de Salida" styleClass="input-label"/>
+                                <TextField fx:id="serverNameProperty" promptText="stmp.gmail.com" styleClass="input-form"/>
+                            </VBox>
+                            <VBox HBox.hgrow="ALWAYS">
+                                <Label text="Puerto" styleClass="input-label"/>
+                                <TextField fx:id="serverPortProperty" promptText="587" styleClass="input-form"/>
+                            </VBox>
+                        </HBox>
+                        <HBox styleClass="input-form-section">
+                            <VBox HBox.hgrow="ALWAYS">
+                                <Label text="Correo servidor" styleClass="input-label"/>
+                                <TextField fx:id="serverEmailProperty" promptText="example@mail.com" styleClass="input-form"/>
+                            </VBox>
+                            <VBox HBox.hgrow="ALWAYS">
+                                <Label text="Contraseña servidor" styleClass="input-label"/>
+                                <PasswordField fx:id="serverPasswordProperty" promptText="Password" styleClass="input-form"/>
+                            </VBox>
+                        </HBox>
+                        <HBox HBox.hgrow="ALWAYS" styleClass="input-form-section">
+                            <Button
+                                    HBox.hgrow="ALWAYS"
+                                    maxWidth="Infinity"
+                                    styleClass="btn-create-user"
+                                    onAction="#onCreateNewUser"
+                            >
+                                Crear
+                            </Button>
+                        </HBox>
+                    </VBox>
+
+                </VBox>
+            </ScrollPane>
+
+        </VBox>
+    </center>
+</BorderPane>

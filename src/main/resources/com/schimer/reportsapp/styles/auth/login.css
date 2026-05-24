@@ -1,0 +1,41 @@
+.login-image{
+    -fx-background-image: url("../../assets/images/login-image.png");
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+.login-container{
+    -fx-background-color: white;
+    -fx-alignment: center;
+}
+.login-form-container{
+    -fx-max-width: 600;
+    -fx-spacing: 20;
+}
+.title-form{
+    -fx-font-size: 60;
+    -fx-text-fill: -color-primary;
+    -fx-font-family: ArchivoBlackRegular;
+}
+.subtitle-form{
+    -fx-text-fill: -color-light;
+}
+.input-label{
+    -fx-text-fill: -color-primary;
+    -fx-font-weight: bold;
+}
+.input-form{
+    -fx-padding: 10;
+    -fx-text-fill: -color-primary;
+}
+.forgot-password-label{
+    -fx-text-fill: -color-light;
+    -fx-cursor: hand;
+}
+.login-button{
+    -fx-background-color: -color-primary;
+    -fx-text-fill: white;
+    -fx-border-radius: 10;
+    -fx-padding: 8;
+    -fx-cursor: hand;
+}

@@ -1,0 +1,27 @@
+.info-profile-container {
+    -fx-spacing: 5;
+    -fx-padding: 10 5 10 0;
+}
+.name-profile {
+    -fx-font-size: 15;
+    -fx-text-fill: -color-deep;
+}
+.image-profile {
+    -fx-cursor: hand;
+}
+
+.info-module-container {
+    -fx-padding: 20;
+    -fx-spacing: 3;
+}
+
+.title-module {
+    -fx-font-size: 40;
+    -fx-font-weight: bold;
+    -fx-text-fill: -color-primary;
+}
+
+.description-module {
+    -fx-font-size: 18;
+    -fx-text-fill:  -color-light;
+}

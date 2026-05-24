@@ -1,0 +1,52 @@
+.main-section-container {
+    -fx-padding: 30 80 30 80;
+}
+
+.title-section {
+    -fx-font-size: 25;
+    -fx-text-fill:  -color-light;
+    -fx-font-weight: bold;
+}
+.input-label{
+    -fx-text-fill: -color-primary;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 3 0;
+}
+.input-form{
+    -fx-padding: 10;
+    -fx-text-fill: -color-primary;
+}
+
+.input-form-section {
+    -fx-padding: 20 0 0 0;
+    -fx-spacing: 10;
+}
+
+.input-form:focused {
+    -fx-border-color: -color-primary;
+    -fx-background-insets: 0;
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-border-radius: 5;
+}
+
+.btn-create-user {
+    -fx-background-color: -color-primary;
+    -fx-text-fill: white;
+    -fx-padding: 10;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.input-combo-box {
+    -fx-padding: 5;
+    -fx-text-fill: -color-primary;
+}
+
+.input-combo-box:focused {
+    -fx-border-color: -color-primary;
+    -fx-background-insets: 0;
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-border-radius: 5;
+}

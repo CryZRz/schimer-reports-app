@@ -1,0 +1,4 @@
+CREATE TABLE departments(
+    id BIGSERIAL PRIMARY KEY NOT NULL,
+    name VARCHAR NOT NULL
+);

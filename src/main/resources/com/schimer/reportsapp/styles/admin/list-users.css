@@ -1,0 +1,20 @@
+.main-section-container {
+    -fx-padding: 30 80 30 80;
+}
+
+.title-section {
+    -fx-font-size: 25;
+    -fx-text-fill:  -color-light;
+    -fx-font-weight: bold;
+}
+
+.button-create-user {
+    -fx-background-color: -color-primary;
+    -fx-text-fill: white;
+    -fx-padding: 8;
+    -fx-font-weight: bold;
+}
+
+.icon-add {
+    -fx-text-fill: white;
+}

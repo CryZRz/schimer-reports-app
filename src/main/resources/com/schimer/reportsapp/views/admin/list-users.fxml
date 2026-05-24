@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Button?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<BorderPane
+        stylesheets="@../../styles/admin/list-users.css"
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="com.schimer.reportsapp.controllers.admin.ListUsersController"
+>
+    <left>
+        <fx:include source="sidebar-admin.fxml" />
+    </left>
+
+    <center>
+        <VBox>
+            <fx:include source="header-module-info.fxml"/>
+            <Separator opacity="0.3"/>
+            <VBox styleClass="main-section-container">
+                <HBox alignment="CENTER_LEFT">
+                    <Label styleClass="title-section" text="Listado de usuarios"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button styleClass="button-create-user" onMouseClicked="#onClickCreateUser">
+                        <graphic>
+                            <FontIcon styleClass="icon-add" iconLiteral="mdi2p-plus"/>
+                        </graphic>
+                        Nuevo usuario
+                    </Button>
+                </HBox>
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>
