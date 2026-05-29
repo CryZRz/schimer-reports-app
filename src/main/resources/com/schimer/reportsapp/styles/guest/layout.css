@@ -1,0 +1,15 @@
+.main-section-container {
+    -fx-padding: 50 80 30 80;
+}
+
+.input-form:focused {
+    -fx-border-color: -color-primary;
+    -fx-background-insets: 0;
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-border-radius: 5;
+}
+
+.table-container {
+    -fx-padding: 30 0 30 0;
+}

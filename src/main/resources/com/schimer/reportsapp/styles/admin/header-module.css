@@ -5,6 +5,8 @@
 .name-profile {
     -fx-font-size: 15;
     -fx-text-fill: -color-deep;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 5 0;
 }
 .image-profile {
     -fx-cursor: hand;

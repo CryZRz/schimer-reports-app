@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import java.net.URL?>
+<?import javafx.scene.control.ScrollPane?>
+<BorderPane
+        stylesheets="@../../styles/guest/create-pt-quality-indicators.css"
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="com.schimer.reportsapp.controllers.guest.QualityLiquidSolidController"
+>
+    <stylesheets>
+        <URL value="@../../styles/guest/layout.css"/>
+        <URL value="@../../styles/components/default-texts.css" />
+        <URL value="@../../styles/components/default-buttons.css" />
+        <URL value="@../../styles/components/default-inputs.css" />
+    </stylesheets>
+
+    <left>
+        <fx:include source="sidebar-product-finished.fxml" />
+    </left>
+
+    <center>
+        <VBox>
+            <fx:include  source="section-pt-info.fxml"/>
+            <Separator opacity="0.3"/>
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                <VBox styleClass="main-section-container">
+                    <Label styleClass="title-section"  text="Calidad Pt Solido liquido"/>
+                    <HBox styleClass="input-form-section">
+                        <VBox HBox.hgrow="ALWAYS">
+                            <Label text="Emisor" styleClass="input-label"/>
+                            <TextField editable="false" fx:id="transmitterProperty" promptText="Emisor" styleClass="input-form-disabled"/>
+                        </VBox>
+                        <VBox HBox.hgrow="ALWAYS">
+                            <Label text="Puesto del emisor" styleClass="input-label"/>
+                            <TextField editable="false" fx:id="transmitterJobPositionProperty" promptText="Puesto del emisor" styleClass="input-form-disabled"/>
+                        </VBox>
+                    </HBox>
+                    <HBox styleClass="input-form-section">
+                        <VBox HBox.hgrow="ALWAYS">
+                            <Label text="Producto" styleClass="input-label"/>
+                            <TextField editable="false" fx:id="productProperty" promptText="Producto" styleClass="input-form-disabled"/>
+                        </VBox>
+                        <VBox HBox.hgrow="ALWAYS">
+                            <Label text="Lote" styleClass="input-label"/>
+                            <TextField editable="false" fx:id="batchProperty" promptText="Lote" styleClass="input-form-disabled"/>
+                        </VBox>
+                    </HBox>
+                    <HBox styleClass="input-form-section">
+                        <VBox HBox.hgrow="ALWAYS">
+                            <Label  text="Solidos" styleClass="input-label"/>
+                            <TextField fx:id="solidsProperty" promptText="Solidos" styleClass="input-form"/>
+                        </VBox>
+                        <VBox HBox.hgrow="ALWAYS">
+                            <Label text="Ph" styleClass="input-label"/>
+                            <TextField fx:id="phProperty" promptText="Ph" styleClass="input-form"/>
+                        </VBox>
+                    </HBox>
+                    <HBox styleClass="input-form-section">
+                        <VBox HBox.hgrow="ALWAYS">
+                            <Label  text="Densidad aparente" styleClass="input-label"/>
+                            <TextField fx:id="apparentDensityProperty" promptText="Solidos" styleClass="input-form"/>
+                        </VBox>
+                        <VBox HBox.hgrow="ALWAYS">
+                            <Label text="Apariencia" styleClass="input-label"/>
+                            <TextField fx:id="appearanceProperty" promptText="Ph" styleClass="input-form"/>
+                        </VBox>
+                    </HBox>
+                    <HBox styleClass="input-form-section">
+                        <VBox HBox.hgrow="ALWAYS">
+                            <Label text="\%Zn0" styleClass="input-label"/>
+                            <TextField fx:id="znoProperty" promptText="Solidos" styleClass="input-form"/>
+                        </VBox>
+                        <VBox HBox.hgrow="ALWAYS">
+                            <Label text="Kilogramos" styleClass="input-label"/>
+                            <TextField fx:id="kilogramsProperty" promptText="Ph" styleClass="input-form"/>
+                        </VBox>
+                    </HBox>
+                    <HBox styleClass="input-form-section">
+                        <VBox HBox.hgrow="ALWAYS">
+                            <CheckBox fx:id="identificationReviewProperty" styleClass="checkbox-form" text="Revisión de identificación"/>
+                        </VBox>
+                        <VBox HBox.hgrow="ALWAYS">
+                            <CheckBox fx:id="packagingReviewProperty" styleClass="checkbox-form" text="Revisión de empaque y pasaje"/>
+                        </VBox>
+                    </HBox>
+                    <VBox HBox.hgrow="ALWAYS" maxWidth="Infinity" styleClass="input-form-section">
+                        <Label text="Certificado" styleClass="input-label"/>
+                        <TextField  fx:id="certificateProperty" promptText="Certificado" styleClass="input-form"/>
+                    </VBox>
+                    <VBox styleClass="input-form-section">
+                        <Button
+                                HBox.hgrow="ALWAYS"
+                                maxWidth="Infinity"
+                                styleClass="cancel-button"
+                                onAction="#onClickNext"
+                        >
+                            Cancelar
+                        </Button>
+                        <Button
+                                HBox.hgrow="ALWAYS"
+                                maxWidth="Infinity"
+                                styleClass="primary-button"
+                        >
+                            Finalizar
+                        </Button>
+                    </VBox>
+                </VBox>
+            </ScrollPane>
+        </VBox>
+    </center>
+</BorderPane>

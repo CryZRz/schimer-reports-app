@@ -13,8 +13,96 @@
     -fx-text-fill: white;
     -fx-padding: 8;
     -fx-font-weight: bold;
+    -fx-cursor: hand;
 }
 
 .icon-add {
+    -fx-icon-color: white;
+    -fx-icon-size: 20;
+}
+
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: -color-light-gray;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 13;
+}
+
+.table-view .table-cell {
+    -fx-border-color: transparent;
+    -fx-padding: 0 15 0 15;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: -color-primary;
+    -fx-background-radius: 6px 6px 0px 0px;
+    -fx-padding: 0 0 5 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-size: 40px;
+    -fx-border-color: transparent;
+}
+
+.table-view .column-header .label {
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
     -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent #eaedf1 transparent;
+    -fx-pref-height: 38px;
+    -fx-font-weight: bold;
+    -fx-border-width: 1px;
+    -fx-text-fill: -color-primary;
+    -fx-font-size: 14;
+}
+
+.table-view .table-row-cell:odd {
+    -fx-background-color: transparent;
+}
+
+.table-view .table-row-cell:hover {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: transparent;
+}
+
+.table-view .table-row-cell:selected .text {
+    -fx-fill: -color-deep;
+}
+
+.table-view .table-corner {
+    -fx-background-color: transparent;
+}
+
+.table-view:focused {
+    -fx-background-color: transparent, transparent, transparent;
+}
+
+.table-container {
+    -fx-padding: 30 0 0 0;
+}
+
+.edit-button{
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-padding: 0;
+    -fx-border-color: transparent;
+}
+
+.edit-button-icon{
+    -fx-icon-color: -color-primary;
+    -fx-icon-size: 20;
 }

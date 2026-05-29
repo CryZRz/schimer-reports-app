@@ -33,11 +33,12 @@ public class LoginController {
             if (user.getRole().getName().equals(Constants.ADMIN_ROLE)) {
                 App.setRoot("views/admin/list-users");
             }else{
-                System.out.println("Hola");
+                App.setRoot("views/guest/products-finished-list");
             }
 
         }catch (Exception e){
-            System.out.println("Error al iniciar el login");
+            System.out.println("Error al iniciar el login" + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

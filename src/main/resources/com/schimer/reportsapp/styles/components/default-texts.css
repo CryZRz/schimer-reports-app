@@ -1,0 +1,10 @@
+.title-section {
+    -fx-font-size: 25;
+    -fx-text-fill:  -color-light;
+    -fx-font-weight: bold;
+}
+
+.description-module {
+    -fx-font-size: 18;
+    -fx-text-fill:  -color-light;
+}

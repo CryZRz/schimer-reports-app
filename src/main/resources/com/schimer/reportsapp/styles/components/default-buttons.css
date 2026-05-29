@@ -1,0 +1,15 @@
+.cancel-button{
+    -fx-background-color: -color-danger;
+    -fx-text-fill: white;
+    -fx-border-radius: 10;
+    -fx-padding: 8;
+    -fx-cursor: hand;
+}
+
+.primary-button {
+    -fx-background-color: -color-primary;
+    -fx-text-fill: white;
+    -fx-border-radius: 10;
+    -fx-padding: 8;
+    -fx-cursor: hand;
+}

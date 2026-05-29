@@ -6,13 +6,13 @@
 <?import javafx.scene.image.Image?>
 
 <VBox
-        fx:controller="com.schimer.reportsapp.controllers.components.HeaderModuleInfo"
+        fx:controller="com.schimer.reportsapp.controllers.components.Header"
         xmlns:fx="http://javafx.com/fxml"
         stylesheets="@../../styles/admin/header-module.css"
 >
     <HBox alignment="BOTTOM_RIGHT">
-        <HBox alignment="TOP_CENTER" styleClass="info-profile-container">
-            <Label text="Hola Christian" styleClass="name-profile"/>
+        <HBox alignment="CENTER" styleClass="info-profile-container">
+            <Label fx:id="username" text="Hola Christian" styleClass="name-profile"/>
             <ImageView
                     fx:id="profileImage"
                     fitWidth="50"

@@ -23,7 +23,7 @@
             >
                 <VBox styleClass="main-section-container">
                     <HBox alignment="CENTER_LEFT">
-                        <Label styleClass="title-section" text="Crear usuario"/>
+                        <Label fx:id="titleModule" styleClass="title-section" text="Crear usuario"/>
                     </HBox>
 
                     <VBox>
@@ -105,16 +105,25 @@
                                 <PasswordField fx:id="serverPasswordProperty" promptText="Password" styleClass="input-form"/>
                             </VBox>
                         </HBox>
-                        <HBox HBox.hgrow="ALWAYS" styleClass="input-form-section">
+                        <VBox HBox.hgrow="ALWAYS" styleClass="input-form-section">
                             <Button
                                     HBox.hgrow="ALWAYS"
                                     maxWidth="Infinity"
                                     styleClass="btn-create-user"
                                     onAction="#onCreateNewUser"
+                                    fx:id="buttonCreateUser"
                             >
                                 Crear
                             </Button>
-                        </HBox>
+                            <Button
+                                    HBox.hgrow="ALWAYS"
+                                    maxWidth="Infinity"
+                                    styleClass="btn-go-back"
+                                    onAction="#onGoBack"
+                            >
+                                Cancelar
+                            </Button>
+                        </VBox>
                     </VBox>
 
                 </VBox>

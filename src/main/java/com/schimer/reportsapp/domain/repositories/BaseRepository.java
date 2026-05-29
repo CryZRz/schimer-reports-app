@@ -1,6 +1,8 @@
 package com.schimer.reportsapp.domain.repositories;
 
 import com.schimer.reportsapp.infrastructure.hibernate.HibernateConfig;
+import org.hibernate.HibernateException;
+import org.hibernate.Transaction;
 
 import java.util.List;
 
@@ -11,11 +13,18 @@ public abstract class BaseRepository <T>{
         this.type = type;
     }
 
-    public void save(T entity) {
+    public T save(T entity) {
+        Transaction transaction = null;
         try(var session = HibernateConfig.getSessionFactory().openSession()) {
-            var transaction = session.beginTransaction();
+            transaction = session.beginTransaction();
             session.persist(entity);
             transaction.commit();
+            return entity;
+        }catch (HibernateException ex){
+            if(transaction != null && transaction.isActive()){
+                transaction.rollback();
+            }
+            throw ex;
         }
     }
 
@@ -25,19 +34,32 @@ public abstract class BaseRepository <T>{
         }
     }
 
-    public void update(T entity) {
+    public T update(T entity) {
+        Transaction transaction = null;
         try(var session = HibernateConfig.getSessionFactory().openSession()) {
-            var transaction = session.beginTransaction();
+            transaction = session.beginTransaction();
             session.merge(entity);
             transaction.commit();
+            return entity;
+        }catch (HibernateException ex){
+            if(transaction != null && transaction.isActive()){
+                transaction.rollback();
+            }
+            throw ex;
         }
     }
 
     public void delete(T entity) {
+        Transaction transaction = null;
         try(var session = HibernateConfig.getSessionFactory().openSession()) {
-            var transaction = session.beginTransaction();
+            transaction = session.beginTransaction();
             session.remove(entity);
             transaction.commit();
+        }catch (HibernateException ex){
+            if(transaction != null && transaction.isActive()){
+                transaction.rollback();
+            }
+            throw ex;
         }
     }
 

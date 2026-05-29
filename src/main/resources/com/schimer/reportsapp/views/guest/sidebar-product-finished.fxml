@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Button?>
+
+<VBox
+        minWidth="300.0"
+        prefWidth="300.0"
+        maxWidth="300.0"
+        styleClass="side-bar"
+        stylesheets="@../../styles/admin/sidebar.css"
+        fx:controller="com.schimer.reportsapp.controllers.components.SidebarAdmin"
+        xmlns:fx="http://javafx.com/fxml"
+>
+
+    <VBox alignment="CENTER" styleClass="logo-container">
+        <ImageView>
+            <Image url="@../../assets/images/schimer-logo.png"/>
+        </ImageView>
+    </VBox>
+
+    <VBox styleClass="list-actions-container">
+        <Hyperlink text="Reportes" styleClass="menu-action"/>
+        <Hyperlink text="Folio Calidad" styleClass="menu-action"/>
+        <Hyperlink text="Certificado" styleClass="menu-action"/>
+        <Hyperlink text="Indicadores" styleClass="menu-action"/>
+        <Hyperlink text="Calidad PT" styleClass="menu-action"/>
+    </VBox>
+
+    <VBox VBox.vgrow="ALWAYS"/>
+
+    <Button
+            maxWidth="Infinity"
+            text="Cerrar Sesión"
+            styleClass="button-logout"
+            onAction="#onClickLogout"
+    />
+</VBox>

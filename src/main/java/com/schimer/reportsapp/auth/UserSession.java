@@ -7,7 +7,7 @@ import lombok.Getter;
 public class UserSession {
 
     private static UserSession instance;
-    private UserEntity  userEntity;
+    private UserEntity userEntity;
 
     private UserSession(UserEntity userEntity) {
         this.userEntity = userEntity;
@@ -19,5 +19,14 @@ public class UserSession {
 
     public static void logout() {
         instance = null;
+    }
+
+    public static UserSession getInstance() {
+        if (instance == null) return  null;
+        return instance;
+    }
+
+    public UserEntity getUser() {
+        return userEntity;
     }
 }

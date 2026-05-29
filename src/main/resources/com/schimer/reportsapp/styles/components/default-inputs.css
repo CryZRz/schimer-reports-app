@@ -1,0 +1,62 @@
+.input-label{
+    -fx-text-fill: -color-primary;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 3 0;
+}
+.input-form{
+    -fx-padding: 10;
+    -fx-text-fill: -color-primary;
+}
+
+.input-form-section {
+    -fx-padding: 20 0 0 0;
+    -fx-spacing: 10;
+}
+
+.input-form:focused {
+    -fx-border-color: -color-primary;
+    -fx-background-insets: 0;
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-border-radius: 5;
+}
+
+.input-form-disabled {
+    -fx-background-color: #f0f0f0;
+    -fx-opacity: 1;
+    -fx-cursor: default;
+    -fx-text-fill:  gray;
+    -fx-padding: 10;
+    -fx-border-radius: 5;
+    -fx-border-color: #d9d9d9;
+}
+
+.input-date-picker-invalid{
+    -fx-padding: 6;
+    -fx-opacity: 1;
+    -fx-cursor: default;
+    -fx-text-fill:  gray;
+    -fx-border-radius: 5;
+    -fx-border-color: #d9d9d9;
+}
+
+.checkbox-form{
+    -fx-text-fill: -color-primary;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 0 3;
+}
+
+.checkbox-form .box {
+    -fx-background-color: white;
+    -fx-border-color: -color-primary;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+.checkbox-form:selected .box {
+    -fx-background-color: -color-primary;
+}
+
+.checkbox-form:selected .mark {
+    -fx-background-color: white;
+}

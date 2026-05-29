@@ -38,6 +38,14 @@
     -fx-cursor: hand;
 }
 
+.btn-go-back{
+    -fx-background-color: -color-danger;
+    -fx-text-fill: white;
+    -fx-padding: 10;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
 .input-combo-box {
     -fx-padding: 5;
     -fx-text-fill: -color-primary;

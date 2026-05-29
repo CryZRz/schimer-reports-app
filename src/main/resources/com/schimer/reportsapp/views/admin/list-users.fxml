@@ -6,6 +6,8 @@
 <?import javafx.scene.control.Button?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
 <BorderPane
         stylesheets="@../../styles/admin/list-users.css"
         xmlns:fx="http://javafx.com/fxml"
@@ -23,12 +25,23 @@
                 <HBox alignment="CENTER_LEFT">
                     <Label styleClass="title-section" text="Listado de usuarios"/>
                     <Region HBox.hgrow="ALWAYS"/>
-                    <Button styleClass="button-create-user" onMouseClicked="#onClickCreateUser">
+                    <Button styleClass="button-create-user" onAction="#onClickCreateUser">
                         <graphic>
                             <FontIcon styleClass="icon-add" iconLiteral="mdi2p-plus"/>
                         </graphic>
                         Nuevo usuario
                     </Button>
+                </HBox>
+                <HBox styleClass="table-container">
+                    <TableView fx:id="usersTable" HBox.hgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="nameColumn" text="Nombre" sortable="false" reorderable="false"/>
+                            <TableColumn fx:id="emailColumn" text="Correo" sortable="false" reorderable="false"/>
+                            <TableColumn fx:id="departmentColumn" text="Departamento" sortable="false" reorderable="false"/>
+                            <TableColumn fx:id="jobPositionColumn" text="Puesto" sortable="false" reorderable="false"/>
+                            <TableColumn fx:id="actionsColumn" text="Puesto" sortable="false" reorderable="false"/>
+                        </columns>
+                    </TableView>
                 </HBox>
             </VBox>
         </VBox>

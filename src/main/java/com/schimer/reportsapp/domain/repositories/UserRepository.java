@@ -2,7 +2,9 @@ package com.schimer.reportsapp.domain.repositories;
 
 import com.schimer.reportsapp.domain.entities.UserEntity;
 import com.schimer.reportsapp.infrastructure.hibernate.HibernateConfig;
+import com.schimer.reportsapp.utils.Constants;
 
+import java.util.List;
 import java.util.Optional;
 
 public class UserRepository extends BaseRepository<UserEntity> {
@@ -25,4 +27,14 @@ public class UserRepository extends BaseRepository<UserEntity> {
         }
     }
 
+    public List<UserEntity> getAllExceptAdmin() {
+        try (var session = HibernateConfig.getSessionFactory().openSession()) {
+            var query = session.createQuery(
+                    "FROM UserEntity u WHERE u.role.id NOT IN (SELECT r.id FROM RoleEntity r WHERE r.name = :roleName) ORDER BY u.id DESC",
+                    UserEntity.class
+            );
+            query.setParameter("roleName", Constants.ADMIN_ROLE);
+            return query.getResultList();
+        }
+    }
 }

@@ -2,9 +2,9 @@ package com.schimer.reportsapp.domain.repositories;
 
 import com.schimer.reportsapp.domain.entities.DepartmentEntity;
 
-public class DepartmentRespository extends BaseRepository<DepartmentEntity> {
+public class DepartmentRepository extends BaseRepository<DepartmentEntity> {
 
-    public DepartmentRespository() {
+    public DepartmentRepository() {
         super(DepartmentEntity.class);
     }
 

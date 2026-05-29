@@ -6,7 +6,15 @@
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Button?>
 
-<VBox minWidth="300.0" prefWidth="300.0" maxWidth="300.0" styleClass="side-bar" stylesheets="@../../styles/admin/sidebar.css">
+<VBox
+        minWidth="300.0"
+        prefWidth="300.0"
+        maxWidth="300.0"
+        styleClass="side-bar"
+        stylesheets="@../../styles/admin/sidebar.css"
+        fx:controller="com.schimer.reportsapp.controllers.components.SidebarAdmin"
+        xmlns:fx="http://javafx.com/fxml"
+>
 
     <VBox alignment="CENTER" styleClass="logo-container">
         <ImageView>
@@ -22,5 +30,10 @@
 
     <VBox VBox.vgrow="ALWAYS"/>
 
-    <Button maxWidth="Infinity" text="Cerrar Sesión" styleClass="button-logout"/>
+    <Button
+            maxWidth="Infinity"
+            text="Cerrar Sesión"
+            styleClass="button-logout"
+            onAction="#onClickLogout"
+    />
 </VBox>

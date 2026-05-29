@@ -14,12 +14,16 @@ module com.schimer.reportsapp {
     requires java.sql;
     requires spring.security.crypto;
     requires org.kordamp.ikonli.materialdesign2;
+    requires java.desktop;
+    requires commons.logging;
 
     opens com.schimer.reportsapp.controllers.auth to javafx.fxml;
     opens com.schimer.reportsapp.controllers.admin to javafx.fxml;
+    opens com.schimer.reportsapp.controllers.guest to javafx.fxml;
     opens com.schimer.reportsapp.controllers.components to javafx.fxml;
+    opens com.schimer.reportsapp.models to javafx.base;
     opens db.migration;
-    opens com.schimer.reportsapp.domain.entities to org.hibernate.orm.core;
+    opens com.schimer.reportsapp.domain.entities to org.hibernate.orm.core, javafx.base;
 
     exports com.schimer.reportsapp;
 }

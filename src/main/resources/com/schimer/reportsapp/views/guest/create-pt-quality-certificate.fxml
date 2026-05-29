@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import java.net.URL?>
+<?import javafx.scene.control.ScrollPane?>
+<BorderPane
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="com.schimer.reportsapp.controllers.guest.QualityCertificateController"
+>
+    <stylesheets>
+        <URL value="@../../styles/guest/layout.css"/>
+        <URL value="@../../styles/components/default-texts.css" />
+        <URL value="@../../styles/components/default-buttons.css" />
+        <URL value="@../../styles/components/default-inputs.css" />
+        <URL value="@../../styles/components/default-table.css" />
+    </stylesheets>
+
+    <left>
+        <fx:include source="sidebar-product-finished.fxml" />
+    </left>
+
+    <center>
+        <VBox>
+            <fx:include  source="section-pt-info.fxml"/>
+            <Separator opacity="0.3"/>
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                <VBox styleClass="main-section-container">
+                    <Label styleClass="title-section"  text="Certificado"/>
+                    <HBox styleClass="input-form-section">
+                        <VBox HBox.hgrow="ALWAYS">
+                            <Label text="Emisor" styleClass="input-label"/>
+                            <TextField editable="false" fx:id="transmitterProperty" promptText="Emisor" styleClass="input-form-disabled"/>
+                        </VBox>
+                        <VBox HBox.hgrow="ALWAYS">
+                            <Label text="Puesto del emisor" styleClass="input-label"/>
+                            <TextField editable="false" fx:id="transmitterJobPositionProperty" promptText="Puesto del emisor" styleClass="input-form-disabled"/>
+                        </VBox>
+                    </HBox>
+                    <HBox styleClass="input-form-section">
+                        <VBox HBox.hgrow="ALWAYS">
+                            <Label text="Folio" styleClass="input-label"/>
+                            <TextField editable="false" fx:id="folioProperty" promptText="Folio" styleClass="input-form-disabled"/>
+                        </VBox>
+                        <VBox HBox.hgrow="ALWAYS">
+                            <Label text="Lote" styleClass="input-label"/>
+                            <TextField editable="false" fx:id="batchProperty" promptText="Lote" styleClass="input-form-disabled"/>
+                        </VBox>
+                    </HBox>
+                    <HBox styleClass="input-form-section">
+                        <VBox HBox.hgrow="ALWAYS">
+                            <Label  text="Fecha de caducidad" styleClass="input-label"/>
+                            <DatePicker  fx:id="expirationDateProperty" maxWidth="Infinity" promptText="Fecha de elaboracion" styleClass="input-date-picker-invalid"/>
+                        </VBox>
+                        <VBox HBox.hgrow="ALWAYS">
+                            <Label text="Cantidad" styleClass="input-label"/>
+                            <TextField fx:id="amountProperty" promptText="Cantidad" styleClass="input-form"/>
+                        </VBox>
+                    </HBox>
+                    <HBox styleClass="table-container">
+                        <TableView
+                                fx:id="qualityTable"
+                                HBox.hgrow="ALWAYS"
+                        >
+                            <columns>
+                                <TableColumn fx:id="specificationColumn" text="Especficación" sortable="false" reorderable="false"/>
+                                <TableColumn fx:id="parameterColumn" text="Parámetro" sortable="false" reorderable="false"/>
+                                <TableColumn fx:id="resultColumn" text="Resultado" sortable="false" reorderable="false"/>
+                                <TableColumn fx:id="unitsColumn" text="Unidades" sortable="false" reorderable="false"/>
+                                <TableColumn fx:id="methodologyColumn" text="Metidología" sortable="false" reorderable="false"/>
+                            </columns>
+                        </TableView>
+                    </HBox>
+                    <HBox styleClass="input-form-section">
+                        <Button
+                                HBox.hgrow="ALWAYS"
+                                maxWidth="Infinity"
+                                styleClass="cancel-button"
+                        >
+                            Cancelar
+                        </Button>
+                        <Button
+                                HBox.hgrow="ALWAYS"
+                                maxWidth="Infinity"
+                                styleClass="primary-button"
+                                onAction="#onClickNext"
+                        >
+                            Siguiente
+                        </Button>
+                    </HBox>
+                </VBox>
+            </ScrollPane>
+        </VBox>
+    </center>
+</BorderPane>
