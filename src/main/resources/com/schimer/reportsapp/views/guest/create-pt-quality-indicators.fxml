@@ -24,7 +24,7 @@
     </stylesheets>
 
     <left>
-        <fx:include source="sidebar-product-finished.fxml" />
+        <fx:include fx:id="sidebar" source="sidebar-product-finished.fxml" />
     </left>
 
     <center>
@@ -57,7 +57,7 @@
                     <HBox styleClass="input-form-section">
                         <VBox HBox.hgrow="ALWAYS">
                             <Label  text="Fecha de elaboracion" styleClass="input-label"/>
-                            <DatePicker editable="false" fx:id="createdAtProperty" maxWidth="Infinity" promptText="Fecha de elaboracion" styleClass="input-date-picker-invalid"/>
+                            <DatePicker disable="true" editable="false" fx:id="createdAtProperty" maxWidth="Infinity" promptText="Fecha de elaboracion" styleClass="input-date-picker-invalid"/>
                         </VBox>
                         <VBox HBox.hgrow="ALWAYS">
                             <Label text="Producto" styleClass="input-label"/>
@@ -73,6 +73,7 @@
                                 HBox.hgrow="ALWAYS"
                                 maxWidth="Infinity"
                                 styleClass="cancel-button"
+                                onAction="#onClickReports"
                         >
                             Cancelar
                         </Button>

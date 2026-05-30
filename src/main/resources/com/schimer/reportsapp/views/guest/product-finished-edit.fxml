@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+
+<?import javafx.scene.control.Button?>
+<?import java.net.URL?>
+<?import javafx.scene.control.ScrollPane?>
+<BorderPane
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="com.schimer.reportsapp.controllers.guest.ProductFinishedEditController"
+>
+    <stylesheets>
+        <URL value="@../../styles/guest/layout.css"/>
+        <URL value="@../../styles/components/default-texts.css" />
+        <URL value="@../../styles/guest/edit-product-finished.css" />
+    </stylesheets>
+    <left>
+        <fx:include fx:id="sidebar" source="sidebar-product-finished.fxml" />
+    </left>
+
+    <center>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+            <VBox>
+                <fx:include  source="section-pt-info.fxml"/>
+                <Separator opacity="0.3"/>
+                <VBox styleClass="main-section-container">
+                    <Label styleClass="title-section"  text="Reportes"/>
+                    <GridPane styleClass="buttons-container" hgap="20" vgap="20">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="50"/>
+                            <ColumnConstraints percentWidth="50"/>
+                        </columnConstraints>
+                        <Button text="Folio de certificado de calidad"
+                                GridPane.rowIndex="0"
+                                GridPane.columnIndex="0"
+                                maxWidth="Infinity"
+                                styleClass="button-section-edit"
+                                onAction="#onClickFolioQuality"
+                        />
+                        <Button
+                                text="Certificado de calidad"
+                                GridPane.rowIndex="0"
+                                GridPane.columnIndex="1"
+                                maxWidth="Infinity"
+                                styleClass="button-section-edit"
+                                onAction="#onClickQualityCertificate"
+                        />
+                        <Button text="Indicadores de calidad"
+                                GridPane.rowIndex="1"
+                                GridPane.columnIndex="0"
+                                maxWidth="Infinity"
+                                styleClass="button-section-edit"
+                                onAction="#onClickQualityIndicators"
+                        />
+                        <Button text="Calidad PT Solido Liquido"
+                                GridPane.rowIndex="1"
+                                GridPane.columnIndex="1"
+                                maxWidth="Infinity"
+                                styleClass="button-section-edit"
+                                onAction="#onClickQualitySolidLiquid"
+                        />
+                    </GridPane>
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

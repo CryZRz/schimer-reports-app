@@ -1,0 +1,12 @@
+.button-section-edit{
+    -fx-background-color: -color-primary;
+    -fx-pref-height: 150;
+    -fx-border-width: 5;
+    -fx-text-fill: white;
+    -fx-cursor: "hand";
+    -fx-font-weight: bold;
+    -fx-font-size: 25;
+}
+.buttons-container{
+    -fx-padding: 20 0 0 0;
+}

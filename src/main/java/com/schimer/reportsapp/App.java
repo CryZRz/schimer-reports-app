@@ -1,5 +1,7 @@
 package com.schimer.reportsapp;
 
+import com.schimer.reportsapp.auth.UserSession;
+import com.schimer.reportsapp.services.AuthService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,6 +17,9 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        var authService = new AuthService();
+        var user = authService.login("paulo@itl.com", "123456");
+        UserSession.login(user);
         scene = new Scene(loadFXML("views/guest/products-finished-list"), 320, 240);
         scene.getStylesheets().add(App.class.getResource("styles/globals.css").toExternalForm());
         stage.setTitle("Reportes Schimmer");

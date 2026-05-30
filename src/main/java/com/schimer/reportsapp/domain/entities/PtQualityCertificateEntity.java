@@ -27,7 +27,11 @@ public class PtQualityCertificateEntity {
     @Column(name = "expiration_date")
     private LocalDate expirationDate;
 
-    @OneToMany(mappedBy = "qualityCertificate")
+    @OneToMany(
+            mappedBy = "qualityCertificate",
+            fetch =  FetchType.EAGER,
+            cascade =   CascadeType.ALL
+    )
     private List<PtQualityCertificateDetailEntity> qualityDetails;
 
     private Integer amount;

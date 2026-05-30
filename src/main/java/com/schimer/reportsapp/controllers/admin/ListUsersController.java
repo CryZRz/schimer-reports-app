@@ -57,7 +57,7 @@ public class ListUsersController {
         actionsColumn.setCellFactory(param -> new TableCell<>() {
 
             private final FontIcon deleteIcon = new FontIcon("mdi2p-pencil");
-            private final Button btnDelete = new javafx.scene.control.Button();
+            private final Button btnDelete = new Button();
 
             {
                 btnDelete.getStyleClass().add("edit-button");

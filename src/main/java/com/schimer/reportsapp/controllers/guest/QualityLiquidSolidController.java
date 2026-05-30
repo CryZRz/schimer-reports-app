@@ -7,8 +7,10 @@ import com.schimer.reportsapp.domain.repositories.UserRepository;
 import com.schimer.reportsapp.models.ProductFinishedForm;
 import com.schimer.reportsapp.services.ProductFinishedService;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
@@ -40,30 +42,43 @@ public class QualityLiquidSolidController implements WizardStep {
     public CheckBox packagingReviewProperty;
     @FXML
     public TextField certificateProperty;
+    @FXML
+    public VBox sidebar;
+    @FXML
+    public Button finishButton;
+    @FXML
+    private SidebarProductFinished sidebarController;
 
     private ProductFinishedForm context;
     private UserSession userSession ;
-    private UserRepository userService = new UserRepository();
     private final ProductFinishedService productFinishedService = new ProductFinishedService();
 
     public void initialize() {
-        var user = userService.getUserByEmail("paulo@itl.com").get();
-        UserSession.login(user);
         userSession = UserSession.getInstance();
         initUserInfo();
+    }
+
+    private void initializeSidebar() {
+        sidebarController.setFormContext(context);
     }
 
     @Override
     public void setFormContext(ProductFinishedForm context) {
         this.context = context;
+        if (context.getProductFinishedFormId() != null) {
+            finishButton.setText("Editar");
+        }
         bindPropertiesWithContext();
+        initializeSidebar();
     }
 
     private void bindPropertiesWithContext() {
+        productProperty.textProperty().bindBidirectional(context.getProduct());
         batchProperty.textProperty().bindBidirectional(context.getBatch());
         solidsProperty.textProperty().bindBidirectional(context.getSolids());
         phProperty.textProperty().bindBidirectional(context.getPh());
         apparentDensityProperty.textProperty().bindBidirectional(context.getApparentDensity());
+        appearanceProperty.textProperty().bindBidirectional(context.getAppearance());
         znoProperty.textProperty().bindBidirectional(context.getZno());
         kilogramsProperty.textProperty().bindBidirectional(context.getKilograms());
         identificationReviewProperty.selectedProperty().bindBidirectional(context.getIdentificationReview());
@@ -78,11 +93,38 @@ public class QualityLiquidSolidController implements WizardStep {
     }
 
     @FXML
-    public void onClickNext(){
+    public void onClickReports(){
+        try {
+            App.setRoot("views/guest/products-finished-list");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void saveProductFinished(){
         try {
             productFinishedService.create(context);
-        } catch (Exception e) {
+            onClickReports();
+        }catch (Exception e){
             throw new RuntimeException(e);
+        }
+    }
+
+    private void updateProductFinished(){
+        try {
+            productFinishedService.update(context);
+            onClickReports();
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    public void onClickNext(){
+        if (context.getQualityIndicatorId() != null){
+            updateProductFinished();
+        }else{
+            saveProductFinished();
         }
     }
 }

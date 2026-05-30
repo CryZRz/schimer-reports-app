@@ -8,6 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class QualityFormRow {
+    private Long id;
     private final String specification;
     private String parameter;
     private String result;

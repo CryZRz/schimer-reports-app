@@ -3,15 +3,16 @@ package com.schimer.reportsapp.controllers.guest;
 import com.schimer.reportsapp.App;
 import com.schimer.reportsapp.auth.UserSession;
 import com.schimer.reportsapp.controllers.interfaces.WizardStep;
-import com.schimer.reportsapp.domain.repositories.UserRepository;
 import com.schimer.reportsapp.models.ProductFinishedForm;
 import com.schimer.reportsapp.utils.guest.ProductFinishedBindContext;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+
+import java.io.IOException;
 
 public class FolioQualityCertificateController implements WizardStep {
-
     @FXML
     public TextField transmitterProperty;
     @FXML
@@ -24,21 +25,27 @@ public class FolioQualityCertificateController implements WizardStep {
     public DatePicker createdAtProperty;
     @FXML
     public TextField productProperty;
+    @FXML
+    public VBox sidebar;
+    @FXML
+    private SidebarProductFinished sidebarController;
 
     private ProductFinishedForm context;
-    private UserSession userSession ;
-    private UserRepository userService = new UserRepository();
+    private final UserSession userSession = UserSession.getInstance();
 
     public void initialize() {
-        var user = userService.getUserByEmail("paulo@itl.com").get();
-        UserSession.login(user);
-        userSession = UserSession.getInstance();
         initUserInfo();
+        sidebarController.setFormContext(context);
     }
 
     public void setFormContext(ProductFinishedForm context) {
         this.context = context;
         bindPropertiesWithContext();
+        initializeSidebar();
+    }
+
+    private void initializeSidebar() {
+        sidebarController.setFormContext(context);
     }
 
     private void bindPropertiesWithContext(){
@@ -52,6 +59,15 @@ public class FolioQualityCertificateController implements WizardStep {
         var user = userSession.getUser();
         transmitterProperty.setText(user.getName()+" " +user.getLastName());
         transmitterJobPositionProperty.setText(user.getJobPosition());
+    }
+
+    @FXML
+    public void onClickReports(){
+        try {
+            App.setRoot("views/guest/products-finished-list");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML

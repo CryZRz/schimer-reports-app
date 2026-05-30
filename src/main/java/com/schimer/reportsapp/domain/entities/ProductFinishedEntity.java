@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @Setter
@@ -18,13 +20,26 @@ public class ProductFinishedEntity {
     private Long id;
 
     private String batch;
+    private String folio;
     private String product;
 
     @ManyToOne
     @JoinColumn(name = "created_by")
     private UserEntity user;
 
+    @Column(name="created_at")
+    private LocalDate createdAt;
+
     @ManyToOne
     @JoinColumn(name = "template_id")
     private TemplateEntity template;
+
+    @OneToOne(mappedBy = "productFinished", cascade = CascadeType.ALL)
+    private PtQualityCertificateEntity qualityCertificate;
+
+    @OneToOne(mappedBy = "productFinished", cascade = CascadeType.ALL)
+    private PtQualityIndicatorsEntity qualityIndicators;
+
+    @OneToOne(mappedBy = "productFinished", cascade = CascadeType.ALL)
+    private PtQualitySolidLiquidEntity qualitySolidLiquid;
 }

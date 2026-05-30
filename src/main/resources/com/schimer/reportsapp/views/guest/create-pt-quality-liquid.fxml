@@ -22,7 +22,7 @@
     </stylesheets>
 
     <left>
-        <fx:include source="sidebar-product-finished.fxml" />
+        <fx:include fx:id="sidebar" source="sidebar-product-finished.fxml" />
     </left>
 
     <center>
@@ -69,7 +69,7 @@
                         </VBox>
                         <VBox HBox.hgrow="ALWAYS">
                             <Label text="Apariencia" styleClass="input-label"/>
-                            <TextField fx:id="appearanceProperty" promptText="Ph" styleClass="input-form"/>
+                            <TextField fx:id="appearanceProperty" promptText="Apariencia" styleClass="input-form"/>
                         </VBox>
                     </HBox>
                     <HBox styleClass="input-form-section">
@@ -99,7 +99,7 @@
                                 HBox.hgrow="ALWAYS"
                                 maxWidth="Infinity"
                                 styleClass="cancel-button"
-                                onAction="#onClickNext"
+                                onAction="#onClickReports"
                         >
                             Cancelar
                         </Button>
@@ -107,6 +107,8 @@
                                 HBox.hgrow="ALWAYS"
                                 maxWidth="Infinity"
                                 styleClass="primary-button"
+                                onAction="#onClickNext"
+                                fx:id="finishButton"
                         >
                             Finalizar
                         </Button>

@@ -16,6 +16,7 @@ module com.schimer.reportsapp {
     requires org.kordamp.ikonli.materialdesign2;
     requires java.desktop;
     requires commons.logging;
+    requires javafx.base;
 
     opens com.schimer.reportsapp.controllers.auth to javafx.fxml;
     opens com.schimer.reportsapp.controllers.admin to javafx.fxml;

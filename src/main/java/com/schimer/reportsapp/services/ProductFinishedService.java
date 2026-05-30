@@ -1,35 +1,64 @@
 package com.schimer.reportsapp.services;
 
 import com.schimer.reportsapp.auth.UserSession;
+import com.schimer.reportsapp.domain.entities.ProductFinishedEntity;
 import com.schimer.reportsapp.domain.repositories.ProductFinishedRepository;
-import com.schimer.reportsapp.domain.repositories.QualityCertificateRepository;
-import com.schimer.reportsapp.domain.repositories.QualityIndicatorsRepository;
-import com.schimer.reportsapp.domain.repositories.QualitySolidLiquidRepository;
 import com.schimer.reportsapp.models.ProductFinishedForm;
 import com.schimer.reportsapp.utils.guest.ProductFinishedMapper;
 
+import java.util.List;
+
 public class ProductFinishedService {
     private final ProductFinishedRepository productFinishedRepository = new ProductFinishedRepository();
-    private final QualityCertificateRepository qualityCertificateRepository = new QualityCertificateRepository();
-    private final QualityIndicatorsRepository qualityIndicatorsRepository = new QualityIndicatorsRepository();
-    private final QualitySolidLiquidRepository qualitySolidLiquidRepository = new QualitySolidLiquidRepository();
 
-    public void create(ProductFinishedForm  productFinishedForm){
-        var productFinishedEntity = ProductFinishedMapper.toEntity(productFinishedForm);
-        var qualityCertificateEntity = ProductFinishedMapper.qualityCertificateMapper(productFinishedForm);
-        var qualityIndicatorsEntity = ProductFinishedMapper.qualityIndicatorsMapper(productFinishedForm);
-        var qualitySolidLiquidEntity = ProductFinishedMapper.qualitySolidLiquidMapper(productFinishedForm);
+    public ProductFinishedEntity create(ProductFinishedForm  productFinishedForm){
+        var data = bindProductFinishedForm(productFinishedForm);
+
+        return productFinishedRepository.save(data);
+    }
+
+    public ProductFinishedEntity update(ProductFinishedForm  productFinishedForm){
+        var data = bindProductFinishedForm(productFinishedForm);
+
+        return productFinishedRepository.update(data);
+    }
+
+    private ProductFinishedEntity bindProductFinishedForm(ProductFinishedForm productFinishedForm) {
+        var productFinishedEntity =
+                ProductFinishedMapper.toEntity(productFinishedForm);
+
+        var qualityCertificateEntity =
+                ProductFinishedMapper.qualityCertificateMapper(productFinishedForm);
+
+        var qualityCertificateDetails =
+                ProductFinishedMapper.qualityCertificateDetailsMapper(productFinishedForm);
+
+        var qualityIndicatorsEntity =
+                ProductFinishedMapper.qualityIndicatorsMapper(productFinishedForm);
+
+        var qualitySolidLiquidEntity =
+                ProductFinishedMapper.qualitySolidLiquidMapper(productFinishedForm);
 
         productFinishedEntity.setUser(UserSession.getInstance().getUser());
-        productFinishedRepository.save(productFinishedEntity);
 
+        qualityCertificateDetails.forEach(detailsEntity ->
+                detailsEntity.setQualityCertificate(qualityCertificateEntity)
+        );
+        qualityCertificateEntity.setQualityDetails(qualityCertificateDetails);
         qualityCertificateEntity.setProductFinished(productFinishedEntity);
-        qualityCertificateRepository.save(qualityCertificateEntity);
 
         qualityIndicatorsEntity.setProductFinished(productFinishedEntity);
-        qualityIndicatorsRepository.save(qualityIndicatorsEntity);
-
         qualitySolidLiquidEntity.setProductFinished(productFinishedEntity);
-        qualitySolidLiquidRepository.save(qualitySolidLiquidEntity);
+
+        productFinishedEntity.setQualityCertificate(qualityCertificateEntity);
+        productFinishedEntity.setQualityIndicators(qualityIndicatorsEntity);
+        productFinishedEntity.setQualitySolidLiquid(qualitySolidLiquidEntity);
+
+        return productFinishedEntity;
     }
+
+    public List<ProductFinishedEntity> getAll(){
+        return this.productFinishedRepository.getAll();
+    }
+
 }

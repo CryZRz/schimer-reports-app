@@ -1,0 +1,11 @@
+.icon-button-primary{
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-padding: 0;
+    -fx-border-color: transparent;
+}
+
+.icon-primary{
+    -fx-icon-color: -color-primary;
+    -fx-icon-size: 20;
+}

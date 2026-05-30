@@ -24,7 +24,7 @@
     </stylesheets>
 
     <left>
-        <fx:include source="sidebar-product-finished.fxml" />
+        <fx:include fx:id="sidebar" source="sidebar-product-finished.fxml" />
     </left>
 
     <center>
@@ -83,6 +83,7 @@
                                 HBox.hgrow="ALWAYS"
                                 maxWidth="Infinity"
                                 styleClass="cancel-button"
+                                onAction="#onClickReports"
                         >
                             Cancelar
                         </Button>

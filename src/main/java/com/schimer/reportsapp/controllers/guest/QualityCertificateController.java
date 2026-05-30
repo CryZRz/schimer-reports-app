@@ -3,7 +3,6 @@ package com.schimer.reportsapp.controllers.guest;
 import com.schimer.reportsapp.App;
 import com.schimer.reportsapp.auth.UserSession;
 import com.schimer.reportsapp.controllers.interfaces.WizardStep;
-import com.schimer.reportsapp.domain.repositories.UserRepository;
 import com.schimer.reportsapp.models.ProductFinishedForm;
 import com.schimer.reportsapp.models.QualityFormRow;
 import com.schimer.reportsapp.utils.guest.ProductFinishedBindContext;
@@ -14,6 +13,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.VBox;
+
+import java.io.IOException;
 
 
 public class QualityCertificateController implements WizardStep {
@@ -30,6 +32,10 @@ public class QualityCertificateController implements WizardStep {
     public DatePicker expirationDateProperty;
     @FXML
     public TextField amountProperty;
+    @FXML
+    public VBox sidebar;
+    @FXML
+    private SidebarProductFinished sidebarController;
     public TableView<QualityFormRow> qualityTable;
     public TableColumn<QualityFormRow, String> specificationColumn;
     public TableColumn<QualityFormRow, String> parameterColumn;
@@ -38,14 +44,15 @@ public class QualityCertificateController implements WizardStep {
     public TableColumn<QualityFormRow, String> methodologyColumn;
 
     private ProductFinishedForm context;
-    private UserSession userSession ;
-    private UserRepository userService = new UserRepository();
+    private UserSession userSession;
 
     public void initialize() {
-        var user = userService.getUserByEmail("paulo@itl.com").get();
-        UserSession.login(user);
         userSession = UserSession.getInstance();
         initUserInfo();
+    }
+
+    private void initializeSidebar() {
+        sidebarController.setFormContext(context);
     }
 
     @Override
@@ -53,6 +60,7 @@ public class QualityCertificateController implements WizardStep {
         this.context = context;
         bindPropertiesWithContext();
         initializeTable();
+        initializeSidebar();
     }
 
     private void bindPropertiesWithContext(){
@@ -97,23 +105,31 @@ public class QualityCertificateController implements WizardStep {
     private void setContextToTable() {
         if (context != null && context.getQualityFormRows().isEmpty()) {
             this.context.getQualityFormRows().addAll(
-                    new QualityFormRow("Apariencia", "", "", "-", "Interno"),
-                    new QualityFormRow("Apariencia", "", "", "-", "Interno"),
-                    new QualityFormRow("Olor", "", "", "-", "ASTM D1296"),
-                    new QualityFormRow("Densidad", "", "", "g/cm3", "ASTM B527-15 S) ISO 7581976 I)"),
-                    new QualityFormRow("pH", "", "", "-", "ASTM E70"),
-                    new QualityFormRow("%Solidos@100°C", "", "", "%", "ASTM D2974"),
-                    new QualityFormRow("%Humedad@100°C", "", "", "%", "ASTM D2974"),
-                    new QualityFormRow("Solubilidad", "", "", "-", "ASTM D1722"),
-                    new QualityFormRow("Punto de fusion", "", "", "°C", "ASTM E324"),
-                    new QualityFormRow("Concentracion", "", "", "%", "ISO 1388"),
-                    new QualityFormRow("Viscosidad", "", "", "cP", "ISO D2196"),
-                    new QualityFormRow("°Brix", "", "", "°Brix", "ISO E108"),
-                    new QualityFormRow("Pellet/gramo", "", "", "psz", "Interno")
+                    new QualityFormRow(0L,"Apariencia", "", "", "-", "Interno"),
+                    new QualityFormRow(0L, "Olor", "", "", "-", "ASTM D1296"),
+                    new QualityFormRow(0L,"Densidad", "", "", "g/cm3", "ASTM B527-15 S) ISO 7581976 I)"),
+                    new QualityFormRow(0L,"pH", "", "", "-", "ASTM E70"),
+                    new QualityFormRow(0L,"%Solidos@100°C", "", "", "%", "ASTM D2974"),
+                    new QualityFormRow(0L,"%Humedad@100°C", "", "", "%", "ASTM D2974"),
+                    new QualityFormRow(0L,"Solubilidad", "", "", "-", "ASTM D1722"),
+                    new QualityFormRow(0L,"Punto de fusion", "", "", "°C", "ASTM E324"),
+                    new QualityFormRow(0L,"Concentracion", "", "", "%", "ISO 1388"),
+                    new QualityFormRow(0L,"Viscosidad", "", "", "cP", "ISO D2196"),
+                    new QualityFormRow(0L,"°Brix", "", "", "°Brix", "ISO E108"),
+                    new QualityFormRow(0L,"Pellet/gramo", "", "", "psz", "Interno")
             );
         }
 
         qualityTable.setItems(this.context.getQualityFormRows());
+    }
+
+    @FXML
+    public void onClickReports(){
+        try {
+            App.setRoot("views/guest/products-finished-list");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
