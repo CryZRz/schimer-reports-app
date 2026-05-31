@@ -1,5 +1,6 @@
 package com.schimer.reportsapp.services;
 
+import com.schimer.reportsapp.auth.UserSession;
 import com.schimer.reportsapp.domain.entities.UserEntity;
 import com.schimer.reportsapp.domain.repositories.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,6 +19,21 @@ public class AuthService {
         }
 
         return user;
+    }
+
+    public UserEntity updateInfo(UserEntity user, String password) {
+        var actualUser = UserSession.getInstance().getUser();
+
+        if (encoder.matches(password, actualUser.getPassword())) {
+            return userRepository.update(user);
+        }
+
+        throw new RuntimeException("Contraseña incorrecta");
+    }
+
+    public UserEntity updatePassword(UserEntity user, String password) {
+        user.setPassword(encoder.encode(password));
+        return userRepository.update(user);
     }
 
 }

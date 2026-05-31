@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox
+        xmlns:fx="http://javafx.com/fxml"
+        stylesheets="@../../styles/admin/section-users-info.css"
+>
+    <fx:include source="../components/header.fxml"/>
+    <VBox styleClass="info-module-container">
+        <Label text="Usuarios" styleClass="title-module"/>
+        <Label styleClass="description-module" text="Esta seccion esta destinada a la administracion &#10; de los usuarios"/>
+    </VBox>
+</VBox>

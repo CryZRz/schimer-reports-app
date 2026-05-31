@@ -35,7 +35,7 @@ public class QualityCertificateController implements WizardStep {
     @FXML
     public VBox sidebar;
     @FXML
-    private SidebarProductFinished sidebarController;
+    private SidebarProductFinishedController sidebarController;
     public TableView<QualityFormRow> qualityTable;
     public TableColumn<QualityFormRow, String> specificationColumn;
     public TableColumn<QualityFormRow, String> parameterColumn;

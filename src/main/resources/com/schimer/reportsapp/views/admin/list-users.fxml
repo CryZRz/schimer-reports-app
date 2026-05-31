@@ -19,7 +19,7 @@
 
     <center>
         <VBox>
-            <fx:include source="header-module-info.fxml"/>
+            <fx:include source="section-users-info.fxml"/>
             <Separator opacity="0.3"/>
             <VBox styleClass="main-section-container">
                 <HBox alignment="CENTER_LEFT">

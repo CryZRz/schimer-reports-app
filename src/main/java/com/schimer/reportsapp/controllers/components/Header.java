@@ -1,5 +1,6 @@
 package com.schimer.reportsapp.controllers.components;
 
+import com.schimer.reportsapp.App;
 import com.schimer.reportsapp.auth.UserSession;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -23,6 +24,14 @@ public class Header {
         var session = UserSession.getInstance();
         if(session != null){
             username.setText("Hola " + session.getUser().getName());
+        }
+    }
+
+    public void onClickEditProfile(){
+        try {
+            App.setRoot("views/guest/profile/edit-profile");
+        }catch (Exception e){
+            throw new RuntimeException(e);
         }
     }
 }

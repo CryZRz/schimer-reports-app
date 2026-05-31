@@ -28,7 +28,7 @@ public class FolioQualityCertificateController implements WizardStep {
     @FXML
     public VBox sidebar;
     @FXML
-    private SidebarProductFinished sidebarController;
+    private SidebarProductFinishedController sidebarController;
 
     private ProductFinishedForm context;
     private final UserSession userSession = UserSession.getInstance();

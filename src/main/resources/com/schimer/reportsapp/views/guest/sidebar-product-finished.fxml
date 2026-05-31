@@ -12,7 +12,7 @@
         maxWidth="300.0"
         styleClass="side-bar"
         stylesheets="@../../styles/admin/sidebar.css"
-        fx:controller="com.schimer.reportsapp.controllers.guest.SidebarProductFinished"
+        fx:controller="com.schimer.reportsapp.controllers.guest.SidebarProductFinishedController"
         xmlns:fx="http://javafx.com/fxml"
 >
 

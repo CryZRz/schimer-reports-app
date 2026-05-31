@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 @AllArgsConstructor
@@ -47,4 +49,10 @@ public class UserEntity {
     @JoinColumn(name = "email_account_id")
     private EmailAccountEntity emailAccount;
 
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
+    private List<QuestionResponseEntity> questions;
 }

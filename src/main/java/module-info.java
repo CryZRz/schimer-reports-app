@@ -21,6 +21,7 @@ module com.schimer.reportsapp {
     opens com.schimer.reportsapp.controllers.auth to javafx.fxml;
     opens com.schimer.reportsapp.controllers.admin to javafx.fxml;
     opens com.schimer.reportsapp.controllers.guest to javafx.fxml;
+    opens com.schimer.reportsapp.controllers.guest.profile to javafx.fxml;
     opens com.schimer.reportsapp.controllers.components to javafx.fxml;
     opens com.schimer.reportsapp.models to javafx.base;
     opens db.migration;

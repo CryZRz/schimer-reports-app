@@ -3,7 +3,6 @@ package com.schimer.reportsapp.controllers.guest;
 import com.schimer.reportsapp.App;
 import com.schimer.reportsapp.auth.UserSession;
 import com.schimer.reportsapp.controllers.interfaces.WizardStep;
-import com.schimer.reportsapp.domain.repositories.UserRepository;
 import com.schimer.reportsapp.models.ProductFinishedForm;
 import com.schimer.reportsapp.services.ProductFinishedService;
 import javafx.fxml.FXML;
@@ -47,7 +46,7 @@ public class QualityLiquidSolidController implements WizardStep {
     @FXML
     public Button finishButton;
     @FXML
-    private SidebarProductFinished sidebarController;
+    private SidebarProductFinishedController sidebarController;
 
     private ProductFinishedForm context;
     private UserSession userSession ;

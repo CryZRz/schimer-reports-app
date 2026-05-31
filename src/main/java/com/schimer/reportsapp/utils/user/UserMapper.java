@@ -1,9 +1,16 @@
 package com.schimer.reportsapp.utils.user;
 
 import com.schimer.reportsapp.controllers.admin.CreateUserController;
+import com.schimer.reportsapp.controllers.guest.profile.EditProfileController;
 import com.schimer.reportsapp.domain.entities.EmailAccountEntity;
 import com.schimer.reportsapp.domain.entities.QuestionEntity;
+import com.schimer.reportsapp.domain.entities.QuestionResponseEntity;
 import com.schimer.reportsapp.domain.entities.UserEntity;
+import com.schimer.reportsapp.models.SecurityQuestionAnswerForm;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserMapper {
 
@@ -19,15 +26,17 @@ public class UserMapper {
         user.setJobPosition(form.jobPositionProperty.getText().trim());
         user.setSignature(form.signatureProperty.getText().trim());
 
-        /*
-        todo
-        var questionEntity = new QuestionEntity();
-        user.setQuestionOne(form.questionOneProperty.getText().trim());
-        user.setQuestionTwo(form.questionTwoProperty.getText().trim());
-        user.setQuestionThree(form.questionTreeProperty.getText().trim());
-        */
 
+        var responses = form.questionAnswers.stream().map(question -> {
+                var questionResponseEntity = new QuestionResponseEntity();
+                questionResponseEntity.setUser(user);
+                questionResponseEntity.setQuestion(question.getQuestion());
+                questionResponseEntity.setResponse(question.getAnswer().get());
+                return questionResponseEntity;
+            }
+        ).toList();
 
+        user.setQuestions(responses);
         user.setDepartment(form.departmentProperty.getValue());
         user.setRole(form.baseRoll);
 
@@ -59,15 +68,8 @@ public class UserMapper {
             user.setSignature(form.signatureProperty.getText().trim());
         }
 
-        /*
-        todo
-        var questionEntity = new QuestionEntity();
-        user.setQuestionOne(form.questionOneProperty.getText().trim());
-        user.setQuestionTwo(form.questionTwoProperty.getText().trim());
-        user.setQuestionThree(form.questionTreeProperty.getText().trim());
-        */
-
-
+        var responses = bindResponses(form.questionAnswers, user);
+        user.setQuestions(responses);
         user.setDepartment(form.departmentProperty.getValue());
 
         user.getEmailAccount().setUrl(form.serverNameProperty.getText().trim());
@@ -80,6 +82,47 @@ public class UserMapper {
         user.getEmailAccount().setPort(portStr.isEmpty() ? null : Integer.parseInt(portStr));
 
         return user;
+    }
+
+    public static List<QuestionResponseEntity> bindResponses(List<SecurityQuestionAnswerForm> questions, UserEntity user) {
+        var responses = new ArrayList<QuestionResponseEntity>();
+        questions.forEach(question -> {
+                    if (!question.getAnswer().get().isEmpty()) {
+                        var questionResponseEntity = new QuestionResponseEntity();
+                        questionResponseEntity.setId(question.getId());
+                        questionResponseEntity.setUser(user);
+                        questionResponseEntity.setQuestion(question.getQuestion());
+                        questionResponseEntity.setResponse(question.getAnswer().get());
+                        responses.add(questionResponseEntity);
+                    }
+                }
+        );
+
+        return responses;
+    }
+
+    public static UserEntity guestFormToEntity(EditProfileController form, UserEntity user){
+        var entity = new UserEntity();
+        var responses = bindResponses(form.questionAnswers, entity);
+        entity.setId(user.getId());
+        entity.setName(user.getName());
+        entity.setLastName(user.getLastName());
+        entity.setEmail(user.getEmail());
+        entity.setDepartment(user.getDepartment());
+        entity.setRole(user.getRole());
+        entity.setJobPosition(user.getJobPosition());
+        entity.setSignature(user.getSignature());
+        entity.setDropboxAccount(user.getDropboxAccount());
+        entity.setEmailAccount(user.getEmailAccount());
+        entity.setPassword(user.getPassword());
+        if (!form.passwordProperty.getText().trim().isEmpty()) {
+            var encoder = new BCryptPasswordEncoder();
+            entity.setPassword(encoder.encode(form.passwordProperty.getText()));
+        }
+
+        entity.setQuestions(responses);
+
+        return entity;
     }
 
 }

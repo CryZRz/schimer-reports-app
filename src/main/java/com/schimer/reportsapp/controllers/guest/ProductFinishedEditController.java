@@ -11,7 +11,7 @@ public class ProductFinishedEditController implements WizardStep {
     @FXML
     public VBox sidebar;
     @FXML
-    private SidebarProductFinished sidebarController;
+    private SidebarProductFinishedController sidebarController;
     private ProductFinishedForm context;
 
 

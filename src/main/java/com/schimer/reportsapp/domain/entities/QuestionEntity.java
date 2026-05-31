@@ -20,4 +20,9 @@ public class QuestionEntity {
     private Long id;
 
     private String question;
+
+    @OneToMany(
+            mappedBy = "question"
+    )
+    private List<QuestionResponseEntity> responses;
 }

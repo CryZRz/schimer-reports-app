@@ -8,7 +8,7 @@
 <VBox
         fx:controller="com.schimer.reportsapp.controllers.components.Header"
         xmlns:fx="http://javafx.com/fxml"
-        stylesheets="@../../styles/admin/header-module.css"
+        stylesheets="@../../styles/components/header.css"
 >
     <HBox alignment="BOTTOM_RIGHT">
         <HBox alignment="CENTER" styleClass="info-profile-container">
@@ -17,7 +17,9 @@
                     fx:id="profileImage"
                     fitWidth="50"
                     fitHeight="50"
-                    styleClass="image-profile">
+                    styleClass="image-profile"
+                    onMouseClicked="#onClickEditProfile"
+            >
                 <Image url="@../../assets/images/profile2.png"/>
             </ImageView>
         </HBox>

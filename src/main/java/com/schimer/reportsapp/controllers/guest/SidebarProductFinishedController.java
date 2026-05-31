@@ -9,7 +9,7 @@ import javafx.fxml.FXML;
 
 import java.io.IOException;
 
-public class SidebarProductFinished implements WizardStep {
+public class SidebarProductFinishedController implements WizardStep {
     private ProductFinishedForm context;
 
     @Override

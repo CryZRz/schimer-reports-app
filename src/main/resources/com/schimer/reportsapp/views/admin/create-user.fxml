@@ -14,7 +14,7 @@
 
     <center>
         <VBox>
-            <fx:include source="header-module-info.fxml"/>
+            <fx:include source="section-users-info.fxml"/>
             <Separator opacity="0.3"/>
 
             <ScrollPane
@@ -55,17 +55,17 @@
                         </HBox>
                         <HBox styleClass="input-form-section">
                             <VBox HBox.hgrow="ALWAYS">
-                                <Label text="¿Cual fue tu primer trabajo?" styleClass="input-label"/>
+                                <Label fx:id="questionOneLabel" styleClass="input-label"/>
                                 <TextField fx:id="questionOneProperty" promptText="Pregunta" styleClass="input-form"/>
                             </VBox>
                             <VBox HBox.hgrow="ALWAYS">
-                                <Label text="¿Cual es nombre de tu primer mascota?" styleClass="input-label"/>
+                                <Label fx:id="questionTwoLabel" styleClass="input-label"/>
                                 <TextField fx:id="questionTwoProperty" promptText="Pregunta" styleClass="input-form"/>
                             </VBox>
                         </HBox>
                         <HBox styleClass="input-form-section">
                             <VBox HBox.hgrow="ALWAYS">
-                                <Label text="¿Cual es tu comida favorita?" styleClass="input-label"/>
+                                <Label fx:id="questionThreeLabel" styleClass="input-label"/>
                                 <TextField fx:id="questionTreeProperty" promptText="Pregunta" styleClass="input-form"/>
                             </VBox>
                             <VBox HBox.hgrow="ALWAYS">

@@ -22,4 +22,8 @@ public class QuestionResponseEntity {
     private QuestionEntity question;
 
     private String response;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 }

@@ -3,7 +3,6 @@ package com.schimer.reportsapp.controllers.guest;
 import com.schimer.reportsapp.App;
 import com.schimer.reportsapp.auth.UserSession;
 import com.schimer.reportsapp.controllers.interfaces.WizardStep;
-import com.schimer.reportsapp.domain.repositories.UserRepository;
 import com.schimer.reportsapp.models.ProductFinishedForm;
 import com.schimer.reportsapp.utils.guest.ProductFinishedBindContext;
 import javafx.fxml.FXML;
@@ -31,7 +30,7 @@ public class QualityIndicatorsController implements WizardStep {
     @FXML
     public VBox sidebar;
     @FXML
-    private SidebarProductFinished sidebarController;
+    private SidebarProductFinishedController sidebarController;
 
     private ProductFinishedForm context;
     private UserSession userSession;

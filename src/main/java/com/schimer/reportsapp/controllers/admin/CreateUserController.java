@@ -4,16 +4,21 @@ import com.schimer.reportsapp.App;
 import com.schimer.reportsapp.domain.entities.DepartmentEntity;
 import com.schimer.reportsapp.domain.entities.RoleEntity;
 import com.schimer.reportsapp.domain.entities.UserEntity;
+import com.schimer.reportsapp.models.SecurityQuestionAnswerForm;
 import com.schimer.reportsapp.services.DepartmentService;
+import com.schimer.reportsapp.services.QuestionService;
 import com.schimer.reportsapp.services.RoleService;
 import com.schimer.reportsapp.services.UserService;
 import com.schimer.reportsapp.utils.Constants;
 import com.schimer.reportsapp.utils.user.UserMapper;
 import com.schimer.reportsapp.utils.validators.UserFormValidator;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CreateUserController {
 
@@ -21,6 +26,8 @@ public class CreateUserController {
     private final RoleService roleService = new RoleService();
     private final UserService  userService = new UserService();
     public RoleEntity baseRoll;
+    private final QuestionService questionService = new QuestionService();
+    public final List<SecurityQuestionAnswerForm> questionAnswers = new ArrayList<>();
 
     private UserEntity userToEdit;
 
@@ -35,9 +42,15 @@ public class CreateUserController {
     @FXML
     public PasswordField passwordConfirmProperty;
     @FXML
+    public Label questionOneLabel;
+    @FXML
     public TextField questionOneProperty;
     @FXML
+    public Label questionTwoLabel;
+    @FXML
     public TextField questionTwoProperty;
+    @FXML
+    public Label questionThreeLabel;
     @FXML
     public TextField questionTreeProperty;
     @FXML
@@ -56,7 +69,6 @@ public class CreateUserController {
     public TextField serverPortProperty;
     @FXML
     public Button buttonCreateUser;
-
     @FXML
     public Label titleModule;
 
@@ -65,13 +77,84 @@ public class CreateUserController {
         this.getDefaultRole();
     }
 
+    private void bindListQuestionsUpdate() {
+        var questionsResponse = userToEdit.getQuestions();
+        if (questionsResponse.size() >= 3) {
+            var questionOne = questionsResponse.get(0).getQuestion();
+            var questionTwo = questionsResponse.get(1).getQuestion();
+            var questionThree = questionsResponse.get(2).getQuestion();
+
+            questionOneLabel.setText(questionOne.getQuestion());
+            questionTwoLabel.setText(questionTwo.getQuestion());
+            questionThreeLabel.setText(questionThree.getQuestion());
+
+            this.questionAnswers.add(
+                    new SecurityQuestionAnswerForm(
+                            questionOne.getId(),
+                            questionOne,
+                            new SimpleStringProperty("")
+                    ));
+            this.questionAnswers.add(
+                    new SecurityQuestionAnswerForm(
+                            questionTwo.getId(),
+                            questionTwo,
+                            new SimpleStringProperty("")
+                    ));
+            this.questionAnswers.add(
+                    new SecurityQuestionAnswerForm(
+                            questionThree.getId(),
+                            questionThree,
+                            new SimpleStringProperty("")
+                    ));
+
+            questionOneProperty.textProperty().bindBidirectional(questionAnswers.get(0).getAnswer());
+            questionTwoProperty.textProperty().bindBidirectional(questionAnswers.get(1).getAnswer());
+            questionTreeProperty.textProperty().bindBidirectional(questionAnswers.get(2).getAnswer());
+        }
+    }
+
+    private void bindListQuestionsCreate() {
+        var questions = this.questionService.getAll();
+        if (questions.size() >= 3) {
+            questionOneLabel.setText(questions.get(0).getQuestion());
+            questionTwoLabel.setText(questions.get(1).getQuestion());
+            questionThreeLabel.setText(questions.get(2).getQuestion());
+
+            this.questionAnswers.add(
+                    new SecurityQuestionAnswerForm(
+                            0L,
+                            questions.get(0),
+                            new SimpleStringProperty("")
+                    ));
+            this.questionAnswers.add(
+                    new SecurityQuestionAnswerForm(
+                            0L,
+                            questions.get(1),
+                            new SimpleStringProperty("")
+                    ));
+            this.questionAnswers.add(
+                    new SecurityQuestionAnswerForm(
+                            0L,
+                            questions.get(2),
+                            new SimpleStringProperty("")
+                    ));
+
+            questionOneProperty.textProperty().bindBidirectional(questionAnswers.get(0).getAnswer());
+            questionTwoProperty.textProperty().bindBidirectional(questionAnswers.get(1).getAnswer());
+            questionTreeProperty.textProperty().bindBidirectional(questionAnswers.get(2).getAnswer());
+        }
+    }
+
     public void setEditableUser(UserEntity userToEdit) {
         this.userToEdit = userToEdit;
 
         if (userToEdit != null) {
-            this.titleModule.setText("Editar Userio");
+            this.titleModule.setText("Editar Usario");
             this.buttonCreateUser.setText("Editar");
             initializeDataEdit();
+            this.bindListQuestionsUpdate();
+        }else{
+            this.bindListQuestionsCreate();
         }
     }
 
@@ -109,7 +192,7 @@ public class CreateUserController {
         if (userToEdit != null){
             try{
                 var userUpdate = UserMapper.toEntity(this, userToEdit);
-                this.userService.updateUser(userUpdate);
+                this.userService.update(userUpdate);
                 goBacK();
             }catch (Exception e){
                 System.out.println(e.getMessage());
@@ -118,7 +201,7 @@ public class CreateUserController {
             if(validateForm()){
                 try{
                     var newUser = UserMapper.toEntity(this);
-                    this.userService.createUser(newUser);
+                    this.userService.create(newUser);
                     goBacK();
                 }catch (Exception e){
                     System.out.println(e.getMessage());
@@ -127,8 +210,12 @@ public class CreateUserController {
         }
     }
 
-    private void goBacK() throws IOException {
-        App.setRoot("views/admin/list-users");
+    private void goBacK()  {
+        try{
+            App.setRoot("views/admin/list-users");
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
     }
 
      @FXML

@@ -29,4 +29,8 @@ public class UserSession {
     public UserEntity getUser() {
         return userEntity;
     }
+
+    public void setUser(UserEntity userEntity) {
+        this.userEntity = userEntity;
+    }
 }
