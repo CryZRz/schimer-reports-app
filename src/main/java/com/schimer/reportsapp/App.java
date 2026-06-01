@@ -18,9 +18,9 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         var authService = new AuthService();
-        var user = authService.login("blinzzia@mail.com", "blinzzia");
+        var user = authService.login("blinzzia@mail.com", "christian");
         UserSession.login(user);
-        scene = new Scene(loadFXML("views/auth/login"), 320, 240);
+        scene = new Scene(loadFXML("views/guest/products-finished-list"), 320, 240);
         scene.getStylesheets().add(App.class.getResource("styles/globals.css").toExternalForm());
         stage.setTitle("Reportes Schimmer");
         stage.setScene(scene);

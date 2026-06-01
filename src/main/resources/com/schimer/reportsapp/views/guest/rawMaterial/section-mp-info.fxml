@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="com.schimer.reportsapp.controllers.guest.SectionPtInfoController"
+        stylesheets="@../../../styles/guest/section-pt-info.css"
+>
+    <fx:include source="../../components/header.fxml"/>
+    <HBox>
+        <VBox HBox.hgrow="ALWAYS" styleClass="info-module-container">
+            <HBox alignment="CENTER_LEFT">
+                <Label text="Materia Prima" styleClass="title-module"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button  fx:id="btnAdd" styleClass="btn-create-report">
+                    Añadir
+                </Button>
+            </HBox>
+            <Label styleClass="description-module" text="Esta seccion esta destinada a la administracion &#10; de las materias primas"/>
+        </VBox>
+    </HBox>
+</VBox>

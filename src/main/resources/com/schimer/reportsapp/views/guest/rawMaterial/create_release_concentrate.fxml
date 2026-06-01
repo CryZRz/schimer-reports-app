@@ -7,32 +7,30 @@
 
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import java.net.URL?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.CheckBox?>
 <BorderPane
         xmlns:fx="http://javafx.com/fxml"
-        fx:controller="com.schimer.reportsapp.controllers.guest.QualityIndicatorsController"
+        fx:controller="com.schimer.reportsapp.controllers.guest.rawMaterial.ReleaseConcentrateController"
 >
-
     <stylesheets>
-        <URL value="@../../styles/guest/layout.css"/>
-        <URL value="@../../styles/components/default-texts.css" />
-        <URL value="@../../styles/components/default-buttons.css" />
-        <URL value="@../../styles/components/default-inputs.css" />
+        <URL value="@../../../styles/guest/layout.css"/>
+        <URL value="@../../../styles/components/default-texts.css" />
+        <URL value="@../../../styles/components/default-inputs.css" />
+        <URL value="@../../../styles/components/default-buttons.css" />
     </stylesheets>
-
     <left>
-        <fx:include fx:id="sidebar" source="sidebar-product-finished.fxml" />
+        <fx:include fx:id="sidebar" source="sidebar-raw-material.fxml" />
     </left>
 
     <center>
-        <VBox>
-            <fx:include  source="section-pt-info.fxml"/>
-            <Separator opacity="0.3"/>
-            <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+            <VBox>
+                <fx:include source="section-mp-info.fxml"/>
+                <Separator opacity="0.3"/>
                 <VBox styleClass="main-section-container">
-                    <Label styleClass="title-section"  text="Indicadores calidad mp pt equipos calibración"/>
+                    <Label styleClass="title-section"  text="Cocentrado de liberacion"/>
                     <HBox styleClass="input-form-section">
                         <VBox HBox.hgrow="ALWAYS">
                             <Label text="Emisor" styleClass="input-label"/>
@@ -46,26 +44,26 @@
                     <HBox styleClass="input-form-section">
                         <VBox HBox.hgrow="ALWAYS">
                             <Label text="Folio" styleClass="input-label"/>
-                            <TextField editable="false" fx:id="folioProperty" promptText="Folio" styleClass="input-form-disabled"/>
+                            <TextField fx:id="folioProperty" promptText="Folio" styleClass="input-form"/>
                         </VBox>
                         <VBox HBox.hgrow="ALWAYS">
                             <Label text="Lote" styleClass="input-label"/>
-                            <TextField editable="false" fx:id="batchProperty" promptText="Lote" styleClass="input-form-disabled"/>
+                            <TextField fx:id="batchProperty" promptText="Lote" styleClass="input-form"/>
                         </VBox>
                     </HBox>
                     <HBox styleClass="input-form-section">
                         <VBox HBox.hgrow="ALWAYS">
-                            <Label  text="Fecha de elaboracion" styleClass="input-label"/>
-                            <DatePicker disable="true" editable="false" fx:id="createdAtProperty" maxWidth="Infinity" promptText="Fecha de elaboracion" styleClass="input-date-picker-invalid"/>
+                            <Label  text="Fecha de liberacion" styleClass="input-label"/>
+                            <DatePicker editable="false" fx:id="releaseDateProperty" maxWidth="Infinity" promptText="Fecha de liberacion" styleClass="input-date-picker-invalid"/>
                         </VBox>
                         <VBox HBox.hgrow="ALWAYS">
                             <Label text="Producto" styleClass="input-label"/>
-                            <TextField editable="false" fx:id="productProperty" promptText="Producto" styleClass="input-form-disabled"/>
+                            <TextField fx:id="productProperty" promptText="Producto" styleClass="input-form"/>
                         </VBox>
                     </HBox>
                     <VBox styleClass="input-form-section">
-                        <CheckBox fx:id="isLiberated" styleClass="checkbox-form" text="Desea marcar como valida la liberación del producto"/>
-                        <Label styleClass="description-liberate">Se tomara la fecha actual para asignar la liberación</Label>
+                        <CheckBox fx:id="statusProperty" styleClass="checkbox-form" text="Estatus"/>
+                        <Label styleClass="description-liberate">¿El producto pasa?</Label>
                     </VBox>
                     <HBox styleClass="input-form-section">
                         <Button
@@ -86,7 +84,7 @@
                         </Button>
                     </HBox>
                 </VBox>
-            </ScrollPane>
-        </VBox>
+            </VBox>
+        </ScrollPane>
     </center>
 </BorderPane>

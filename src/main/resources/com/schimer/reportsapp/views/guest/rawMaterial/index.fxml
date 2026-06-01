@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<BorderPane
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="com.schimer.reportsapp.controllers.guest.rawMaterial.ListRawMaterialsController"
+>
+
+    <stylesheets>
+        <URL value="@../../../styles/guest/layout.css"/>
+        <URL value="@../../../styles/components/default-inputs.css"/>
+        <URL value="@../../../styles/components/default-table.css"/>
+        <URL value="@../../../styles/components/default-icons.css"/>
+    </stylesheets>
+
+    <left>
+        <fx:include fx:id="sidebar" source="../sidebar-guest.fxml" />
+    </left>
+
+    <center>
+        <VBox>
+            <fx:include fx:id="sectionPtInfo" source="section-mp-info.fxml"/>
+            <Separator opacity="0.3"/>
+            <VBox styleClass="main-section-container">
+                <VBox>
+                    <Label styleClass="input-label" text="Buscar" />
+                    <TextField  styleClass="find-report"/>
+                </VBox>
+                <HBox styleClass="table-container">
+                    <TableView fx:id="productsFinishedTable" HBox.hgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="folioColumn" text="Folio" sortable="false" reorderable="false"/>
+                            <TableColumn fx:id="transmitterColumn" text="Emisor" sortable="false" reorderable="false"/>
+                            <TableColumn fx:id="productColumn" text="Producto" sortable="false" reorderable="false"/>
+                            <TableColumn fx:id="batchColumn" text="Lote" sortable="false" reorderable="false"/>
+                            <TableColumn fx:id="actionsColumn" text="Acciones" sortable="false" reorderable="false"/>
+                        </columns>
+                    </TableView>
+                </HBox>
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>

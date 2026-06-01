@@ -11,21 +11,21 @@
         prefWidth="300.0"
         maxWidth="300.0"
         styleClass="side-bar"
-        stylesheets="@../../styles/admin/sidebar.css"
-        fx:controller="com.schimer.reportsapp.controllers.components.SidebarGuest"
+        stylesheets="@../../../styles/admin/sidebar.css"
+        fx:controller="com.schimer.reportsapp.controllers.guest.rawMaterial.SidebarRawMaterialController"
         xmlns:fx="http://javafx.com/fxml"
 >
 
     <VBox alignment="CENTER" styleClass="logo-container">
         <ImageView>
-            <Image url="@../../assets/images/schimer-logo.png"/>
+            <Image url="@../../../assets/images/schimer-logo.png"/>
         </ImageView>
     </VBox>
 
     <VBox styleClass="list-actions-container">
-        <Hyperlink onAction="#onClickProductsFinished" text="Productos" styleClass="menu-action"/>
-        <Hyperlink onAction="#onClickRawMaterials" text="Materia" styleClass="menu-action"/>
-        <Hyperlink text="Dropbox" styleClass="menu-action"/>
+        <Hyperlink onAction="#onClickReports" text="Reportes" styleClass="menu-action"/>
+        <Hyperlink onAction="#onClickConcentrate" text="Concentrado" styleClass="menu-action"/>
+        <Hyperlink onAction="#onClickLiberation" text="Liberacion" styleClass="menu-action"/>
     </VBox>
 
     <VBox VBox.vgrow="ALWAYS"/>

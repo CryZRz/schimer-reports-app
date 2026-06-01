@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Separator?>
+
+<?import java.net.URL?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<BorderPane
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="com.schimer.reportsapp.controllers.guest.rawMaterial.RawMaterialEditController"
+>
+
+    <stylesheets>
+        <URL value="@../../../styles/guest/layout.css"/>
+        <URL value="@../../../styles/components/default-inputs.css"/>
+        <URL value="@../../../styles/components/default-table.css"/>
+        <URL value="@../../../styles/components/default-icons.css"/>
+        <URL value="@../../../styles/guest/edit-product-finished.css" />
+        <URL value="@../../../styles/components/default-texts.css" />
+    </stylesheets>
+
+    <left>
+        <fx:include fx:id="sidebar" source="sidebar-raw-material.fxml" />
+    </left>
+
+    <center>
+        <VBox>
+            <fx:include fx:id="sectionPtInfo" source="section-mp-info.fxml"/>
+            <Separator opacity="0.3"/>
+            <VBox styleClass="main-section-container">
+                <Label styleClass="title-section" text="Editar"/>
+                <VBox spacing="20">
+                    <Button text="Concentrado de liberacion"
+                            maxWidth="Infinity"
+                            styleClass="button-section-edit"
+                            onAction="#onClickReleaseConcentrate"
+                    />
+                    <Button
+                            text="Certificado de calidad"
+                            maxWidth="Infinity"
+                            styleClass="button-section-edit"
+                            onAction="#onClickReleaseRawMateria"
+                    />
+                </VBox>
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>
