@@ -38,7 +38,8 @@ public class RawMaterialReleaseEntity {
     @OneToMany(
             mappedBy = "rawMaterialReleases",
             cascade = CascadeType.ALL,
-            fetch =  FetchType.EAGER
+            fetch =  FetchType.EAGER,
+            orphanRemoval = true
     )
     private List<QualityParameterRawMaterialRelease> qualityParameters;
 }

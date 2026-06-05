@@ -9,12 +9,15 @@ import com.schimer.reportsapp.services.DepartmentService;
 import com.schimer.reportsapp.services.QuestionService;
 import com.schimer.reportsapp.services.RoleService;
 import com.schimer.reportsapp.services.UserService;
+import com.schimer.reportsapp.ui.components.WindowsUtils;
 import com.schimer.reportsapp.utils.Constants;
 import com.schimer.reportsapp.utils.user.UserMapper;
-import com.schimer.reportsapp.utils.validators.UserFormValidator;
+import com.schimer.reportsapp.utils.validators.FormValidators;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import net.synedra.validatorfx.Validator;
+import org.hibernate.exception.ConstraintViolationException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -72,9 +75,58 @@ public class CreateUserController {
     @FXML
     public Label titleModule;
 
+    private final Validator validator = new Validator();
+
     public void initialize() {
         this.initializeDepartment();
         this.getDefaultRole();
+        this.initializeValidations();
+        this.bindListQuestionsCreate();
+    }
+
+    private void initializeValidations() {
+        FormValidators.addNotEmptyValidation(validator, namesProperty.textProperty(), namesProperty, "Nombre");
+        FormValidators.addMaxLengthValidation(validator, namesProperty.textProperty(), namesProperty, 20,"Nombre");
+        FormValidators.addMinLengthValidation(validator, namesProperty.textProperty(), namesProperty, 5,"Nombre");
+
+        FormValidators.addNotEmptyValidation(validator, lastNameProperty.textProperty(), lastNameProperty, "Apellidos");
+        FormValidators.addMaxLengthValidation(validator, lastNameProperty.textProperty(), lastNameProperty, 50,"Apellidos");
+        FormValidators.addMinLengthValidation(validator, lastNameProperty.textProperty(), lastNameProperty, 5,"Apellidos");
+
+        FormValidators.addNotEmptyValidation(validator, emailProperty.textProperty(), emailProperty, "Correo");
+        FormValidators.addEmailValidation(validator, emailProperty.textProperty(), emailProperty);
+
+        FormValidators.addNotEmptyValidation(validator, passwordProperty.textProperty(), passwordProperty, "Contraseña");
+        FormValidators.addMinLengthValidation(validator, passwordProperty.textProperty(), passwordProperty, 8,"Contraseña");
+        FormValidators.addNotEmptyValidation(validator, passwordConfirmProperty.textProperty(), passwordConfirmProperty, "Contraseña");
+        FormValidators.addMatchValidation(
+                validator,
+                passwordProperty.textProperty(),
+                passwordConfirmProperty.textProperty(),
+                passwordConfirmProperty,
+                "Confirmar contraseña"
+        );
+
+        FormValidators.addNotEmptyValidation(validator, questionOneProperty.textProperty(), questionOneProperty, "Pregunta 1");
+        FormValidators.addMaxLengthValidation(validator, questionOneProperty.textProperty(), questionOneProperty, 30,"Pregunta 1");
+
+        FormValidators.addNotEmptyValidation(validator, questionTwoProperty.textProperty(), questionTwoProperty, "Pregunta 2");
+        FormValidators.addMaxLengthValidation(validator, questionTwoProperty.textProperty(), questionTwoProperty,30, "Pregunta 2");
+
+        FormValidators.addNotEmptyValidation(validator, questionTreeProperty.textProperty(), questionTreeProperty, "Pregunta 3");
+        FormValidators.addMaxLengthValidation(validator, questionTreeProperty.textProperty(), questionTreeProperty,30, "Pregunta 3");
+
+        FormValidators.addRequiredSelectionValidation(validator, departmentProperty.valueProperty(), departmentProperty, "Departamento");
+
+        FormValidators.addNotEmptyValidation(validator, jobPositionProperty.textProperty(), jobPositionProperty, "Puesto");
+        FormValidators.addMaxLengthValidation(validator, jobPositionProperty.textProperty(), jobPositionProperty, 30,"Puesto");
+
+        FormValidators.addNotEmptyValidation(validator, serverNameProperty.textProperty(), serverNameProperty, "Servidor");
+        FormValidators.addNotEmptyValidation(validator, serverEmailProperty.textProperty(), serverEmailProperty, "Correo servidor");
+        FormValidators.addEmailValidation(validator, serverEmailProperty.textProperty(), serverEmailProperty);
+        FormValidators.addNotEmptyValidation(validator, serverPortProperty.textProperty(), serverPortProperty, "puerto de servidor");
+        FormValidators.addPositiveNumberValidation(validator, serverPortProperty.textProperty(), serverPortProperty, "Puerto de servidor");
+        FormValidators.addNotEmptyValidation(validator, serverPasswordProperty.textProperty(), serverPasswordProperty, "Contraseña de servidor");
     }
 
     private void bindListQuestionsUpdate() {
@@ -153,8 +205,6 @@ public class CreateUserController {
             this.buttonCreateUser.setText("Editar");
             initializeDataEdit();
             this.bindListQuestionsUpdate();
-        }else{
-            this.bindListQuestionsCreate();
         }
     }
 
@@ -181,32 +231,39 @@ public class CreateUserController {
         });
     }
 
-    private boolean validateForm(){
-        var validations = UserFormValidator.validate(this);
-        //TODO
-        return true;
+    private void onCreateUser(){
+        if(validator.validate()){
+            try{
+                var newUser = UserMapper.toEntity(this);
+                this.userService.create(newUser);
+                goBacK();
+            }catch (ConstraintViolationException e){
+                WindowsUtils.showWindowError("El correo ingresado ya esta registrado");
+            }catch (Exception e){
+                WindowsUtils.showAlertErrorSystem();
+            }
+        }
+    }
+
+    private void onUpdateUser(){
+        try{
+            var userUpdate = UserMapper.toEntity(this, userToEdit);
+            this.userService.update(userUpdate);
+            goBacK();
+        }catch (ConstraintViolationException e){
+            WindowsUtils.showWindowError("El correo ingresado ya esta registrado");
+        }catch (Exception e){
+            WindowsUtils.showAlertErrorSystem();
+        }
+
     }
 
     @FXML
     private void onCreateNewUser(){
         if (userToEdit != null){
-            try{
-                var userUpdate = UserMapper.toEntity(this, userToEdit);
-                this.userService.update(userUpdate);
-                goBacK();
-            }catch (Exception e){
-                System.out.println(e.getMessage());
-            }
+            onUpdateUser();
         }else{
-            if(validateForm()){
-                try{
-                    var newUser = UserMapper.toEntity(this);
-                    this.userService.create(newUser);
-                    goBacK();
-                }catch (Exception e){
-                    System.out.println(e.getMessage());
-                }
-            }
+            onCreateUser();
         }
     }
 

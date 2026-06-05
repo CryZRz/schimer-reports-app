@@ -31,7 +31,7 @@
 
     <center>
         <VBox>
-            <fx:include  source="section-mp-info.fxml"/>
+            <fx:include fx:id="sectionPtInfo" source="section-mp-info.fxml"/>
             <Separator opacity="0.3"/>
             <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                 <VBox styleClass="main-section-container">

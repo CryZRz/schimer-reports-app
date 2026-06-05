@@ -3,25 +3,22 @@ package com.schimer.reportsapp.controllers.admin;
 import com.schimer.reportsapp.App;
 import com.schimer.reportsapp.domain.entities.UserEntity;
 import com.schimer.reportsapp.services.UserService;
+import com.schimer.reportsapp.ui.components.WindowsUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.kordamp.ikonli.javafx.FontIcon;
-
-import java.io.IOException;
 
 public class ListUsersController {
 
     private final UserService userService = new UserService();
     private final ObservableList<UserEntity> users = FXCollections.observableArrayList();
-
+    @FXML
+    private TextField textFind;
     @FXML
     public TableView<UserEntity> usersTable;
     public TableColumn<UserEntity, String> nameColumn;
@@ -31,8 +28,12 @@ public class ListUsersController {
     public TableColumn<UserEntity, Void> actionsColumn;
 
     @FXML
-    private void  onClickCreateUser() throws IOException {
-        App.setRoot("views/admin/create-user");
+    private void  onClickCreateUser()  {
+        try{
+            App.setRoot("views/admin/create-user");
+        }catch (Exception e){
+            WindowsUtils.showAlertErrorSystem();
+        }
     }
 
     public void initialize()  {
@@ -40,6 +41,7 @@ public class ListUsersController {
     }
 
     private void initListUsers() {
+        usersTable.setPlaceholder(new Label("No hay usuarios con esa coincidencia"));
         usersTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
 
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -83,6 +85,11 @@ public class ListUsersController {
         });
     }
 
+    public void onFindUsers(){
+        users.clear();
+        users.addAll(userService.findByName(textFind.getText()));
+    }
+
     public void onEditUser(UserEntity user) {
         try {
             var loader = new FXMLLoader(App.class.getResource("views/admin/create-user.fxml"));
@@ -91,8 +98,7 @@ public class ListUsersController {
             controller.setEditableUser(user);
             App.setRoot(root);
         }catch (Exception e){
-            //todo
-            e.printStackTrace();
+            WindowsUtils.showAlertErrorSystem();
         }
     }
 

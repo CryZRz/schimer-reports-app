@@ -2,11 +2,11 @@ package com.schimer.reportsapp.controllers.guest.rawMaterial;
 
 import com.schimer.reportsapp.App;
 import com.schimer.reportsapp.auth.UserSession;
+import com.schimer.reportsapp.controllers.guest.SectionPtInfoController;
 import com.schimer.reportsapp.controllers.interfaces.WizardStepRawMaterial;
 import com.schimer.reportsapp.models.QualityFormRowMaterialRelease;
 import com.schimer.reportsapp.models.RawMaterialForm;
 import com.schimer.reportsapp.services.rawMaterial.RawMaterialService;
-import com.schimer.reportsapp.utils.guest.RawMaterialBindContext;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -52,6 +52,8 @@ public class ReleaseRawMaterialController implements WizardStepRawMaterial {
     public Button persistButton;
     @FXML
     private SidebarRawMaterialController sidebarController;
+    @FXML
+    private SectionPtInfoController sectionPtInfoController;
 
     private RawMaterialForm context;
     private final UserSession userSession = UserSession.getInstance();
@@ -60,6 +62,13 @@ public class ReleaseRawMaterialController implements WizardStepRawMaterial {
     public void initialize() {
         initUserInfo();
         sidebarController.setFormContext(context);
+        removeButton();
+    }
+
+    private void removeButton() {
+        sectionPtInfoController.getBtnAdd().ifPresent(button -> {
+            button.setVisible(false);
+        });
     }
 
     private void initializeTable() {

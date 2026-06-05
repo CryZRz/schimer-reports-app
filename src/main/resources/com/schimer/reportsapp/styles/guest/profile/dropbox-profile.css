@@ -1,0 +1,27 @@
+.login-title{
+    -fx-text-fill: -color-primary;
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+}
+
+.info-account-container{
+    -fx-border-color: -color-light-gray;
+    -fx-border-radius: 10;
+    -fx-padding: 20;
+}
+
+.account-name{
+    -fx-text-fill: -color-primary;
+    -fx-font-weight: bold;
+    -fx-font-size: 15;
+}
+
+.account-description{
+    -fx-font-size: 12;
+    -fx-text-fill: -color-light;
+}
+
+.scroll-container{
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+}

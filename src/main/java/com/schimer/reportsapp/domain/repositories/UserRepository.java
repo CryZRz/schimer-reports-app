@@ -30,9 +30,33 @@ public class UserRepository extends BaseRepository<UserEntity> {
     public List<UserEntity> getAllExceptAdmin() {
         try (var session = HibernateConfig.getSessionFactory().openSession()) {
             var query = session.createQuery(
-                    "FROM UserEntity u WHERE u.role.id NOT IN (SELECT r.id FROM RoleEntity r WHERE r.name = :roleName) ORDER BY u.id DESC",
+                    """
+                        FROM UserEntity u 
+                        WHERE u.role.id NOT IN 
+                        (SELECT r.id FROM RoleEntity r WHERE r.name = :roleName) 
+                        ORDER BY u.id DESC
+                        """,
                     UserEntity.class
             );
+            query.setParameter("roleName", Constants.ADMIN_ROLE);
+            return query.getResultList();
+        }
+    }
+
+    public List<UserEntity> findByName(String name) {
+        try (var session = HibernateConfig.getSessionFactory().openSession()) {
+            var query = session.createQuery(
+                    """
+                            FROM UserEntity u 
+                            WHERE LOWER(CONCAT(u.name, ' ', u.lastName)) 
+                            LIKE LOWER(:name)
+                            AND u.role.id NOT IN 
+                            (SELECT r.id FROM RoleEntity r WHERE r.name = :roleName) 
+                            ORDER BY u.id DESC
+                       """,
+                    UserEntity.class
+            );
+            query.setParameter("name", "%"+name+"%");
             query.setParameter("roleName", Constants.ADMIN_ROLE);
             return query.getResultList();
         }

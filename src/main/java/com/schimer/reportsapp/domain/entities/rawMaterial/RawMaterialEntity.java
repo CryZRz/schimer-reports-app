@@ -25,6 +25,7 @@ public class RawMaterialEntity {
 
     private String batch;
     private String product;
+    private String folio;
     private boolean status;
 
     @ManyToOne

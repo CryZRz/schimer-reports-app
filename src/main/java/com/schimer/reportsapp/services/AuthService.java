@@ -1,6 +1,7 @@
 package com.schimer.reportsapp.services;
 
 import com.schimer.reportsapp.auth.UserSession;
+import com.schimer.reportsapp.domain.entities.DropboxAccountEntity;
 import com.schimer.reportsapp.domain.entities.UserEntity;
 import com.schimer.reportsapp.domain.repositories.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,6 +18,9 @@ public class AuthService {
         if (!encoder.matches(password, user.getPassword())) {
             throw new RuntimeException("Contraseña incorrecta");
         }
+        if (!user.isActive()) {
+            throw new RuntimeException("Usuario incativo");
+        }
 
         return user;
     }
@@ -29,6 +33,19 @@ public class AuthService {
         }
 
         throw new RuntimeException("Contraseña incorrecta");
+    }
+
+    public UserEntity updateDropboxInfo(UserEntity user, String token) {
+        var dropboxAccount = user.getDropboxAccount();
+        if (dropboxAccount != null){
+            user.setDropboxAccount(dropboxAccount);
+        }else {
+            var newDropboxAccount = new DropboxAccountEntity();
+            newDropboxAccount.setToken(token);
+            user.setDropboxAccount(newDropboxAccount);
+        }
+
+        return userRepository.update(user);
     }
 
     public UserEntity updatePassword(UserEntity user, String password) {

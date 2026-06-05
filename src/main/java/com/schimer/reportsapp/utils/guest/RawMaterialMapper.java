@@ -3,7 +3,6 @@ package com.schimer.reportsapp.utils.guest;
 import com.schimer.reportsapp.domain.entities.rawMaterial.QualityParameterRawMaterialRelease;
 import com.schimer.reportsapp.domain.entities.rawMaterial.RawMaterialEntity;
 import com.schimer.reportsapp.domain.entities.rawMaterial.RawMaterialReleaseEntity;
-import com.schimer.reportsapp.models.QualityFormRow;
 import com.schimer.reportsapp.models.QualityFormRowMaterialRelease;
 import com.schimer.reportsapp.models.RawMaterialForm;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -25,10 +24,10 @@ public class RawMaterialMapper {
         rawMaterialEntity.setBatch(context.getBatch().get());
         rawMaterialEntity.setReleaseDate(context.getReleaseDate().get());
         rawMaterialEntity.setStatus(context.getStatus().get());
-        //rawMaterialEntity.setFolio(context.getFolio().get());
+        rawMaterialEntity.setFolio(context.getFolio().get());
 
         return rawMaterialEntity;
-    };
+    }
 
     public static RawMaterialReleaseEntity rawMaterialReleaseToEntity(RawMaterialForm context) {
         var rawMaterialReleaseEntity = new RawMaterialReleaseEntity();
@@ -40,14 +39,12 @@ public class RawMaterialMapper {
         rawMaterialReleaseEntity.setNote(context.getNote().get());
         rawMaterialReleaseEntity.setAccepted(context.getAccepted().get());
 
-
-
         return rawMaterialReleaseEntity;
     }
 
-    public static List<QualityParameterRawMaterialRelease> parameterRawMaterialToEntity(RawMaterialForm context) {
+    public static List<QualityParameterRawMaterialRelease> parameterRawMaterialToEntity(List<QualityFormRowMaterialRelease> context) {
         var listParametersRawMaterialRelease = new ArrayList<QualityParameterRawMaterialRelease>();
-        context.getQualityFormRows().forEach(row -> {
+        context.forEach(row -> {
             var qualityParameterRawMaterialRelease = new QualityParameterRawMaterialRelease();
             if (row.getId() != null && row.getId() != 0) {
                 qualityParameterRawMaterialRelease.setId(row.getId());
@@ -70,6 +67,7 @@ public class RawMaterialMapper {
         rawMaterialForm.setReleaseDate(new SimpleObjectProperty<>(productFinishedEntity.getReleaseDate()));
         rawMaterialForm.setProduct(new SimpleStringProperty(productFinishedEntity.getProduct()));
         rawMaterialForm.setStatus(new SimpleBooleanProperty(productFinishedEntity.isStatus()));
+        rawMaterialForm.setFolio(new SimpleStringProperty(productFinishedEntity.getFolio()));
 
         rawMaterialForm.setExpirationDate(new SimpleObjectProperty<>(productFinishedEntity.getRawMaterialRelease().getExpirationDate()));
         rawMaterialForm.setAmount(new SimpleStringProperty(productFinishedEntity.getRawMaterialRelease().getAmount().toString()));

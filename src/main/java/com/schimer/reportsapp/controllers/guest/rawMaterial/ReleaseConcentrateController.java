@@ -2,6 +2,7 @@ package com.schimer.reportsapp.controllers.guest.rawMaterial;
 
 import com.schimer.reportsapp.App;
 import com.schimer.reportsapp.auth.UserSession;
+import com.schimer.reportsapp.controllers.guest.SectionPtInfoController;
 import com.schimer.reportsapp.controllers.interfaces.WizardStepRawMaterial;
 import com.schimer.reportsapp.models.RawMaterialForm;
 import com.schimer.reportsapp.utils.guest.RawMaterialBindContext;
@@ -32,6 +33,8 @@ public class ReleaseConcentrateController implements WizardStepRawMaterial {
     public CheckBox statusProperty;
     @FXML
     private SidebarRawMaterialController sidebarController;
+    @FXML
+    private SectionPtInfoController sectionPtInfoController;
 
     private RawMaterialForm context;
     private final UserSession userSession = UserSession.getInstance();
@@ -39,6 +42,13 @@ public class ReleaseConcentrateController implements WizardStepRawMaterial {
     public void initialize() {
         initUserInfo();
         sidebarController.setFormContext(context);
+        removeButton();
+    }
+
+    private void removeButton() {
+        sectionPtInfoController.getBtnAdd().ifPresent(button -> {
+            button.setVisible(false);
+        });
     }
 
     public void setFormContext(RawMaterialForm context) {
@@ -56,6 +66,7 @@ public class ReleaseConcentrateController implements WizardStepRawMaterial {
         batchProperty.textProperty().bindBidirectional(context.getBatch());
         releaseDateProperty.valueProperty().bindBidirectional(context.getCreatedAt());
         productProperty.textProperty().bindBidirectional(context.getProduct());
+        statusProperty.selectedProperty().bindBidirectional(context.getStatus());
     }
 
     private void initUserInfo() {

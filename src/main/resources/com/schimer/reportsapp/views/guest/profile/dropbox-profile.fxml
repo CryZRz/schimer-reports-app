@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Separator?>
+
+<?import java.net.URL?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<BorderPane
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="com.schimer.reportsapp.controllers.guest.profile.DropboxProfileController"
+>
+
+    <stylesheets>
+        <URL value="@../../../styles/guest/layout.css"/>
+        <URL value="@../../../styles/components/default-inputs.css"/>
+        <URL value="@../../../styles/components/default-texts.css"/>
+        <URL value="@../../../styles/components/default-buttons.css"/>
+        <URL value="@../../../styles/guest/profile/dropbox-profile.css"/>
+    </stylesheets>
+
+    <left>
+        <fx:include fx:id="sidebar" source="../sidebar-guest.fxml" />
+    </left>
+
+    <center>
+        <VBox>
+            <fx:include fx:id="sectionInfo" source="../../components/base-section-info.fxml"/>
+            <Separator opacity="0.3"/>
+            <ScrollPane styleClass="scroll-container" fitToWidth="true" hbarPolicy="NEVER">
+                <VBox HBox.hgrow="ALWAYS" styleClass="main-section-container">
+                    <VBox  maxWidth="Infinity" styleClass="info-account-container" spacing="8">
+                        <Label styleClass="login-title" text="Actualmente estas logeado" />
+                        <HBox>
+                           <HBox>
+                               <VBox>
+                                   <ImageView
+                                           fx:id="profileImage"
+                                           fitWidth="50"
+                                           fitHeight="50"
+                                           styleClass="image-profile"
+                                   >
+                                       <Image url="@../../../assets/images/profile2.png"/>
+                                   </ImageView>
+                               </VBox>
+                               <VBox>
+                                   <Label styleClass="account-name" fx:id="accountName" text="" />
+                                   <Label styleClass="account-description" text="Actualmente estas logeado si deseas cambiar de cuenta has click en los siguientes botones"/>
+                               </VBox>
+                           </HBox>
+                        </HBox>
+                        <Button onAction="#onClickLogout" styleClass="cancel-button">Cerrar sesion</Button>
+                    </VBox>
+                </VBox>
+            </ScrollPane>
+        </VBox>
+    </center>
+</BorderPane>

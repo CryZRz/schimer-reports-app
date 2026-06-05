@@ -31,6 +31,8 @@ public class QualityIndicatorsController implements WizardStep {
     public VBox sidebar;
     @FXML
     private SidebarProductFinishedController sidebarController;
+    @FXML
+    private SectionPtInfoController sectionPtInfoController;
 
     private ProductFinishedForm context;
     private UserSession userSession;
@@ -38,6 +40,13 @@ public class QualityIndicatorsController implements WizardStep {
     public void initialize() {
         userSession = UserSession.getInstance();
         initUserInfo();
+        removeButton();
+    }
+
+    private void removeButton() {
+        sectionPtInfoController.getBtnAdd().ifPresent(button -> {
+            button.setVisible(false);
+        });
     }
 
     private void initializeSidebar() {

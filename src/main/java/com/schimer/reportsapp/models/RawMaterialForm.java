@@ -27,5 +27,4 @@ public class RawMaterialForm {
     private BooleanProperty accepted = new SimpleBooleanProperty(false);
 
     private ObservableList<QualityFormRowMaterialRelease> qualityFormRows = FXCollections.observableArrayList();
-
 }

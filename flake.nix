@@ -15,6 +15,8 @@
         xorg.libX11
         xorg.libXxf86vm
         xorg.libXtst
+        xdg-utils
+        glib
         libGL
         pango
         gtk3

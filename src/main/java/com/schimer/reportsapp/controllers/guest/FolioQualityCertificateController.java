@@ -29,6 +29,8 @@ public class FolioQualityCertificateController implements WizardStep {
     public VBox sidebar;
     @FXML
     private SidebarProductFinishedController sidebarController;
+    @FXML
+    private SectionPtInfoController sectionPtInfoController;
 
     private ProductFinishedForm context;
     private final UserSession userSession = UserSession.getInstance();
@@ -36,6 +38,13 @@ public class FolioQualityCertificateController implements WizardStep {
     public void initialize() {
         initUserInfo();
         sidebarController.setFormContext(context);
+        removeButton();
+    }
+
+    private void removeButton() {
+        sectionPtInfoController.getBtnAdd().ifPresent(button -> {
+           button.setVisible(false);
+        });
     }
 
     public void setFormContext(ProductFinishedForm context) {

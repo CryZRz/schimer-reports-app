@@ -5,11 +5,17 @@ import com.schimer.reportsapp.domain.entities.UserEntity;
 import com.schimer.reportsapp.models.SecurityQuestionAnswerForm;
 import com.schimer.reportsapp.services.QuestionService;
 import com.schimer.reportsapp.services.UserService;
+import com.schimer.reportsapp.ui.components.WindowsUtils;
+import com.schimer.reportsapp.utils.validators.FormValidators;
+import javafx.animation.PauseTransition;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.util.Duration;
+import net.synedra.validatorfx.Validator;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,13 +37,29 @@ public class ForgotPasswordController {
     public TextField questionThree;
     @FXML
     public TextField emailProperty;
+    @FXML
+    private Button restorePasswordButton;
+    @FXML
+    private Button cancelButton;
 
     private final UserService userService = new UserService();
     private final QuestionService questionService = new QuestionService();
     public final List<SecurityQuestionAnswerForm> questionAnswers = new ArrayList<>();
+    private final Validator validator = new Validator();
+    private int attempts = 0;
 
     public void initialize() {
         bindListResponses();
+        initializeValidator();
+    }
+
+    private void initializeValidator() {
+        FormValidators.addNotEmptyValidation(validator, emailProperty.textProperty(), emailProperty, "Correo");
+        FormValidators.addEmailValidation(validator, emailProperty.textProperty(), emailProperty);
+
+        FormValidators.addNotEmptyValidation(validator, questionOne.textProperty(), questionOne, "Pregunta 1");
+        FormValidators.addNotEmptyValidation(validator, questionTwo.textProperty(), questionTwo, "Pregunta 2");
+        FormValidators.addNotEmptyValidation(validator, questionThree.textProperty(), questionThree, "Pregunta 3");
     }
 
     private void bindListResponses() {
@@ -72,10 +94,29 @@ public class ForgotPasswordController {
         }
     }
 
+    private void verifyAttempts(){
+        attempts++;
+        if (attempts > 5) {
+            WindowsUtils.showWindowError("Superaste el limite de intentos debes esperar 30 segundos");
+            var pause = new PauseTransition(Duration.seconds(30));
+            restorePasswordButton.setDisable(true);
+            cancelButton.setDisable(true);
+
+            pause.setOnFinished(event -> {
+                attempts=0;
+                restorePasswordButton.setDisable(false);
+                cancelButton.setDisable(false);
+            });
+            pause.play();
+        }
+    }
+
     @FXML
     private void onClickForgotPassword()  {
+        verifyAttempts();
         var userFound = userService.getByEmail(emailProperty.getText());
         var countAsserts = new AtomicInteger();
+
         if (userFound.isPresent()) {
             var user = userFound.get();
             user.getQuestions().forEach(question -> {
@@ -84,13 +125,19 @@ public class ForgotPasswordController {
                     if (questionResponse.get().getAnswer().get().equals(question.getResponse())){
                         countAsserts.getAndIncrement();
                     }
+                }else{
+                    WindowsUtils.showAlertErrorSystem();
                 }
             });
+
             if (countAsserts.get() == questionAnswers.size()) {
                 onGoRestorePassword(userFound.get());
+            }else {
+                WindowsUtils.showWindowError("Las respuestas proporcionadas no son correctas");
             }
+
         }else {
-            System.out.println("User not found");
+           WindowsUtils.showWindowError("El correo proporcionado no esta registrado");
         }
     }
 
@@ -104,15 +151,20 @@ public class ForgotPasswordController {
                         controller.setUserToUpdate(userEntity);
                         return parent;
                     }catch (Exception e){
-                        throw new RuntimeException(e);
+                        WindowsUtils.showAlertErrorSystem();
+                        return null;
                     }
                 }
         );
     }
 
     @FXML
-    private void onClickBackToLogin() throws IOException {
-        App.setRoot("views/auth/login");
+    private void onClickBackToLogin()  {
+        try{
+            App.setRoot("views/auth/login");
+        }catch (Exception e){
+            WindowsUtils.showAlertErrorSystem();
+        }
     }
 
 }

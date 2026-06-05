@@ -13,3 +13,6 @@
     -fx-text-fill: -color-light;
     -fx-font-size: 10;
 }
+.text-primary{
+    -fx-text-fill: -color-primary;
+}

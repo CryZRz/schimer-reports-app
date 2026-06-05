@@ -2,6 +2,7 @@ package com.schimer.reportsapp.services.rawMaterial;
 
 import com.schimer.reportsapp.auth.UserSession;
 import com.schimer.reportsapp.domain.entities.rawMaterial.RawMaterialEntity;
+import com.schimer.reportsapp.domain.repositories.rawMaterial.ParameterRawMaterialRepository;
 import com.schimer.reportsapp.domain.repositories.rawMaterial.RawMaterialRepository;
 import com.schimer.reportsapp.models.RawMaterialForm;
 import com.schimer.reportsapp.utils.guest.RawMaterialMapper;
@@ -29,7 +30,7 @@ public class RawMaterialService {
     private RawMaterialEntity getRawMaterialEntity(RawMaterialForm context) {
         var rawMaterialEntity = RawMaterialMapper.toEntity(context);
         var rawMaterialReleaseEntity = RawMaterialMapper.rawMaterialReleaseToEntity(context);
-        var parametersRawMaterialEntities =  RawMaterialMapper.parameterRawMaterialToEntity(context);
+        var parametersRawMaterialEntities =  RawMaterialMapper.parameterRawMaterialToEntity(context.getQualityFormRows());
         var user = UserSession.getInstance().getUser();
 
         rawMaterialEntity.setUser(user);

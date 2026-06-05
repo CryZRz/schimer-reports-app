@@ -36,6 +36,8 @@ public class QualityCertificateController implements WizardStep {
     public VBox sidebar;
     @FXML
     private SidebarProductFinishedController sidebarController;
+    @FXML
+    private SectionPtInfoController sectionPtInfoController;
     public TableView<QualityFormRow> qualityTable;
     public TableColumn<QualityFormRow, String> specificationColumn;
     public TableColumn<QualityFormRow, String> parameterColumn;
@@ -49,6 +51,13 @@ public class QualityCertificateController implements WizardStep {
     public void initialize() {
         userSession = UserSession.getInstance();
         initUserInfo();
+        removeButton();
+    }
+
+    private void removeButton() {
+        sectionPtInfoController.getBtnAdd().ifPresent(button -> {
+            button.setVisible(false);
+        });
     }
 
     private void initializeSidebar() {

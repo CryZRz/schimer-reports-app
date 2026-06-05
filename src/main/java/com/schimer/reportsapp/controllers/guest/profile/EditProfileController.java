@@ -2,14 +2,22 @@ package com.schimer.reportsapp.controllers.guest.profile;
 
 import com.schimer.reportsapp.App;
 import com.schimer.reportsapp.auth.UserSession;
+import com.schimer.reportsapp.controllers.guest.SectionPtInfoController;
 import com.schimer.reportsapp.models.SecurityQuestionAnswerForm;
 import com.schimer.reportsapp.services.AuthService;
+import com.schimer.reportsapp.ui.components.WindowsUtils;
 import com.schimer.reportsapp.utils.user.UserMapper;
+import com.schimer.reportsapp.utils.validators.FormValidators;
+import javafx.animation.PauseTransition;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.WindowEvent;
+import javafx.util.Duration;
+import net.synedra.validatorfx.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +51,11 @@ public class EditProfileController {
     public Label questionTwoLabel;
     @FXML
     public Label questionThreeLabel;
+    @FXML
+    private SectionPtInfoController sectionPtInfoController;
 
+    private int attempts = 0;
+    private Validator validator = new Validator();
     private UserSession session;
     public final List<SecurityQuestionAnswerForm> questionAnswers = new ArrayList<>();
     private final AuthService authService = new AuthService();
@@ -52,6 +64,39 @@ public class EditProfileController {
         session = UserSession.getInstance();
         initializeUserInfo();
         bindListQuestionsUpdate();
+        removeButton();
+        initializeValidations();
+    }
+
+    private void initializeValidations() {
+        FormValidators.addNotEmptyValidation(validator, namesProperty.textProperty(), namesProperty, "Nombre");
+        FormValidators.addNotEmptyValidation(validator, lastNameProperty.textProperty(), lastNameProperty, "Apellidos");
+        FormValidators.addNotEmptyValidation(validator, oldPasswordProperty.textProperty(), oldPasswordProperty, "Contraseña anterior");
+        FormValidators.addNotEmptyValidation(validator, emailProperty.textProperty(), emailProperty, "Correo");
+        FormValidators.addEmailValidation(validator, emailProperty.textProperty(), emailProperty);
+    }
+
+    private void dynamicValidations() {
+        if(!passwordProperty.getText().isEmpty()){
+            FormValidators.addMatchValidation(validator, passwordProperty.textProperty(), passwordConfirmProperty.textProperty(), passwordConfirmProperty, "Contraseña");
+        }
+        if(!questionOneProperty.getText().isEmpty()){
+            FormValidators.addMaxLengthValidation(validator, questionOneProperty.textProperty(), questionOneProperty, 30,"Pregunta 1");
+        }
+        if(!questionTwoProperty.getText().isEmpty()){
+            FormValidators.addMaxLengthValidation(validator, questionTwoProperty.textProperty(), questionTwoProperty, 30,"Pregunta 2");
+        }
+        if(!questionTreeProperty.getText().isEmpty()){
+            FormValidators.addMaxLengthValidation(validator, questionTreeProperty.textProperty(), questionTreeProperty, 30,"Pregunta 3");
+        }
+    }
+
+    private void removeButton() {
+        if(sectionPtInfoController != null){
+            sectionPtInfoController.getBtnAdd().ifPresent(button -> {
+                button.setVisible(false);
+            });
+        }
     }
 
     private void bindListQuestionsUpdate() {
@@ -103,19 +148,48 @@ public class EditProfileController {
         try{
             App.setRoot("views/guest/products-finished-list");
         }catch(Exception e){
-            throw new RuntimeException(e);
+            WindowsUtils.showAlertErrorSystem();
         }
     }
 
-    @FXML
-    public void onEditInfoUser(){
+    private void verifyAttempts(){
+        attempts++;
+        if (attempts > 5) {
+            var pause = new PauseTransition(Duration.seconds(30));
+            var window = WindowsUtils.showAlertBlock("Superaste el limite de intentos debes esperar 30 segundos");
+
+            pause.setOnFinished(event -> {
+                attempts=0;
+                window.setOnCloseRequest(null);
+                window.hide();
+            });
+            pause.play();
+        }
+    }
+
+    public void editInfoUserHandler(){
         var entityToUpdate = UserMapper.guestFormToEntity(this, session.getUser());
         try{
             var newInfoUser = authService.updateInfo(entityToUpdate, oldPasswordProperty.getText());
             session.setUser(newInfoUser);
             onGoBack();
-        }catch (Exception e){
-            throw new RuntimeException(e);
+        }
+        catch (RuntimeException e){
+            verifyAttempts();
+            WindowsUtils.showWindowError("La contraseña es  incorrecta");
+        }
+        catch (Exception e){
+            WindowsUtils.showAlertErrorSystem();
+        }
+
+    }
+
+    @FXML
+    public void onEditInfoUser(){
+        dynamicValidations();
+        if (validator.validate()) {
+            editInfoUserHandler();
         }
     }
+
 }

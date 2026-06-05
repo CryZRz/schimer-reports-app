@@ -33,6 +33,8 @@ public class UserEntity {
 
     private String email;
 
+    private boolean active;
+
     @ManyToOne
     @JoinColumn(name = "rol_id")
     private RoleEntity role;
@@ -41,11 +43,11 @@ public class UserEntity {
     @JoinColumn(name = "department_id")
     private DepartmentEntity department;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "dropbox_account_id")
     private DropboxAccountEntity dropboxAccount;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "email_account_id")
     private EmailAccountEntity emailAccount;
 

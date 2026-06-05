@@ -23,7 +23,7 @@
     </VBox>
 
     <VBox styleClass="list-actions-container">
-        <Hyperlink text="Usuarios" styleClass="menu-action"/>
+        <Hyperlink onAction="#onClickUsers" text="Usuarios" styleClass="menu-action"/>
         <Hyperlink text="Plantillas MP" styleClass="menu-action"/>
         <Hyperlink text="Plantillas PT" styleClass="menu-action"/>
     </VBox>

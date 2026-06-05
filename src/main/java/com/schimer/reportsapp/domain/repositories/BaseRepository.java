@@ -21,9 +21,6 @@ public abstract class BaseRepository <T>{
             transaction.commit();
             return entity;
         }catch (HibernateException ex){
-            if(transaction != null && transaction.isActive()){
-                transaction.rollback();
-            }
             throw ex;
         }
     }

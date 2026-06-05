@@ -5,6 +5,9 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Button?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import javafx.scene.control.TextField?>
+
+<?import java.net.URL?>
 
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TableColumn?>
@@ -13,6 +16,11 @@
         xmlns:fx="http://javafx.com/fxml"
         fx:controller="com.schimer.reportsapp.controllers.admin.ListUsersController"
 >
+    <stylesheets>
+        <URL value="@../../styles/components/default-inputs.css"/>
+        <URL value="@../../styles/components/default-table.css"/>
+    </stylesheets>
+
     <left>
         <fx:include source="sidebar-admin.fxml" />
     </left>
@@ -32,6 +40,10 @@
                         Nuevo usuario
                     </Button>
                 </HBox>
+                <VBox styleClass="input-form-section">
+                    <Label styleClass="input-label" text="Buscar" />
+                    <TextField onAction="#onFindUsers" fx:id="textFind" styleClass="input-form"/>
+                </VBox>
                 <HBox styleClass="table-container">
                     <TableView fx:id="usersTable" HBox.hgrow="ALWAYS">
                         <columns>

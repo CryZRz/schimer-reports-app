@@ -30,9 +30,11 @@
                         text="¿Olvidaste tu contraseña?"
                         styleClass="forgot-password-label"
                         onMouseClicked="#onClickGoForgotPassword"
+                        fx:id="forgotPasswordLabel"
                 />
             </VBox>
             <Button
+                    fx:id="loginButton"
                     HBox.hgrow="ALWAYS"
                     maxWidth="Infinity"
                     styleClass="login-button"

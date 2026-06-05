@@ -25,7 +25,7 @@
     <VBox styleClass="list-actions-container">
         <Hyperlink onAction="#onClickProductsFinished" text="Productos" styleClass="menu-action"/>
         <Hyperlink onAction="#onClickRawMaterials" text="Materia" styleClass="menu-action"/>
-        <Hyperlink text="Dropbox" styleClass="menu-action"/>
+        <Hyperlink onAction="#onClickDropbox" text="Dropbox" styleClass="menu-action"/>
     </VBox>
 
     <VBox VBox.vgrow="ALWAYS"/>

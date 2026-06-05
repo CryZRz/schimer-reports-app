@@ -26,7 +26,7 @@
     <center>
         <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
             <VBox>
-                <fx:include  source="section-pt-info.fxml"/>
+                <fx:include fx:id="sectionPtInfo" source="section-pt-info.fxml"/>
                 <Separator opacity="0.3"/>
                 <VBox styleClass="main-section-container">
                     <Label styleClass="title-section"  text="Folio de certificado de calidad"/>

@@ -40,4 +40,6 @@ public class UserService {
         return userRepository.getUserByEmail(email);
     }
 
+    public List<UserEntity> findByName(String name) {return userRepository.findByName(name);}
+
 }
