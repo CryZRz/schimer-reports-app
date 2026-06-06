@@ -3,6 +3,7 @@ package com.schimer.reportsapp.services;
 import com.schimer.reportsapp.auth.UserSession;
 import com.schimer.reportsapp.domain.entities.ProductFinishedEntity;
 import com.schimer.reportsapp.domain.repositories.ProductFinishedRepository;
+import com.schimer.reportsapp.domain.repositories.templates.TemplatePTRepository;
 import com.schimer.reportsapp.models.ProductFinishedForm;
 import com.schimer.reportsapp.utils.guest.ProductFinishedMapper;
 
@@ -10,11 +11,18 @@ import java.util.List;
 
 public class ProductFinishedService {
     private final ProductFinishedRepository productFinishedRepository = new ProductFinishedRepository();
+    private final TemplatePTRepository templatePTRepository = new TemplatePTRepository();
 
     public ProductFinishedEntity create(ProductFinishedForm  productFinishedForm){
-        var data = bindProductFinishedForm(productFinishedForm);
+        var template = templatePTRepository.getLast();
+        if(template.isPresent()){
+            var data = bindProductFinishedForm(productFinishedForm);
+            data.setTemplate(template.get());
 
-        return productFinishedRepository.save(data);
+            return productFinishedRepository.save(data);
+        }
+
+        throw new RuntimeException("No hay plantillas disponibles");
     }
 
     public ProductFinishedEntity update(ProductFinishedForm  productFinishedForm){

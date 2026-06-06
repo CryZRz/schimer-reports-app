@@ -32,7 +32,7 @@ public class ProductFinishedEntity {
 
     @ManyToOne
     @JoinColumn(name = "template_id")
-    private TemplateEntity template;
+    private TemplatePTEntity template;
 
     @OneToOne(mappedBy = "productFinished", cascade = CascadeType.ALL)
     private PtQualityCertificateEntity qualityCertificate;

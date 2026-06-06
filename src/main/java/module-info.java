@@ -21,14 +21,16 @@ module com.schimer.reportsapp {
     requires javafx.web;
     requires fr.opensagres.xdocreport.document;
     requires fr.opensagres.xdocreport.template;
+    requires fr.opensagres.xdocreport.document.docx;
+    requires fr.opensagres.xdocreport.core;
 
+    opens com.schimer.reportsapp.models;
     opens com.schimer.reportsapp.controllers.auth to javafx.fxml;
     opens com.schimer.reportsapp.controllers.admin to javafx.fxml;
     opens com.schimer.reportsapp.controllers.guest to javafx.fxml;
     opens com.schimer.reportsapp.controllers.guest.profile to javafx.fxml;
     opens com.schimer.reportsapp.controllers.guest.rawMaterial to javafx.fxml;
     opens com.schimer.reportsapp.controllers.components to javafx.fxml;
-    opens com.schimer.reportsapp.models to javafx.base;
     opens db.migration;
     opens com.schimer.reportsapp.domain.entities to org.hibernate.orm.core, javafx.base;
     opens com.schimer.reportsapp.domain.entities.rawMaterial to org.hibernate.orm.core, javafx.base;

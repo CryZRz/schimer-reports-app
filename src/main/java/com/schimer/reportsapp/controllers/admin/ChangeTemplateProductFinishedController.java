@@ -2,10 +2,12 @@ package com.schimer.reportsapp.controllers.admin;
 
 import com.schimer.reportsapp.App;
 import com.schimer.reportsapp.controllers.components.BaseSectionInfo;
-import com.schimer.reportsapp.services.admin.ChangeTemplatePTService;
+import com.schimer.reportsapp.services.admin.TemplatePTService;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.stage.FileChooser;
+
+import java.io.FileNotFoundException;
 
 public class ChangeTemplateProductFinishedController {
     @FXML
@@ -13,7 +15,7 @@ public class ChangeTemplateProductFinishedController {
     @FXML
     private BaseSectionInfo sectionInfoController;
 
-    private final ChangeTemplatePTService changeTemplatePTService =  new ChangeTemplatePTService();
+    private final TemplatePTService changeTemplatePTService =  new TemplatePTService();
 
     public void initialize() {
         initializeSectionInfo();

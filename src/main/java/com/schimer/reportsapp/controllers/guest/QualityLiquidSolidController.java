@@ -5,6 +5,8 @@ import com.schimer.reportsapp.auth.UserSession;
 import com.schimer.reportsapp.controllers.interfaces.WizardStep;
 import com.schimer.reportsapp.models.ProductFinishedForm;
 import com.schimer.reportsapp.services.ProductFinishedService;
+import com.schimer.reportsapp.services.admin.TemplatePTService;
+import com.schimer.reportsapp.ui.components.WindowsUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -53,6 +55,7 @@ public class QualityLiquidSolidController implements WizardStep {
     private ProductFinishedForm context;
     private UserSession userSession ;
     private final ProductFinishedService productFinishedService = new ProductFinishedService();
+    private final TemplatePTService templatePTService = new TemplatePTService();
 
     public void initialize() {
         userSession = UserSession.getInstance();
@@ -105,16 +108,17 @@ public class QualityLiquidSolidController implements WizardStep {
         try {
             App.setRoot("views/guest/products-finished-list");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            WindowsUtils.showAlertErrorSystem();
         }
     }
 
     private void saveProductFinished(){
         try {
-            productFinishedService.create(context);
+            var entity = productFinishedService.create(context);
+            templatePTService.generateReport(entity);
             onClickReports();
         }catch (Exception e){
-            throw new RuntimeException(e);
+            WindowsUtils.showAlertErrorSystem();
         }
     }
 
@@ -123,7 +127,7 @@ public class QualityLiquidSolidController implements WizardStep {
             productFinishedService.update(context);
             onClickReports();
         }catch (Exception e){
-            throw new RuntimeException(e);
+            WindowsUtils.showAlertErrorSystem();
         }
     }
 
