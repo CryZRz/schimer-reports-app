@@ -19,6 +19,8 @@ module com.schimer.reportsapp {
     requires javafx.base;
     requires dropbox.core.sdk;
     requires javafx.web;
+    requires fr.opensagres.xdocreport.document;
+    requires fr.opensagres.xdocreport.template;
 
     opens com.schimer.reportsapp.controllers.auth to javafx.fxml;
     opens com.schimer.reportsapp.controllers.admin to javafx.fxml;

@@ -31,7 +31,8 @@ public class UserSession {
         try{
             dropboxAccount = clientDropbox.users().getCurrentAccount();
         } catch (DbxException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            //throw new RuntimeException(e);
         }
     }
 

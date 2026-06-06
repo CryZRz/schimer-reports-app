@@ -24,8 +24,8 @@
 
     <VBox styleClass="list-actions-container">
         <Hyperlink onAction="#onClickUsers" text="Usuarios" styleClass="menu-action"/>
-        <Hyperlink text="Plantillas MP" styleClass="menu-action"/>
-        <Hyperlink text="Plantillas PT" styleClass="menu-action"/>
+        <Hyperlink onAction="#onClickTemplateMp" text="Plantillas MP" styleClass="menu-action"/>
+        <Hyperlink onAction="#onClickTemplatePt" text="Plantillas PT" styleClass="menu-action"/>
     </VBox>
 
     <VBox VBox.vgrow="ALWAYS"/>
