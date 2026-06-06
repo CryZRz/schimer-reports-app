@@ -18,8 +18,20 @@
 
         <mapping class="com.schimer.reportsapp.domain.entities.UserEntity"/>
         <mapping class="com.schimer.reportsapp.domain.entities.RoleEntity"/>
+        <mapping class="com.schimer.reportsapp.domain.entities.QuestionEntity"/>
+        <mapping class="com.schimer.reportsapp.domain.entities.QuestionResponseEntity"/>
         <mapping class="com.schimer.reportsapp.domain.entities.DepartmentEntity"/>
         <mapping class="com.schimer.reportsapp.domain.entities.DropboxAccountEntity"/>
         <mapping class="com.schimer.reportsapp.domain.entities.EmailAccountEntity"/>
+        <mapping class="com.schimer.reportsapp.domain.entities.ProductFinishedEntity"/>
+        <mapping class="com.schimer.reportsapp.domain.entities.PtQualityCertificateEntity"/>
+        <mapping class="com.schimer.reportsapp.domain.entities.PtQualityCertificateDetailEntity"/>
+        <mapping class="com.schimer.reportsapp.domain.entities.PtQualityIndicatorsEntity"/>
+        <mapping class="com.schimer.reportsapp.domain.entities.PtQualitySolidLiquidEntity"/>
+        <mapping class="com.schimer.reportsapp.domain.entities.TemplateEntity"/>
+        <mapping class="com.schimer.reportsapp.domain.entities.rawMaterial.TemplateRawMaterialEntity"/>
+        <mapping class="com.schimer.reportsapp.domain.entities.rawMaterial.RawMaterialEntity"/>
+        <mapping class="com.schimer.reportsapp.domain.entities.rawMaterial.RawMaterialReleaseEntity"/>
+        <mapping class="com.schimer.reportsapp.domain.entities.rawMaterial.QualityParameterRawMaterialRelease"/>
     </session-factory>
 </hibernate-configuration>
