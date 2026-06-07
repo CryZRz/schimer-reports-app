@@ -6,7 +6,7 @@ public class SetupMigrations {
 
     public static void main(String[] args) {
         var flyway = Flyway.configure()
-                .dataSource("jdbc:postgresql://localhost:5432/schimerapp", "postgres", "schimmer1232746")
+                .dataSource("jdbc:postgresql://localhost:5432/schimerapp", "postgres", "blinzzia")
                 .load();
 
         flyway.migrate();

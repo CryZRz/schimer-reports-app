@@ -6,6 +6,7 @@ import com.schimer.reportsapp.domain.entities.ProductFinishedEntity;
 import com.schimer.reportsapp.models.ProductFinishedForm;
 import com.schimer.reportsapp.services.ProductFinishedService;
 import com.schimer.reportsapp.services.admin.TemplatePTService;
+import com.schimer.reportsapp.ui.components.WindowsUtils;
 import com.schimer.reportsapp.utils.guest.ProductFinishedBindContext;
 import com.schimer.reportsapp.utils.guest.ProductFinishedMapper;
 import javafx.beans.property.SimpleStringProperty;
@@ -116,7 +117,11 @@ public class ListProductsFinishedController {
     }
 
     private void onClickViewReport(ProductFinishedEntity productFinishedEntity){
-        templatePTService.generateReport(productFinishedEntity);
+        try{
+            App.setRoot("views/guest/view-report");
+        }catch (Exception e){
+            WindowsUtils.showAlertErrorSystem();
+        }
     }
 
     private void initializeButtonAdd() {

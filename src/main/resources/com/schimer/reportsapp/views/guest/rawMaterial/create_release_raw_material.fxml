@@ -69,7 +69,7 @@
                     <HBox styleClass="input-form-section">
                         <VBox HBox.hgrow="ALWAYS">
                             <Label text="Fecha de caducidad" styleClass="input-label"/>
-                            <DatePicker fx:id="expirationDateProperty" maxWidth="Infinity" promptText="Fecha de liberacion" styleClass="input-form"/>
+                            <DatePicker editable="false" fx:id="expirationDateProperty" maxWidth="Infinity" promptText="Fecha de liberacion" styleClass="input-form"/>
                         </VBox>
                         <VBox HBox.hgrow="ALWAYS">
                             <Label text="Cantidad" styleClass="input-label"/>

@@ -5,7 +5,9 @@ import com.schimer.reportsapp.auth.UserSession;
 import com.schimer.reportsapp.controllers.interfaces.WizardStep;
 import com.schimer.reportsapp.models.ProductFinishedForm;
 import com.schimer.reportsapp.models.QualityFormRow;
+import com.schimer.reportsapp.ui.components.WindowsUtils;
 import com.schimer.reportsapp.utils.guest.ProductFinishedBindContext;
+import com.schimer.reportsapp.utils.validators.FormValidators;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
@@ -14,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
+import net.synedra.validatorfx.Validator;
 
 import java.io.IOException;
 
@@ -47,11 +50,19 @@ public class QualityCertificateController implements WizardStep {
 
     private ProductFinishedForm context;
     private UserSession userSession;
+    private final Validator validator = new Validator();
 
     public void initialize() {
         userSession = UserSession.getInstance();
         initUserInfo();
         removeButton();
+        initializeValidations();
+    }
+
+    private void initializeValidations() {
+        FormValidators.addNotEmptyValidation(validator, expirationDateProperty.valueProperty(), expirationDateProperty, "Fecha caducidad");
+        FormValidators.addNotEmptyValidation(validator, amountProperty.textProperty(), amountProperty, "Cantidad");
+        FormValidators.addNumericValidation(validator, amountProperty.textProperty(), amountProperty, "Cantidad");
     }
 
     private void removeButton() {
@@ -137,15 +148,17 @@ public class QualityCertificateController implements WizardStep {
         try {
             App.setRoot("views/guest/products-finished-list");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            WindowsUtils.showAlertErrorSystem();
         }
     }
 
     @FXML
     public void onClickNext(){
-        App.setRoot(
-                "views/guest/create-pt-quality-indicators",
-                loader -> (ProductFinishedBindContext.bindContext(loader, this.context))
-        );
+        if (validator.validate()) {
+            App.setRoot(
+                    "views/guest/create-pt-quality-indicators",
+                    loader -> (ProductFinishedBindContext.bindContext(loader, this.context))
+            );
+        }
     }
 }

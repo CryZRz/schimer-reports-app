@@ -13,3 +13,11 @@
     -fx-padding: 8;
     -fx-cursor: hand;
 }
+
+.primary-success {
+    -fx-background-color: -color-light;
+    -fx-text-fill: white;
+    -fx-border-radius: 10;
+    -fx-padding: 8;
+    -fx-cursor: hand;
+}

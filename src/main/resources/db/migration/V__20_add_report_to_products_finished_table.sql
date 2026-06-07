@@ -1,0 +1,1 @@
+ALTER TABLE products_finished ADD COLUMN path_report NOT NULL DEFAULT "";

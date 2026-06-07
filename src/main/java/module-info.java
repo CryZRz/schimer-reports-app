@@ -23,6 +23,8 @@ module com.schimer.reportsapp {
     requires fr.opensagres.xdocreport.template;
     requires fr.opensagres.xdocreport.document.docx;
     requires fr.opensagres.xdocreport.core;
+    requires fr.opensagres.xdocreport.converter;
+    requires jakarta.mail;
 
     opens com.schimer.reportsapp.models;
     opens com.schimer.reportsapp.controllers.auth to javafx.fxml;

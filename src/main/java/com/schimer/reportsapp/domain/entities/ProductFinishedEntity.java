@@ -23,6 +23,9 @@ public class ProductFinishedEntity {
     private String folio;
     private String product;
 
+    @Column(name = "report_path")
+    private String reportPath;
+
     @ManyToOne
     @JoinColumn(name = "created_by")
     private UserEntity user;

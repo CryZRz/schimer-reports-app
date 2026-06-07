@@ -1,11 +1,15 @@
 package com.schimer.reportsapp.controllers.guest.rawMaterial;
 
 import com.schimer.reportsapp.App;
+import com.schimer.reportsapp.auth.UserSession;
 import com.schimer.reportsapp.controllers.components.SidebarGuest;
 import com.schimer.reportsapp.controllers.guest.SectionPtInfoController;
+import com.schimer.reportsapp.controllers.guest.SendAndUploadReportController;
 import com.schimer.reportsapp.domain.entities.rawMaterial.RawMaterialEntity;
 import com.schimer.reportsapp.models.RawMaterialForm;
+import com.schimer.reportsapp.services.email.EmailService;
 import com.schimer.reportsapp.services.rawMaterial.RawMaterialService;
+import com.schimer.reportsapp.ui.components.WindowsUtils;
 import com.schimer.reportsapp.utils.guest.RawMaterialBindContext;
 import com.schimer.reportsapp.utils.guest.RawMaterialMapper;
 import javafx.beans.property.SimpleStringProperty;
@@ -14,6 +18,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -48,6 +53,7 @@ public class ListRawMaterialsController {
 
     private final RawMaterialService rawMaterialService = new RawMaterialService();
     private final ObservableList<RawMaterialEntity> productsFinished = FXCollections.observableArrayList();
+    private final EmailService emailService = new EmailService();
 
     public void initialize(){
         initializeButtonAdd();
@@ -56,7 +62,7 @@ public class ListRawMaterialsController {
 
     private void initializeTable() {
         productsFinishedTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
-        folioColumn.setCellValueFactory(new PropertyValueFactory<>("batch"));
+        folioColumn.setCellValueFactory(new PropertyValueFactory<>("folio"));
         transmitterColumn.setCellValueFactory(cellData -> {
             var name = cellData.getValue().getUser().getName();
             return new SimpleStringProperty(name);
@@ -92,6 +98,11 @@ public class ListRawMaterialsController {
                     onClickEditReport(rawMaterial);
                 });
 
+                btnView.setOnAction(event -> {
+                    var rawMaterial = getTableView().getItems().get(getIndex());
+                    onClickViewReport(rawMaterial);
+                });
+
                 container.setAlignment(Pos.CENTER);
                 container.getChildren().addAll(btnView, btnEdit);
             }
@@ -112,6 +123,21 @@ public class ListRawMaterialsController {
     private void initializeButtonAdd() {
         var button = sectionPtInfoController.getBtnAdd();
         button.ifPresent(value -> value.setOnAction(this::onClickAddReport));
+    }
+
+    private void onClickViewReport(RawMaterialEntity productFinishedEntity) {
+        var user = UserSession.getInstance().getUser();
+        App.setRoot("views/guest/send-upload-report", loader -> {
+            try{
+                var parent =  (Parent)loader.load();
+                var controller = (SendAndUploadReportController)loader.getController();
+                controller.setReportPath(productFinishedEntity.getReportPath());
+                return parent;
+            }catch (Exception e){
+                WindowsUtils.showAlertErrorSystem();
+            }
+            return null;
+        });
     }
 
     private void onClickEditReport(RawMaterialEntity productFinishedEntity) {

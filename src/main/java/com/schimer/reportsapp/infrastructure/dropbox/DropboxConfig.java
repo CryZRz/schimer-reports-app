@@ -5,8 +5,8 @@ import lombok.Getter;
 
 @Getter
 public class DropboxConfig {
-    private static final String APP_KEY    = "";
-    private static final String APP_SECRET = "";
+    private static final String APP_KEY    = "745gkasj6igwfls";
+    private static final String APP_SECRET = "2t62034yexyn187";
     private DbxAppInfo appInfo = new DbxAppInfo(APP_KEY, APP_SECRET);
     private static String keyHost = "http://localhost:8080/OAuth2";
     private DbxWebAuth webAuth;
@@ -14,25 +14,26 @@ public class DropboxConfig {
 
     public String makeUrlLogin(){
         webAuth = new DbxWebAuth(config, appInfo);
-        var authRequest = getWebAuth();
+        var authRequest = getWebAuthRequest();
 
         return webAuth.authorize(authRequest);
     }
     
-    private DbxWebAuth.Request getWebAuth(){
+    private DbxWebAuth.Request getWebAuthRequest(){
         return DbxWebAuth.newRequestBuilder()
                 .withRedirectUri(
                         keyHost,
                         getSessionStore()
                 )
+                .withTokenAccessType(TokenAccessType.OFFLINE)
                 .build();
     }
 
-    public String getAccessToken(String code) throws DbxException {
+    public DbxAuthFinish finishAuthenticate(String code) throws DbxException {
         return webAuth.finishFromCode(
                 code,
                 "http://localhost:8080/OAuth2"
-        ).getAccessToken();
+        );
     }
     
     private DbxSessionStore  getSessionStore() {

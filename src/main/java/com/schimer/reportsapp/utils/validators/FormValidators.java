@@ -1,5 +1,7 @@
 package com.schimer.reportsapp.utils.validators;
 
+import javafx.beans.value.ObservableValue;
+import javafx.scene.control.Control;
 import net.synedra.validatorfx.Check;
 import net.synedra.validatorfx.Validator;
 import javafx.beans.property.StringProperty;
@@ -20,6 +22,25 @@ public class FormValidators {
                 .withMethod(c -> {
                     String value = c.get(fieldName);
                     if (value == null || value.trim().isEmpty()) {
+                        c.error(fieldName + " no puede estar vacío");
+                    }
+                })
+                .decorates(field);
+    }
+
+    public static <T> void addNotEmptyValidation(
+            Validator validator,
+            ObservableValue<T> property,
+            Control field,
+            String fieldName) {
+
+        validator.createCheck()
+                .dependsOn(fieldName, property)
+                .withMethod(c -> {
+                    T value = c.get(fieldName);
+
+                    if (value == null ||
+                            (value instanceof String s && s.trim().isEmpty())) {
                         c.error(fieldName + " no puede estar vacío");
                     }
                 })

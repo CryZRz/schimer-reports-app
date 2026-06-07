@@ -1,0 +1,1 @@
+ALTER TABLE questions_response ADD COLUMN user_id BIGSERIAL REFERENCES users(id) NOT NULL;

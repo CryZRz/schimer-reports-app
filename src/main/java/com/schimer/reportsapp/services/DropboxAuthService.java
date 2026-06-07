@@ -22,10 +22,17 @@ public class DropboxAuthService {
         }
 
         var code = server.waitForCode();
-        var accessToken = dropboxConfig.getAccessToken(code);
+        var authFinish = dropboxConfig.finishAuthenticate(code);
         server.stop();
 
-        var user = authService.updateDropboxInfo(session.getUserEntity(), accessToken);
+        var accessToken = authFinish.getAccessToken();
+        var refreshToken = authFinish.getRefreshToken();
+
+        var user = authService.updateDropboxInfo(
+                session.getUserEntity(),
+                refreshToken
+        );
+
         var client = new DbxClientV2(DropboxConfig.config, accessToken);
         session.setUser(user);
         session.setClientDropbox(client);
