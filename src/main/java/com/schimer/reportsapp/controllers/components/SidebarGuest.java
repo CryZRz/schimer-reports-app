@@ -38,15 +38,15 @@ public class SidebarGuest {
     }
 
     private void verifyDropbox(){
-        var client = userSession.getDropboxAccount();
 
         try {
-            if (client != null){
+            if (userSession.getClientDropbox() != null){
                 App.setRoot("views/guest/profile/dropbox-profile");
             }else{
                 App.setRoot("views/guest/profile/dropbox-login");
             }
         } catch (IOException e) {
+            e.printStackTrace();
             WindowsUtils.showAlertErrorSystem();
         }
     }

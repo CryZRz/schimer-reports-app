@@ -5,12 +5,15 @@ import com.schimer.reportsapp.auth.UserSession;
 import com.schimer.reportsapp.controllers.guest.SectionPtInfoController;
 import com.schimer.reportsapp.controllers.interfaces.WizardStepRawMaterial;
 import com.schimer.reportsapp.models.RawMaterialForm;
+import com.schimer.reportsapp.ui.components.WindowsUtils;
 import com.schimer.reportsapp.utils.guest.RawMaterialBindContext;
+import com.schimer.reportsapp.utils.validators.FormValidators;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import net.synedra.validatorfx.Validator;
 
 import java.io.IOException;
 
@@ -38,11 +41,21 @@ public class ReleaseConcentrateController implements WizardStepRawMaterial {
 
     private RawMaterialForm context;
     private final UserSession userSession = UserSession.getInstance();
+    private final Validator validator = new Validator();
 
     public void initialize() {
         initUserInfo();
         sidebarController.setFormContext(context);
         removeButton();
+        initializeValidations();
+    }
+
+    private void initializeValidations() {
+        FormValidators.addNotEmptyValidation(validator, folioProperty.textProperty(), folioProperty, "Folio");
+        FormValidators.addNotEmptyValidation(validator, batchProperty.textProperty(), batchProperty, "Lote");
+        FormValidators.addNotEmptyValidation(validator, productProperty.textProperty(), productProperty, "Producto");
+        FormValidators.addNotEmptyValidation(validator, releaseDateProperty.valueProperty(), releaseDateProperty, "Fecha liberacion");
+        FormValidators.addNotEmptyValidation(validator, statusProperty.textProperty(), statusProperty, "Estatus");
     }
 
     private void removeButton() {
@@ -80,15 +93,17 @@ public class ReleaseConcentrateController implements WizardStepRawMaterial {
         try {
             App.setRoot("views/guest/rawMaterial/index");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            WindowsUtils.showAlertErrorSystem();
         }
     }
 
     @FXML
     public void onClickNext(){
-        App.setRoot(
-                "views/guest/rawMaterial/create_release_raw_material",
-                loader -> (RawMaterialBindContext.bindContext(loader, this.context))
-        );
+        if (validator.validate()) {
+            App.setRoot(
+                    "views/guest/rawMaterial/create_release_raw_material",
+                    loader -> (RawMaterialBindContext.bindContext(loader, this.context))
+            );
+        }
     }
 }

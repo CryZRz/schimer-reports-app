@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+
+<BorderPane
+        stylesheets="@../../styles/admin/create-user.css"
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="com.schimer.reportsapp.controllers.admin.ChangeTemplateRawMaterialController"
+>
+    <stylesheets>
+        <URL value="@../../styles/guest/layout.css"/>
+        <URL value="@../../styles/components/default-texts.css"/>
+        <URL value="@../../styles/components/default-buttons.css"/>
+    </stylesheets>
+
+    <left>
+        <fx:include source="sidebar-admin.fxml" />
+    </left>
+
+    <center>
+        <VBox>
+            <fx:include fx:id="sectionInfo" source="../components/base-section-info.fxml"/>
+            <Separator opacity="0.3"/>
+
+            <ScrollPane
+                    fitToWidth="true"
+                    hbarPolicy="NEVER"
+            >
+                <VBox styleClass="main-section-container">
+                    <VBox HBox.hgrow="ALWAYS" spacing="10">
+                        <Label styleClass="title-section" text="Cambio de plantilla MP"/>
+                        <ListView fx:id="listFiles" />
+                        <Button
+                                maxWidth="Infinity"
+                                styleClass="primary-button"
+                                onAction="#onChangeTemplate"
+                        >
+                            Agregar
+                        </Button>
+                    </VBox>
+                </VBox>
+            </ScrollPane>
+
+        </VBox>
+    </center>
+</BorderPane>

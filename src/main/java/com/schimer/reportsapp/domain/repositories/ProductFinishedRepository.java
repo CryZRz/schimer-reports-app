@@ -19,4 +19,17 @@ public class ProductFinishedRepository extends BaseRepository<ProductFinishedEnt
             return query.getResultList();
         }
     }
+
+    public List<ProductFinishedEntity> getByProductParam(String find) {
+        try(var session = HibernateConfig.getSessionFactory().openSession()) {
+            var query = session.createQuery(
+                    "FROM ProductFinishedEntity p " +
+                            "WHERE p.batch LIKE :param OR LOWER(p.product) LIKE LOWER(:param) "+
+                            "ORDER BY p.id DESC",
+                    ProductFinishedEntity.class
+            );
+            query.setParameter("param", "%"+find+"%");
+            return query.getResultList();
+        }
+    }
 }

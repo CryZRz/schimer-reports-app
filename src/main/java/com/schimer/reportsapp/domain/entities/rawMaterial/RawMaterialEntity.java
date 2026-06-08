@@ -32,6 +32,13 @@ public class RawMaterialEntity {
     @JoinColumn(name = "created_by")
     private UserEntity user;
 
+    @ManyToOne
+    @JoinColumn(name = "template_id")
+    private TemplateRawMaterialEntity template;
+
+    @Column(name = "report_path")
+    private String reportPath;
+
     @OneToOne(
             mappedBy = "rawMaterial",
             cascade = CascadeType.ALL

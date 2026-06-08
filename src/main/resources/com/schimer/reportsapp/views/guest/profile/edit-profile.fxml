@@ -10,6 +10,7 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.ComboBox?>
 <BorderPane
         xmlns:fx="http://javafx.com/fxml"
         fx:controller="com.schimer.reportsapp.controllers.guest.profile.EditProfileController"
@@ -83,7 +84,7 @@
                             </VBox>
                             <VBox HBox.hgrow="ALWAYS">
                                 <Label text="Departamento" styleClass="input-label"/>
-                                <TextField editable="false" fx:id="departmentProperty" maxWidth="Infinity" styleClass="input-form-disabled"/>
+                                <ComboBox disable="true" fx:id="departmentProperty" maxWidth="Infinity" styleClass="input-form-disabled"/>
                             </VBox>
                         </HBox>
                         <HBox HBox.hgrow="ALWAYS" styleClass="input-form-section">

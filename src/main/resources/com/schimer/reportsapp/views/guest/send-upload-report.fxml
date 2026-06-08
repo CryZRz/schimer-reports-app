@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.Button?>
+<BorderPane
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="com.schimer.reportsapp.controllers.guest.SendAndUploadReportController"
+>
+
+    <stylesheets>
+        <URL value="@../../styles/guest/layout.css"/>
+        <URL value="@../../styles/components/default-inputs.css"/>
+        <URL value="@../../styles/components/default-table.css"/>
+        <URL value="@../../styles/components/default-icons.css"/>
+        <URL value="@../../styles/components/default-buttons.css"/>
+    </stylesheets>
+
+    <left>
+        <fx:include fx:id="sidebar" source="sidebar-guest.fxml" />
+    </left>
+
+    <center>
+        <VBox>
+            <fx:include fx:id="sectionPtInfo" source="rawMaterial/section-mp-info.fxml"/>
+            <Separator opacity="0.3"/>
+            <VBox styleClass="main-section-container">
+                <HBox styleClass="table-container">
+                    <TableView fx:id="emailsTable" HBox.hgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="emailColumn" text="Correo" sortable="false" reorderable="false"/>
+                            <TableColumn fx:id="affairColumn" text="Asunto" sortable="false" reorderable="false"/>
+                            <TableColumn fx:id="bodyColumn" text="Cuerpo" sortable="false" reorderable="false"/>
+                            <TableColumn fx:id="actionsColumn" text="Acciones" sortable="false" reorderable="false"/>
+                        </columns>
+                    </TableView>
+                </HBox>
+                <VBox HBox.hgrow="ALWAYS" spacing="10">
+                    <Button maxWidth="Infinity" styleClass="primary-button" onAction="#onClickAddEmail">
+                        Agregar
+                    </Button>
+                    <Button maxWidth="Infinity" styleClass="primary-success" onAction="#onSendEmails">
+                        Enviar
+                    </Button>
+                    <Button maxWidth="Infinity" styleClass="cancel-button" onAction="#onCancel">
+                        Cancelar
+                    </Button>
+                </VBox>
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>

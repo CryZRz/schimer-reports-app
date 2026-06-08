@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Separator?>
+
+<?import java.net.URL?>
+
+<?import javafx.scene.web.WebView?>
+<BorderPane
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="com.schimer.reportsapp.controllers.guest.ViewReportController"
+>
+
+    <stylesheets>
+        <URL value="@../../styles/guest/layout.css"/>
+        <URL value="@../../styles/components/default-inputs.css"/>
+        <URL value="@../../styles/components/default-table.css"/>
+        <URL value="@../../styles/components/default-icons.css"/>
+    </stylesheets>
+
+    <left>
+        <fx:include fx:id="sidebar" source="sidebar-guest.fxml" />
+    </left>
+
+    <center>
+        <VBox>
+            <fx:include fx:id="sectionPtInfo" source="section-pt-info.fxml"/>
+            <Separator opacity="0.3"/>
+            <VBox styleClass="main-section-container">
+                <WebView fx:id="pdfView" />
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>

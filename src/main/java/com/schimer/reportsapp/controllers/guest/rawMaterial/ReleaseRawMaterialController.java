@@ -3,17 +3,26 @@ package com.schimer.reportsapp.controllers.guest.rawMaterial;
 import com.schimer.reportsapp.App;
 import com.schimer.reportsapp.auth.UserSession;
 import com.schimer.reportsapp.controllers.guest.SectionPtInfoController;
+import com.schimer.reportsapp.controllers.guest.SendAndUploadReportController;
 import com.schimer.reportsapp.controllers.interfaces.WizardStepRawMaterial;
+import com.schimer.reportsapp.domain.entities.rawMaterial.RawMaterialEntity;
 import com.schimer.reportsapp.models.QualityFormRowMaterialRelease;
 import com.schimer.reportsapp.models.RawMaterialForm;
+import com.schimer.reportsapp.services.DropboxService;
 import com.schimer.reportsapp.services.rawMaterial.RawMaterialService;
+import com.schimer.reportsapp.ui.components.WindowsUtils;
+import com.schimer.reportsapp.utils.validators.FormValidators;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
+import net.synedra.validatorfx.Validator;
 import org.kordamp.ikonli.javafx.FontIcon;
 
+import java.io.File;
 import java.io.IOException;
 
 public class ReleaseRawMaterialController implements WizardStepRawMaterial {
@@ -58,11 +67,21 @@ public class ReleaseRawMaterialController implements WizardStepRawMaterial {
     private RawMaterialForm context;
     private final UserSession userSession = UserSession.getInstance();
     private final RawMaterialService rawMaterialService = new RawMaterialService();
+    private final Validator validator = new Validator();
+    private final DropboxService dropboxService = new DropboxService();
 
     public void initialize() {
         initUserInfo();
         sidebarController.setFormContext(context);
         removeButton();
+        initializeValidations();
+    }
+
+    private void initializeValidations() {
+        FormValidators.addNotEmptyValidation(validator, amountProperty.textProperty(), amountProperty, "Cantidad");
+        FormValidators.addNumericValidation(validator, amountProperty.textProperty(), amountProperty, "Cantidad");
+        FormValidators.addNotEmptyValidation(validator, noteProperty.textProperty(), noteProperty, "Nota");
+        FormValidators.addNotEmptyValidation(validator, acceptedProperty.textProperty(), acceptedProperty, "Aceptada");
     }
 
     private void removeButton() {
@@ -193,17 +212,41 @@ public class ReleaseRawMaterialController implements WizardStepRawMaterial {
         try {
             App.setRoot("views/guest/rawMaterial/index");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            WindowsUtils.showAlertErrorSystem();
         }
     }
 
     private void onSave(){
         try{
-            rawMaterialService.save(context);
-            onClickReports();
+            var entity = rawMaterialService.save(context);
+            uploadFile(entity);
+            App.setRoot("views/guest/send-upload-report", loader -> goToSendEmails(loader, entity));
         }catch (Exception e){
-            throw new RuntimeException(e);
+            WindowsUtils.showAlertErrorSystem();
         }
+    }
+
+    private void uploadFile(RawMaterialEntity entity){
+        var path = entity.getReportPath();
+        var dropboxPath = userSession.getUser().getDropboxAccount().getPath();
+        var client = userSession.getClientDropbox();
+        try{
+            dropboxService.uploadFileToDropbox(new File(path), dropboxPath, client);
+        }catch (Exception e){
+            WindowsUtils.showAlertErrorSystem();
+        }
+    }
+
+    private Parent goToSendEmails(FXMLLoader loader, RawMaterialEntity entity) {
+        try{
+            var parent =  (Parent)loader.load();
+            var controller = (SendAndUploadReportController)loader.getController();
+            controller.setReportPath(entity.getReportPath());
+            return parent;
+        }catch (Exception e){
+            WindowsUtils.showAlertErrorSystem();
+        }
+        return null;
     }
 
     private void onUpdate(){
@@ -211,16 +254,18 @@ public class ReleaseRawMaterialController implements WizardStepRawMaterial {
             rawMaterialService.update(context);
             onClickReports();
         }catch (Exception e){
-            throw new RuntimeException(e);
+            WindowsUtils.showAlertErrorSystem();
         }
     }
 
     @FXML
     public void onClickNext(){
-        if (context.getRawMaterialId() != null){
-            onUpdate();
-        }else{
-            onSave();
+        if (validator.validate()){
+            if (context.getRawMaterialId() != null){
+                onUpdate();
+            }else{
+                onSave();
+            }
         }
     }
 }

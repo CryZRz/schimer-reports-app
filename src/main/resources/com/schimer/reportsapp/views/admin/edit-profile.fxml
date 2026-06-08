@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Separator?>
+
+<?import java.net.URL?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.ComboBox?>
+<BorderPane
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="com.schimer.reportsapp.controllers.guest.profile.EditProfileController"
+>
+
+    <stylesheets>
+        <URL value="@../../styles/guest/layout.css"/>
+        <URL value="@../../styles/components/default-inputs.css"/>
+        <URL value="@../../styles/components/default-texts.css"/>
+        <URL value="@../../styles/components/default-buttons.css"/>
+    </stylesheets>
+
+    <left>
+        <fx:include fx:id="sidebar" source="./sidebar-admin.fxml" />
+    </left>
+
+    <center>
+        <VBox>
+            <fx:include fx:id="sectionInfo" source="../components/base-section-info.fxml"/>
+            <Separator opacity="0.3"/>
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                <VBox styleClass="main-section-container">
+                    <Label styleClass="title-section" text="Actualizar perfil"/>
+                    <VBox>
+                        <HBox styleClass="input-form-section">
+                            <VBox HBox.hgrow="ALWAYS">
+                                <Label text="Nombre" styleClass="input-label"/>
+                                <TextField fx:id="namesProperty" promptText="Nombres" styleClass="input-form"/>
+                            </VBox>
+                            <VBox HBox.hgrow="ALWAYS">
+                                <Label text="Apellidos" styleClass="input-label"/>
+                                <TextField fx:id="lastNameProperty" promptText="Apellidos" styleClass="input-form"/>
+                            </VBox>
+                        </HBox>
+                        <VBox styleClass="input-form-section" HBox.hgrow="ALWAYS">
+                            <Label text="Correo" styleClass="input-label"/>
+                            <TextField fx:id="emailProperty" promptText="Correo" styleClass="input-form"/>
+                        </VBox>
+                        <VBox styleClass="input-form-section" HBox.hgrow="ALWAYS">
+                            <Label text="Contraseña actual" styleClass="input-label"/>
+                            <PasswordField fx:id="oldPasswordProperty" promptText="Contraseña actual" styleClass="input-form"/>
+                        </VBox>
+                        <HBox styleClass="input-form-section">
+                            <VBox HBox.hgrow="ALWAYS">
+                                <Label text="Nueva contraseña" styleClass="input-label"/>
+                                <PasswordField fx:id="passwordProperty" promptText="Contraseña" styleClass="input-form"/>
+                            </VBox>
+                            <VBox HBox.hgrow="ALWAYS">
+                                <Label text="Confirmar nueva contraseña" styleClass="input-label"/>
+                                <PasswordField fx:id="passwordConfirmProperty" promptText="Contraseña" styleClass="input-form"/>
+                            </VBox>
+                        </HBox>
+                        <HBox styleClass="input-form-section">
+                            <VBox HBox.hgrow="ALWAYS">
+                                <Label fx:id="questionOneLabel" styleClass="input-label"/>
+                                <TextField fx:id="questionOneProperty" promptText="Pregunta" styleClass="input-form"/>
+                            </VBox>
+                            <VBox HBox.hgrow="ALWAYS">
+                                <Label fx:id="questionTwoLabel" styleClass="input-label"/>
+                                <TextField fx:id="questionTwoProperty" promptText="Pregunta" styleClass="input-form"/>
+                            </VBox>
+                        </HBox>
+                        <VBox styleClass="input-form-section" HBox.hgrow="ALWAYS">
+                            <Label fx:id="questionThreeLabel" styleClass="input-label"/>
+                            <TextField fx:id="questionTreeProperty" promptText="Pregunta" styleClass="input-form"/>
+                        </VBox>
+                        <HBox styleClass="input-form-section">
+                            <VBox HBox.hgrow="ALWAYS">
+                                <Label text="Puesto" styleClass="input-label"/>
+                                <TextField fx:id="jobPositionProperty" promptText="Puesto" styleClass="input-form"/>
+                            </VBox>
+                            <VBox HBox.hgrow="ALWAYS">
+                                <Label text="Departamento" styleClass="input-label"/>
+                                <ComboBox fx:id="departmentProperty" maxWidth="Infinity" styleClass="input-form"/>
+                            </VBox>
+                        </HBox>
+                        <HBox HBox.hgrow="ALWAYS" styleClass="input-form-section">
+                            <Button
+                                    HBox.hgrow="ALWAYS"
+                                    maxWidth="Infinity"
+                                    styleClass="cancel-button"
+                                    onAction="#onGoBack"
+                            >
+                                Cancelar
+                            </Button>
+                            <Button
+                                    HBox.hgrow="ALWAYS"
+                                    maxWidth="Infinity"
+                                    styleClass="primary-button"
+                                    onAction="#onEditInfoUser"
+                            >
+                                Editar
+                            </Button>
+                        </HBox>
+                    </VBox>
+                </VBox>
+            </ScrollPane>
+        </VBox>
+    </center>
+</BorderPane>

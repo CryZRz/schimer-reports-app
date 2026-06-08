@@ -4,10 +4,13 @@ import com.schimer.reportsapp.App;
 import com.schimer.reportsapp.auth.UserSession;
 import com.schimer.reportsapp.controllers.interfaces.WizardStep;
 import com.schimer.reportsapp.models.ProductFinishedForm;
+import com.schimer.reportsapp.ui.components.WindowsUtils;
 import com.schimer.reportsapp.utils.guest.ProductFinishedBindContext;
+import com.schimer.reportsapp.utils.validators.FormValidators;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import net.synedra.validatorfx.Validator;
 
 import java.io.IOException;
 
@@ -36,11 +39,17 @@ public class QualityIndicatorsController implements WizardStep {
 
     private ProductFinishedForm context;
     private UserSession userSession;
+    private final Validator validator = new Validator();
 
     public void initialize() {
         userSession = UserSession.getInstance();
         initUserInfo();
         removeButton();
+        initializeValidations();
+    }
+
+    private void initializeValidations() {
+        FormValidators.addNotEmptyValidation(validator, isLiberated.selectedProperty(), isLiberated, "Liberado");
     }
 
     private void removeButton() {
@@ -79,15 +88,17 @@ public class QualityIndicatorsController implements WizardStep {
         try {
             App.setRoot("views/guest/products-finished-list");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            WindowsUtils.showAlertErrorSystem();
         }
     }
 
     @FXML
     public void onClickNext(){
-        App.setRoot(
-                "views/guest/create-pt-quality-liquid",
-                loader -> (ProductFinishedBindContext.bindContext(loader, this.context))
-        );
+        if (validator.validate()) {
+            App.setRoot(
+                    "views/guest/create-pt-quality-liquid",
+                    loader -> (ProductFinishedBindContext.bindContext(loader, this.context))
+            );
+        }
     }
 }

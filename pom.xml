@@ -52,6 +52,50 @@
             <artifactId>dropbox-core-sdk</artifactId>
             <version>7.0.0</version>
         </dependency>
+        <!-- NÚCLEO - contiene XDocReportRegistry -->
+        <dependency>
+            <groupId>fr.opensagres.xdocreport</groupId>
+            <artifactId>fr.opensagres.xdocreport.document.docx</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+
+        <!-- Motor de plantillas Velocity -->
+        <dependency>
+            <groupId>fr.opensagres.xdocreport</groupId>
+            <artifactId>fr.opensagres.xdocreport.template.velocity</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+
+        <!-- Conversión DOCX (procesamiento XWPF) -->
+        <dependency>
+            <groupId>fr.opensagres.xdocreport</groupId>
+            <artifactId>fr.opensagres.xdocreport.converter.docx.xwpf</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+
+        <!-- Conversión a PDF -->
+        <dependency>
+            <groupId>com.documents4j</groupId>
+            <artifactId>documents4j-local</artifactId>
+            <version>1.1.12</version>
+        </dependency>
+        <dependency>
+            <groupId>com.documents4j</groupId>
+            <artifactId>documents4j-api</artifactId>
+            <version>1.1.12</version>
+        </dependency>
+        <dependency>
+            <groupId>com.documents4j</groupId>
+            <artifactId>documents4j-transformer-msoffice-word</artifactId>
+            <version>1.1.12</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.angus</groupId>
+            <artifactId>jakarta.mail</artifactId>
+            <version>2.0.3</version>
+        </dependency>
+
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-web</artifactId>
@@ -128,6 +172,12 @@
                 <configuration>
                     <source>21</source>
                     <target>21</target>
+                    <compilerArgs>
+                        <arg>--add-reads</arg>
+                        <arg>com.schimer.reportsapp=ALL-UNNAMED</arg>
+                        <arg>--add-modules</arg>
+                        <arg>ALL-SYSTEM</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
             <plugin>
@@ -146,6 +196,12 @@
                             <noManPages>true</noManPages>
                             <stripDebug>true</stripDebug>
                             <noHeaderFiles>true</noHeaderFiles>
+                            <options>
+                                <option>--add-reads</option>
+                                <option>com.schimer.reportsapp=ALL-UNNAMED</option>
+                                <option>--add-opens</option>
+                                <option>com.schimer.reportsapp/com.schimer.reportsapp.services.admin=ALL-UNNAMED</option>
+                            </options>
                         </configuration>
                     </execution>
                 </executions>

@@ -45,3 +45,5 @@ sql/
 mvnw.cmd
 mvnw
 .envrc
+
+/storage/reports/

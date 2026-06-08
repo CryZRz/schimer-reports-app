@@ -3,20 +3,22 @@ package com.schimer.reportsapp.controllers.guest.profile;
 import com.schimer.reportsapp.App;
 import com.schimer.reportsapp.auth.UserSession;
 import com.schimer.reportsapp.controllers.guest.SectionPtInfoController;
+import com.schimer.reportsapp.domain.entities.DepartmentEntity;
 import com.schimer.reportsapp.models.SecurityQuestionAnswerForm;
 import com.schimer.reportsapp.services.AuthService;
+import com.schimer.reportsapp.services.DepartmentService;
 import com.schimer.reportsapp.ui.components.WindowsUtils;
 import com.schimer.reportsapp.utils.user.UserMapper;
 import com.schimer.reportsapp.utils.validators.FormValidators;
 import javafx.animation.PauseTransition;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.WindowEvent;
 import javafx.util.Duration;
+import lombok.Setter;
 import net.synedra.validatorfx.Validator;
 
 import java.util.ArrayList;
@@ -44,7 +46,7 @@ public class EditProfileController {
     @FXML
     public TextField jobPositionProperty;
     @FXML
-    public TextField departmentProperty;
+    public ComboBox<DepartmentEntity> departmentProperty;
     @FXML
     public Label questionOneLabel;
     @FXML
@@ -59,13 +61,24 @@ public class EditProfileController {
     private UserSession session;
     public final List<SecurityQuestionAnswerForm> questionAnswers = new ArrayList<>();
     private final AuthService authService = new AuthService();
+    private final DepartmentService departmentService = new DepartmentService();
+    @Setter
+    private boolean isAdmin = false;
 
     public void initialize() {
         session = UserSession.getInstance();
+        initializeDepartments();
         initializeUserInfo();
         bindListQuestionsUpdate();
         removeButton();
         initializeValidations();
+
+    }
+
+    private void initializeDepartments() {
+        departmentService.getAll().forEach(departmentEntity -> {
+            departmentProperty.getItems().add(departmentEntity);
+        });
     }
 
     private void initializeValidations() {
@@ -140,13 +153,14 @@ public class EditProfileController {
         lastNameProperty.setText(session.getUser().getLastName());
         emailProperty.setText(session.getUser().getEmail());
         jobPositionProperty.setText(session.getUser().getJobPosition());
-        departmentProperty.setText(session.getUser().getDepartment().toString());
+        departmentProperty.getSelectionModel().select(session.getUser().getDepartment());
     }
 
     @FXML
     public void onGoBack(){
+        var path = isAdmin ? "views/admin/list-users" : "views/guest/products-finished-list";
         try{
-            App.setRoot("views/guest/products-finished-list");
+            App.setRoot(path);
         }catch(Exception e){
             WindowsUtils.showAlertErrorSystem();
         }

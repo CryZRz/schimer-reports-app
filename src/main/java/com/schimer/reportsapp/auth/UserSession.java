@@ -1,10 +1,9 @@
 package com.schimer.reportsapp.auth;
 
-import com.dropbox.core.DbxApiException;
 import com.dropbox.core.DbxException;
+import com.dropbox.core.oauth.DbxCredential;
 import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.users.FullAccount;
-import com.dropbox.core.v2.users.GetAccountBatchErrorException;
 import com.schimer.reportsapp.domain.entities.UserEntity;
 import com.schimer.reportsapp.infrastructure.dropbox.DropboxConfig;
 import lombok.Getter;
@@ -16,8 +15,8 @@ public class UserSession {
 
     private static UserSession instance;
     private UserEntity userEntity;
-    private DbxClientV2 clientDropbox;
-    private FullAccount dropboxAccount;
+    private DbxClientV2 clientDropbox = null;
+    private FullAccount dropboxSession = null;
 
     private UserSession(UserEntity userEntity) {
         this.userEntity = userEntity;
@@ -27,11 +26,22 @@ public class UserSession {
     }
 
     private void verifyDropboxAccount() {
-        clientDropbox = new DbxClientV2(DropboxConfig.config, userEntity.getDropboxAccount().getToken());
+        if (userEntity.getDropboxAccount().getToken() == "") return;
+
         try{
-            dropboxAccount = clientDropbox.users().getCurrentAccount();
+            var refreshToken = userEntity.getDropboxAccount().getToken();
+            var credential = new DbxCredential(
+                    "",
+                    -1L,
+                    refreshToken,
+                    DropboxConfig.APP_KEY,
+                    DropboxConfig.APP_SECRET
+            );
+            clientDropbox = new DbxClientV2(DropboxConfig.config, credential);
+            dropboxSession = clientDropbox.users().getCurrentAccount();
         } catch (DbxException e) {
-            throw new RuntimeException(e);
+            clientDropbox = null;
+            dropboxSession = null;
         }
     }
 

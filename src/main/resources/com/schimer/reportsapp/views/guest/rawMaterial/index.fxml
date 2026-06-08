@@ -31,7 +31,7 @@
             <VBox styleClass="main-section-container">
                 <VBox>
                     <Label styleClass="input-label" text="Buscar" />
-                    <TextField  styleClass="find-report"/>
+                    <TextField onAction="#onFind" fx:id="findProperty" styleClass="find-report"/>
                 </VBox>
                 <HBox styleClass="table-container">
                     <TableView fx:id="productsFinishedTable" HBox.hgrow="ALWAYS">

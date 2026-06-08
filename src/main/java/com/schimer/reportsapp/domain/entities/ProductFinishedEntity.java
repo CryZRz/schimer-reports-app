@@ -23,6 +23,9 @@ public class ProductFinishedEntity {
     private String folio;
     private String product;
 
+    @Column(name = "report_path")
+    private String reportPath;
+
     @ManyToOne
     @JoinColumn(name = "created_by")
     private UserEntity user;
@@ -32,7 +35,7 @@ public class ProductFinishedEntity {
 
     @ManyToOne
     @JoinColumn(name = "template_id")
-    private TemplateEntity template;
+    private TemplatePTEntity template;
 
     @OneToOne(mappedBy = "productFinished", cascade = CascadeType.ALL)
     private PtQualityCertificateEntity qualityCertificate;
