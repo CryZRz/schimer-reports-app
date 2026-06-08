@@ -5,8 +5,8 @@ import lombok.Getter;
 
 @Getter
 public class DropboxConfig {
-    private static final String APP_KEY    = "745gkasj6igwfls";
-    private static final String APP_SECRET = "2t62034yexyn187";
+    public static final String APP_KEY    = "745gkasj6igwfls";
+    public static final String APP_SECRET = "2t62034yexyn187";
     private DbxAppInfo appInfo = new DbxAppInfo(APP_KEY, APP_SECRET);
     private static String keyHost = "http://localhost:8080/OAuth2";
     private DbxWebAuth webAuth;
@@ -50,4 +50,6 @@ public class DropboxConfig {
             public void clear() { stored = null; }
         };
     }
+
+
 }

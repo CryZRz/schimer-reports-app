@@ -13,9 +13,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DropboxAccountEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String token;
+    private String path;
+
 }

@@ -35,14 +35,12 @@ public class AuthService {
         throw new RuntimeException("Contraseña incorrecta");
     }
 
-    public UserEntity updateDropboxInfo(UserEntity user, String token) {
+    public UserEntity updateDropboxInfo(UserEntity user, DropboxAccountEntity entity) {
         var dropboxAccount = user.getDropboxAccount();
         if (dropboxAccount != null){
             user.setDropboxAccount(dropboxAccount);
         }else {
-            var newDropboxAccount = new DropboxAccountEntity();
-            newDropboxAccount.setToken(token);
-            user.setDropboxAccount(newDropboxAccount);
+            user.setDropboxAccount(entity);
         }
 
         return userRepository.update(user);

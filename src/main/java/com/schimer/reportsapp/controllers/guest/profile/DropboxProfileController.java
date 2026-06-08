@@ -1,8 +1,10 @@
 package com.schimer.reportsapp.controllers.guest.profile;
 
 import com.dropbox.core.DbxException;
+import com.schimer.reportsapp.App;
 import com.schimer.reportsapp.auth.UserSession;
 import com.schimer.reportsapp.controllers.components.BaseSectionInfo;
+import com.schimer.reportsapp.ui.components.WindowsUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -55,7 +57,16 @@ public class DropboxProfileController {
     }
 
     @FXML
-    private void onClickLogout(ActionEvent event) {
+    public void onClickLogout(ActionEvent event) {
 
+    }
+
+    public void onSelectFolder(){
+        try{
+            App.setRoot("views/guest/profile/select-dropbox-folder");
+        }catch (Exception e){
+            e.printStackTrace();
+            WindowsUtils.showAlertErrorSystem();
+        }
     }
 }

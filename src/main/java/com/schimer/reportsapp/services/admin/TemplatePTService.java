@@ -41,7 +41,7 @@ public class TemplatePTService {
     public String generateReport(ProductFinishedEntity entity){
         if (entity.getTemplate() == null) return null;
 
-        var docxPath = "storage/templates/" + entity.getFolio() + ".docx";
+        var docxPath = "storage/reports/" + entity.getFolio() + ".docx";
 
         try {
             var report = XDocReportRegistry.getRegistry()

@@ -2,18 +2,17 @@ package com.schimer.reportsapp.controllers.guest.profile;
 
 import com.schimer.reportsapp.App;
 import com.schimer.reportsapp.controllers.components.BaseSectionInfo;
-import com.schimer.reportsapp.services.DropboxAuthService;
+import com.schimer.reportsapp.services.DropboxService;
 import com.schimer.reportsapp.ui.components.WindowsUtils;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 
 public class DropboxLoginController {
     @FXML
     private Node sectionInfo;
     private BaseSectionInfo sectionInfoController;
 
-    private final DropboxAuthService dropboxAuthService = new DropboxAuthService();
+    private final DropboxService dropboxAuthService = new DropboxService();
 
     public void initialize() {
         initializeSectionInfo();

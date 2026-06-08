@@ -20,6 +20,7 @@
         <URL value="@../../../styles/components/default-inputs.css"/>
         <URL value="@../../../styles/components/default-texts.css"/>
         <URL value="@../../../styles/components/default-buttons.css"/>
+        <URL value="@../../../styles/guest/profile/dropbox-login.css"/>
     </stylesheets>
 
     <left>
@@ -33,9 +34,9 @@
             <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                 <VBox styleClass="main-section-container">
                     <HBox>
-                        <VBox spacing="8">
-                            <Label text="Inicar sesion" />
-                            <Label text="Actualmente no tienes una sesión iniciada en el sistema, has click en el botón para poder iniciar sesión y seleccionar tu directorio de trabajo" />
+                        <VBox HBox.hgrow="ALWAYS" styleClass="login-container" spacing="10">
+                            <Label styleClass="login-title" text="Inicar sesion" />
+                            <Label styleClass="login-description" text="Actualmente no tienes una sesión iniciada en el sistema, has click en el botón para poder iniciar sesión&#10; y seleccionar tu directorio de trabajo" />
                             <Button onAction="#onClickLogin" styleClass="primary-button">Iniciar sesion</Button>
                         </VBox>
                     </HBox>

@@ -1,9 +1,11 @@
 package com.schimer.reportsapp.controllers.guest;
 
 import com.schimer.reportsapp.App;
+import com.schimer.reportsapp.auth.UserSession;
 import com.schimer.reportsapp.controllers.components.SidebarGuest;
 import com.schimer.reportsapp.domain.entities.ProductFinishedEntity;
 import com.schimer.reportsapp.models.ProductFinishedForm;
+import com.schimer.reportsapp.services.DropboxService;
 import com.schimer.reportsapp.services.ProductFinishedService;
 import com.schimer.reportsapp.services.admin.TemplatePTService;
 import com.schimer.reportsapp.ui.components.WindowsUtils;
@@ -23,6 +25,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.kordamp.ikonli.javafx.FontIcon;
+
+import java.io.File;
 
 public class ListProductsFinishedController {
 
@@ -47,7 +51,7 @@ public class ListProductsFinishedController {
     @FXML
     public TableColumn<ProductFinishedEntity, Void> actionsColumn;
 
-    private final TemplatePTService templatePTService = new TemplatePTService();
+    private final DropboxService dropboxService = new DropboxService();
     private final ProductFinishedService productFinishedService = new ProductFinishedService();
     private final ObservableList<ProductFinishedEntity> productsFinished = FXCollections.observableArrayList();
 
@@ -118,7 +122,9 @@ public class ListProductsFinishedController {
 
     private void onClickViewReport(ProductFinishedEntity productFinishedEntity){
         try{
-            App.setRoot("views/guest/view-report");
+            var user = UserSession.getInstance().getClientDropbox();
+            var path = UserSession.getInstance().getUser().getDropboxAccount().getPath();
+            dropboxService.uploadFileToDropbox(new File(productFinishedEntity.getReportPath()), path,user);
         }catch (Exception e){
             WindowsUtils.showAlertErrorSystem();
         }

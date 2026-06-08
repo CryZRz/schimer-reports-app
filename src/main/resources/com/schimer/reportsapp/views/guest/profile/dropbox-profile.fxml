@@ -56,7 +56,10 @@
                                </VBox>
                            </HBox>
                         </HBox>
-                        <Button onAction="#onClickLogout" styleClass="cancel-button">Cerrar sesion</Button>
+                        <HBox spacing="10">
+                            <Button onAction="#onClickLogout" styleClass="cancel-button">Cerrar sesion</Button>
+                            <Button onAction="#onSelectFolder" styleClass="primary-button">Seleccionar carpeta</Button>
+                        </HBox>
                     </VBox>
                 </VBox>
             </ScrollPane>
