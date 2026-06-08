@@ -15,7 +15,7 @@ public class UserSession {
 
     private static UserSession instance;
     private UserEntity userEntity;
-    private DbxClientV2 clientDropbox;
+    private DbxClientV2 clientDropbox = null;
     private FullAccount dropboxSession = null;
 
     private UserSession(UserEntity userEntity) {
@@ -26,6 +26,8 @@ public class UserSession {
     }
 
     private void verifyDropboxAccount() {
+        if (userEntity.getDropboxAccount().getToken() == "") return;
+
         try{
             var refreshToken = userEntity.getDropboxAccount().getToken();
             var credential = new DbxCredential(
@@ -38,7 +40,8 @@ public class UserSession {
             clientDropbox = new DbxClientV2(DropboxConfig.config, credential);
             dropboxSession = clientDropbox.users().getCurrentAccount();
         } catch (DbxException e) {
-            //TODO
+            clientDropbox = null;
+            dropboxSession = null;
         }
     }
 

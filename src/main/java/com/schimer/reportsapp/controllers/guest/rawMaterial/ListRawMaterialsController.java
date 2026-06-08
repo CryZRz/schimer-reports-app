@@ -19,14 +19,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.kordamp.ikonli.javafx.FontIcon;
+
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class ListRawMaterialsController {
 
@@ -34,6 +37,8 @@ public class ListRawMaterialsController {
     public VBox sectionPtInfo;
     @FXML
     public VBox sidebar;
+    @FXML
+    public TextField findProperty;
     @FXML
     private SidebarGuest sidebarGuest;
     @FXML
@@ -53,7 +58,6 @@ public class ListRawMaterialsController {
 
     private final RawMaterialService rawMaterialService = new RawMaterialService();
     private final ObservableList<RawMaterialEntity> productsFinished = FXCollections.observableArrayList();
-    private final EmailService emailService = new EmailService();
 
     public void initialize(){
         initializeButtonAdd();
@@ -73,6 +77,11 @@ public class ListRawMaterialsController {
         productsFinishedTable.setItems(productsFinished);
         productsFinished.addAll(rawMaterialService.getAll());
         setupActionsColumn();
+    }
+
+    public void onFind(){
+        this.productsFinished.clear();
+        this.productsFinished.addAll(rawMaterialService.getByParam(findProperty.getText()));
     }
 
     private void setupActionsColumn() {
@@ -126,18 +135,11 @@ public class ListRawMaterialsController {
     }
 
     private void onClickViewReport(RawMaterialEntity productFinishedEntity) {
-        var user = UserSession.getInstance().getUser();
-        App.setRoot("views/guest/send-upload-report", loader -> {
-            try{
-                var parent =  (Parent)loader.load();
-                var controller = (SendAndUploadReportController)loader.getController();
-                controller.setReportPath(productFinishedEntity.getReportPath());
-                return parent;
-            }catch (Exception e){
-                WindowsUtils.showAlertErrorSystem();
-            }
-            return null;
-        });
+        try {
+            Desktop.getDesktop().open(new File(productFinishedEntity.getReportPath()));
+        } catch (IOException e) {
+            WindowsUtils.showWindowError("Error al abrir el reporte");
+        }
     }
 
     private void onClickEditReport(RawMaterialEntity productFinishedEntity) {

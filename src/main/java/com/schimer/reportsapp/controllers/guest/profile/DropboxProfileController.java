@@ -4,8 +4,8 @@ import com.dropbox.core.DbxException;
 import com.schimer.reportsapp.App;
 import com.schimer.reportsapp.auth.UserSession;
 import com.schimer.reportsapp.controllers.components.BaseSectionInfo;
+import com.schimer.reportsapp.services.AuthService;
 import com.schimer.reportsapp.ui.components.WindowsUtils;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -20,10 +20,11 @@ public class DropboxProfileController {
     private BaseSectionInfo sectionInfoController;
     @FXML
     private Label accountName;
-
-    private final UserSession session = UserSession.getInstance();
     @FXML
     private ImageView profileImage;
+
+    private final UserSession session = UserSession.getInstance();
+    private final AuthService authService = new AuthService();
 
     public void initialize() {
         initializeSectionInfo();
@@ -57,8 +58,23 @@ public class DropboxProfileController {
     }
 
     @FXML
-    public void onClickLogout(ActionEvent event) {
+    public void onClickLogout() {
+        var dropboxAccount = session.getUser().getDropboxAccount();
+        dropboxAccount.setToken("");
+        session.getUser().getDropboxAccount().setPath("");
+        authService.updateDropboxInfo(session.getUser(),dropboxAccount);
 
+        session.setClientDropbox(null);
+        session.setDropboxSession(null);
+        onGoToHome();
+    }
+
+    private void onGoToHome(){
+        try{
+            App.setRoot("views/guest/products-finished-list");
+        }catch(Exception e){
+            WindowsUtils.showAlertErrorSystem();
+        }
     }
 
     public void onSelectFolder(){

@@ -8,6 +8,7 @@ import com.schimer.reportsapp.controllers.interfaces.WizardStepRawMaterial;
 import com.schimer.reportsapp.domain.entities.rawMaterial.RawMaterialEntity;
 import com.schimer.reportsapp.models.QualityFormRowMaterialRelease;
 import com.schimer.reportsapp.models.RawMaterialForm;
+import com.schimer.reportsapp.services.DropboxService;
 import com.schimer.reportsapp.services.rawMaterial.RawMaterialService;
 import com.schimer.reportsapp.ui.components.WindowsUtils;
 import com.schimer.reportsapp.utils.validators.FormValidators;
@@ -21,6 +22,7 @@ import javafx.scene.layout.VBox;
 import net.synedra.validatorfx.Validator;
 import org.kordamp.ikonli.javafx.FontIcon;
 
+import java.io.File;
 import java.io.IOException;
 
 public class ReleaseRawMaterialController implements WizardStepRawMaterial {
@@ -66,6 +68,7 @@ public class ReleaseRawMaterialController implements WizardStepRawMaterial {
     private final UserSession userSession = UserSession.getInstance();
     private final RawMaterialService rawMaterialService = new RawMaterialService();
     private final Validator validator = new Validator();
+    private final DropboxService dropboxService = new DropboxService();
 
     public void initialize() {
         initUserInfo();
@@ -216,7 +219,19 @@ public class ReleaseRawMaterialController implements WizardStepRawMaterial {
     private void onSave(){
         try{
             var entity = rawMaterialService.save(context);
+            uploadFile(entity);
             App.setRoot("views/guest/send-upload-report", loader -> goToSendEmails(loader, entity));
+        }catch (Exception e){
+            WindowsUtils.showAlertErrorSystem();
+        }
+    }
+
+    private void uploadFile(RawMaterialEntity entity){
+        var path = entity.getReportPath();
+        var dropboxPath = userSession.getUser().getDropboxAccount().getPath();
+        var client = userSession.getClientDropbox();
+        try{
+            dropboxService.uploadFileToDropbox(new File(path), dropboxPath, client);
         }catch (Exception e){
             WindowsUtils.showAlertErrorSystem();
         }

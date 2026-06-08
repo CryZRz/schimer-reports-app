@@ -2,8 +2,8 @@ package com.schimer.reportsapp.controllers.admin;
 
 import com.schimer.reportsapp.App;
 import com.schimer.reportsapp.controllers.components.BaseSectionInfo;
-import com.schimer.reportsapp.domain.entities.TemplatePTEntity;
-import com.schimer.reportsapp.services.admin.TemplatePTService;
+import com.schimer.reportsapp.domain.entities.rawMaterial.TemplateRawMaterialEntity;
+import com.schimer.reportsapp.services.admin.TemplateMPService;
 import com.schimer.reportsapp.ui.components.WindowsUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,16 +17,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
-public class ChangeTemplateProductFinishedController {
+public class ChangeTemplateRawMaterialController {
     @FXML
-    public ListView<TemplatePTEntity> listFiles;
+    public ListView<TemplateRawMaterialEntity> listFiles;
     @FXML
     private Node sectionInfo;
     @FXML
     private BaseSectionInfo sectionInfoController;
 
-    private final TemplatePTService templatePTService =  new TemplatePTService();
-    ObservableList<TemplatePTEntity> listView = FXCollections.observableArrayList();
+    private final TemplateMPService templateMPService =  new TemplateMPService();
+    ObservableList<TemplateRawMaterialEntity> listView = FXCollections.observableArrayList();
 
     public void initialize() {
         initializeSectionInfo();
@@ -34,9 +34,9 @@ public class ChangeTemplateProductFinishedController {
     }
 
     private void initializeFiles() {
-        listFiles.setCellFactory(lv -> new ListCell<TemplatePTEntity>() {
+        listFiles.setCellFactory(lv -> new ListCell<TemplateRawMaterialEntity>() {
             @Override
-            protected void updateItem(TemplatePTEntity item, boolean empty) {
+            protected void updateItem(TemplateRawMaterialEntity item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty || item == null) {
                     setText(null);
@@ -45,15 +45,15 @@ public class ChangeTemplateProductFinishedController {
                 }
             }
         });
-        listView.addAll(templatePTService.getAll());
-        templatePTService.getAll().forEach(templatePTEntity -> {
+        listView.addAll(templateMPService.getAll());
+        templateMPService.getAll().forEach(templatePTEntity -> {
             listFiles.getItems().add(templatePTEntity);
         });
     }
 
     private void initializeSectionInfo() {
         if (sectionInfoController != null){
-            sectionInfoController.getTitleModule().setText("Plantillas PT");
+            sectionInfoController.getTitleModule().setText("Plantillas MP");
             sectionInfoController.getDescriptionModule().setText("Esta seccion esta destinada a la administracion\nde las plantillas");
         }
     }
@@ -73,7 +73,7 @@ public class ChangeTemplateProductFinishedController {
                 var destino = Path.of("storage/templates/" + file.getName());
                 Files.createDirectories(destino.getParent());
                 Files.copy(file.toPath(), destino, StandardCopyOption.REPLACE_EXISTING);
-                templatePTService.save(new TemplatePTEntity(null, file.getName(), destino.toAbsolutePath().toString()));
+                templateMPService.save(new TemplateRawMaterialEntity(null, file.getName(), destino.toAbsolutePath().toString()));
             }catch (Exception e){
                 WindowsUtils.showAlertErrorSystem();
             }

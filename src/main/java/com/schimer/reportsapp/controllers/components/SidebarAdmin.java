@@ -30,7 +30,11 @@ public class SidebarAdmin {
 
     @FXML
     public void onClickTemplateMp(){
-
+        try{
+            App.setRoot("views/admin/change-template-raw-material");
+        }catch (Exception e){
+            WindowsUtils.showAlertErrorSystem();
+        }
     }
 
     @FXML

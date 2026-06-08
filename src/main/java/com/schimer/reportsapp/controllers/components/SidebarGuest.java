@@ -40,7 +40,7 @@ public class SidebarGuest {
     private void verifyDropbox(){
 
         try {
-            if (userSession.getDropboxSession() != null){
+            if (userSession.getClientDropbox() != null){
                 App.setRoot("views/guest/profile/dropbox-profile");
             }else{
                 App.setRoot("views/guest/profile/dropbox-login");

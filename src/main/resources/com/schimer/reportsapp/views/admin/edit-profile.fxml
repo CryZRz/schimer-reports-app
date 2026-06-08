@@ -17,19 +17,19 @@
 >
 
     <stylesheets>
-        <URL value="@../../../styles/guest/layout.css"/>
-        <URL value="@../../../styles/components/default-inputs.css"/>
-        <URL value="@../../../styles/components/default-texts.css"/>
-        <URL value="@../../../styles/components/default-buttons.css"/>
+        <URL value="@../../styles/guest/layout.css"/>
+        <URL value="@../../styles/components/default-inputs.css"/>
+        <URL value="@../../styles/components/default-texts.css"/>
+        <URL value="@../../styles/components/default-buttons.css"/>
     </stylesheets>
 
     <left>
-        <fx:include fx:id="sidebar" source="../sidebar-guest.fxml" />
+        <fx:include fx:id="sidebar" source="./sidebar-admin.fxml" />
     </left>
 
     <center>
         <VBox>
-            <fx:include fx:id="sectionPtInfo" source="../section-pt-info.fxml"/>
+            <fx:include fx:id="sectionInfo" source="../components/base-section-info.fxml"/>
             <Separator opacity="0.3"/>
             <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                 <VBox styleClass="main-section-container">
@@ -38,16 +38,16 @@
                         <HBox styleClass="input-form-section">
                             <VBox HBox.hgrow="ALWAYS">
                                 <Label text="Nombre" styleClass="input-label"/>
-                                <TextField editable="false" fx:id="namesProperty" promptText="Nombres" styleClass="input-form-disabled"/>
+                                <TextField fx:id="namesProperty" promptText="Nombres" styleClass="input-form"/>
                             </VBox>
                             <VBox HBox.hgrow="ALWAYS">
                                 <Label text="Apellidos" styleClass="input-label"/>
-                                <TextField editable="false" fx:id="lastNameProperty" promptText="Apellidos" styleClass="input-form-disabled"/>
+                                <TextField fx:id="lastNameProperty" promptText="Apellidos" styleClass="input-form"/>
                             </VBox>
                         </HBox>
                         <VBox styleClass="input-form-section" HBox.hgrow="ALWAYS">
                             <Label text="Correo" styleClass="input-label"/>
-                            <TextField editable="false" fx:id="emailProperty" promptText="Correo" styleClass="input-form-disabled"/>
+                            <TextField fx:id="emailProperty" promptText="Correo" styleClass="input-form"/>
                         </VBox>
                         <VBox styleClass="input-form-section" HBox.hgrow="ALWAYS">
                             <Label text="Contraseña actual" styleClass="input-label"/>
@@ -80,11 +80,11 @@
                         <HBox styleClass="input-form-section">
                             <VBox HBox.hgrow="ALWAYS">
                                 <Label text="Puesto" styleClass="input-label"/>
-                                <TextField editable="false" fx:id="jobPositionProperty" promptText="Puesto" styleClass="input-form-disabled"/>
+                                <TextField fx:id="jobPositionProperty" promptText="Puesto" styleClass="input-form"/>
                             </VBox>
                             <VBox HBox.hgrow="ALWAYS">
                                 <Label text="Departamento" styleClass="input-label"/>
-                                <ComboBox disable="true" fx:id="departmentProperty" maxWidth="Infinity" styleClass="input-form-disabled"/>
+                                <ComboBox fx:id="departmentProperty" maxWidth="Infinity" styleClass="input-form"/>
                             </VBox>
                         </HBox>
                         <HBox HBox.hgrow="ALWAYS" styleClass="input-form-section">

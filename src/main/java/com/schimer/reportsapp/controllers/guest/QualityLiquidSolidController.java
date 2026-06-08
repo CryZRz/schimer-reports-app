@@ -6,6 +6,7 @@ import com.schimer.reportsapp.controllers.interfaces.WizardStep;
 import com.schimer.reportsapp.domain.entities.ProductFinishedEntity;
 import com.schimer.reportsapp.domain.entities.rawMaterial.RawMaterialEntity;
 import com.schimer.reportsapp.models.ProductFinishedForm;
+import com.schimer.reportsapp.services.DropboxService;
 import com.schimer.reportsapp.services.ProductFinishedService;
 import com.schimer.reportsapp.services.admin.TemplatePTService;
 import com.schimer.reportsapp.ui.components.WindowsUtils;
@@ -19,6 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import net.synedra.validatorfx.Validator;
 
+import java.io.File;
 import java.io.IOException;
 
 public class QualityLiquidSolidController implements WizardStep {
@@ -63,6 +65,7 @@ public class QualityLiquidSolidController implements WizardStep {
     private final ProductFinishedService productFinishedService = new ProductFinishedService();
     private final TemplatePTService templatePTService = new TemplatePTService();
     private final Validator validator = new Validator();
+    private final DropboxService dropboxService = new DropboxService();
 
     public void initialize() {
         userSession = UserSession.getInstance();
@@ -148,9 +151,21 @@ public class QualityLiquidSolidController implements WizardStep {
         try {
             var entity = productFinishedService.create(context);
             templatePTService.generateReport(entity);
+            uploadReport(entity);
             App.setRoot("views/guest/send-upload-report", loader -> goToSendEmails(loader, entity));
         }catch (Exception e){
             e.printStackTrace();
+            WindowsUtils.showAlertErrorSystem();
+        }
+    }
+
+    private void uploadReport(ProductFinishedEntity entity){
+        try{
+            var file = new File(entity.getReportPath());
+            var path = userSession.getUser().getDropboxAccount().getPath();
+            var client = userSession.getClientDropbox();
+            dropboxService.uploadFileToDropbox(file, path, client);
+        }catch (Exception e){
             WindowsUtils.showAlertErrorSystem();
         }
     }

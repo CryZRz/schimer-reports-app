@@ -28,7 +28,7 @@ public class DropboxLoginController {
     public void onClickLogin(){
         try {
             dropboxAuthService.handleDropboxLogin();
-            onGoProfileDropbox();
+            onSelectFolder();
         } catch (Exception e) {
             WindowsUtils.showAlertErrorSystem();
         }
@@ -38,6 +38,15 @@ public class DropboxLoginController {
         try {
             App.setRoot("views/guest/profile/dropbox-profile");
         } catch (Exception e) {
+            WindowsUtils.showAlertErrorSystem();
+        }
+    }
+
+    public void onSelectFolder(){
+        try{
+            App.setRoot("views/guest/profile/select-dropbox-folder");
+        }catch (Exception e){
+            e.printStackTrace();
             WindowsUtils.showAlertErrorSystem();
         }
     }

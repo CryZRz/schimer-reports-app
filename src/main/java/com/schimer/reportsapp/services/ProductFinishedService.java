@@ -69,4 +69,8 @@ public class ProductFinishedService {
         return this.productFinishedRepository.getAll();
     }
 
+    public List<ProductFinishedEntity> getByParam(String param){
+        return productFinishedRepository.getByProductParam(param);
+    }
+
 }

@@ -54,4 +54,8 @@ public class RawMaterialService {
 
         return rawMaterialEntity;
     }
+
+    public List<RawMaterialEntity> getByParam(String param) {
+        return rawMaterialRepository.getByProductParam(param);
+    }
 }

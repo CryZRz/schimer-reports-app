@@ -7,7 +7,7 @@
 <BorderPane
         stylesheets="@../../styles/admin/create-user.css"
         xmlns:fx="http://javafx.com/fxml"
-        fx:controller="com.schimer.reportsapp.controllers.admin.ChangeTemplateProductFinishedController"
+        fx:controller="com.schimer.reportsapp.controllers.admin.ChangeTemplateRawMaterialController"
 >
     <stylesheets>
         <URL value="@../../styles/guest/layout.css"/>
@@ -30,7 +30,7 @@
             >
                 <VBox styleClass="main-section-container">
                     <VBox HBox.hgrow="ALWAYS" spacing="10">
-                        <Label styleClass="title-section" text="Cambio de plantilla PT"/>
+                        <Label styleClass="title-section" text="Cambio de plantilla MP"/>
                         <ListView fx:id="listFiles" />
                         <Button
                                 maxWidth="Infinity"

@@ -1,6 +1,8 @@
 package com.schimer.reportsapp.services.admin;
 
 import com.schimer.reportsapp.domain.entities.rawMaterial.RawMaterialEntity;
+import com.schimer.reportsapp.domain.entities.rawMaterial.TemplateRawMaterialEntity;
+import com.schimer.reportsapp.domain.repositories.templates.TemplateMPRepository;
 import com.schimer.reportsapp.models.QualityRowTemplateMaterialRelease;
 import com.schimer.reportsapp.utils.PdfUtils;
 import fr.opensagres.xdocreport.core.XDocReportException;
@@ -11,8 +13,11 @@ import fr.opensagres.xdocreport.template.formatter.FieldsMetadata;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.util.List;
 
 public class TemplateMPService {
+
+    private final TemplateMPRepository templateMPRepository = new TemplateMPRepository();
 
     public String generateReport(RawMaterialEntity entity, String templatePath){
         var rawMaterialRelease = entity.getRawMaterialRelease();
@@ -71,5 +76,12 @@ public class TemplateMPService {
         }
     }
 
+    public List<TemplateRawMaterialEntity> getAll(){
+        return templateMPRepository.getAll();
+    }
+
+    public TemplateRawMaterialEntity save(TemplateRawMaterialEntity entity){
+        return templateMPRepository.save(entity);
+    }
 
 }

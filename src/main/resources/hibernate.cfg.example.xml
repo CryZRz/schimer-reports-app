@@ -28,8 +28,8 @@
         <mapping class="com.schimer.reportsapp.domain.entities.PtQualityCertificateDetailEntity"/>
         <mapping class="com.schimer.reportsapp.domain.entities.PtQualityIndicatorsEntity"/>
         <mapping class="com.schimer.reportsapp.domain.entities.PtQualitySolidLiquidEntity"/>
-        <mapping class="com.schimer.reportsapp.domain.entities.TemplateEntity"/>
         <mapping class="com.schimer.reportsapp.domain.entities.rawMaterial.TemplateRawMaterialEntity"/>
+        <mapping class="com.schimer.reportsapp.domain.entities.TemplatePTEntity"/>
         <mapping class="com.schimer.reportsapp.domain.entities.rawMaterial.RawMaterialEntity"/>
         <mapping class="com.schimer.reportsapp.domain.entities.rawMaterial.RawMaterialReleaseEntity"/>
         <mapping class="com.schimer.reportsapp.domain.entities.rawMaterial.QualityParameterRawMaterialRelease"/>

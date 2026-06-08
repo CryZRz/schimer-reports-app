@@ -17,16 +17,17 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.kordamp.ikonli.javafx.FontIcon;
 
+import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 
 public class ListProductsFinishedController {
 
@@ -34,6 +35,7 @@ public class ListProductsFinishedController {
     public VBox sectionPtInfo;
     @FXML
     public VBox sidebar;
+    public TextField findProperty;
     @FXML
     private SidebarGuest sidebarGuest;
     @FXML
@@ -120,13 +122,16 @@ public class ListProductsFinishedController {
         });
     }
 
+    public void onFind(){
+        this.productsFinished.clear();
+        this.productsFinished.setAll(productFinishedService.getByParam(findProperty.getText()));
+    }
+
     private void onClickViewReport(ProductFinishedEntity productFinishedEntity){
-        try{
-            var user = UserSession.getInstance().getClientDropbox();
-            var path = UserSession.getInstance().getUser().getDropboxAccount().getPath();
-            dropboxService.uploadFileToDropbox(new File(productFinishedEntity.getReportPath()), path,user);
-        }catch (Exception e){
-            WindowsUtils.showAlertErrorSystem();
+        try {
+            Desktop.getDesktop().open(new File(productFinishedEntity.getReportPath()));
+        } catch (IOException e) {
+            WindowsUtils.showWindowError("Error al abrir el reporte");
         }
     }
 

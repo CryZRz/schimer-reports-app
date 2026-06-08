@@ -45,6 +45,7 @@ public class DropboxService {
         var client = new DbxClientV2(DropboxConfig.config, accessToken);
         session.setUser(user);
         session.setClientDropbox(client);
+        session.setDropboxSession(client.users().getCurrentAccount());
 
         return client;
     }

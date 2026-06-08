@@ -12,6 +12,7 @@ import fr.opensagres.xdocreport.template.TemplateEngineKind;
 import fr.opensagres.xdocreport.template.formatter.FieldsMetadata;
 
 import java.io.*;
+import java.util.List;
 
 public class TemplatePTService {
 
@@ -90,4 +91,11 @@ public class TemplatePTService {
         }
     }
 
+    public List<TemplatePTEntity> getAll(){
+        return templatePTRepository.getAll();
+    }
+
+    public TemplatePTEntity save(TemplatePTEntity entity){
+        return templatePTRepository.save(entity);
+    }
 }
