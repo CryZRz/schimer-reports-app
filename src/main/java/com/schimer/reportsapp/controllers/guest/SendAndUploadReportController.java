@@ -169,6 +169,7 @@ public class SendAndUploadReportController {
             }
             onCancel();
         }catch (Exception e){
+            e.printStackTrace();
             WindowsUtils.showWindowError(e.getMessage());
         }
     }

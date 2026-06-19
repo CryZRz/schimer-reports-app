@@ -1,5 +1,6 @@
 package com.schimer.reportsapp.models;
 
+import com.schimer.reportsapp.domain.entities.rawMaterial.TemplateRawMaterialEntity;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,6 +26,9 @@ public class RawMaterialForm {
     private StringProperty amount = new SimpleStringProperty("");
     private StringProperty note = new SimpleStringProperty("");
     private BooleanProperty accepted = new SimpleBooleanProperty(false);
+
+    private TemplateRawMaterialEntity template;
+    private String path = "";
 
     private ObservableList<QualityFormRowMaterialRelease> qualityFormRows = FXCollections.observableArrayList();
 }

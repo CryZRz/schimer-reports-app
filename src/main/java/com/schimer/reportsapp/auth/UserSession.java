@@ -9,6 +9,8 @@ import com.schimer.reportsapp.infrastructure.dropbox.DropboxConfig;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Objects;
+
 @Getter
 @Setter
 public class UserSession {
@@ -26,7 +28,7 @@ public class UserSession {
     }
 
     private void verifyDropboxAccount() {
-        if (userEntity.getDropboxAccount().getToken() == "") return;
+        if (Objects.equals(userEntity.getDropboxAccount().getToken(), "")) return;
 
         try{
             var refreshToken = userEntity.getDropboxAccount().getToken();

@@ -129,7 +129,8 @@ public class ProductFinishedMapper {
         form.setIdentificationReview(new SimpleBooleanProperty(qualitySolidLiquid.isIdentificationReview()));
         form.setPackagingReview(new SimpleBooleanProperty(qualitySolidLiquid.isPackagingReview()));
         form.setCertificate(new SimpleStringProperty(qualitySolidLiquid.getCertificate().toString()));
-
+        form.setReportPath(entity.getReportPath());
+        form.setTemplatePTEntity(entity.getTemplate());
 
         return form;
     }
