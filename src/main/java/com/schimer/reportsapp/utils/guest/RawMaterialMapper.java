@@ -25,6 +25,8 @@ public class RawMaterialMapper {
         rawMaterialEntity.setReleaseDate(context.getReleaseDate().get());
         rawMaterialEntity.setStatus(context.getStatus().get());
         rawMaterialEntity.setFolio(context.getFolio().get());
+        rawMaterialEntity.setReportPath(context.getPath());
+        rawMaterialEntity.setTemplate(context.getTemplate());
 
         return rawMaterialEntity;
     }
@@ -83,6 +85,8 @@ public class RawMaterialMapper {
         )).toList();
 
         rawMaterialForm.setQualityFormRows(FXCollections.observableArrayList(parametersRawMaterial));
+        rawMaterialForm.setPath(productFinishedEntity.getReportPath());
+        rawMaterialForm.setTemplate(productFinishedEntity.getTemplate());
 
         return rawMaterialForm;
     }

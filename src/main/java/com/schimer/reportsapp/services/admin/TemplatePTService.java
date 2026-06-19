@@ -39,14 +39,14 @@ public class TemplatePTService {
         }
     }
 
-    public String generateReport(ProductFinishedEntity entity){
+    public String generateReport(ProductFinishedEntity entity, String templatePath){
         if (entity.getTemplate() == null) return null;
 
         var docxPath = "storage/reports/" + entity.getFolio() + ".docx";
 
         try {
             var report = XDocReportRegistry.getRegistry()
-                    .loadReport(new FileInputStream(entity.getTemplate().getPath()), TemplateEngineKind.Velocity);
+                    .loadReport(new FileInputStream(templatePath), TemplateEngineKind.Velocity);
 
             report.addPreprocessor("word/document.xml", DocxPreprocessor.INSTANCE);
 

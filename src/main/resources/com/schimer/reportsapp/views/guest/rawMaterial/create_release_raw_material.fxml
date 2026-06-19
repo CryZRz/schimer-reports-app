@@ -99,12 +99,6 @@
                         <CheckBox fx:id="acceptedProperty" styleClass="checkbox-form" text="MP aceptada"/>
                         <Label styleClass="description-liberate">¿El producto pasa?</Label>
                     </VBox>
-                    <VBox styleClass="input-form-section">
-                        <Label text="Certificado de provedor" styleClass="input-label"/>
-                        <Button maxWidth="Infinity">
-                            Seleccionar archivo
-                        </Button>
-                    </VBox>
                     <HBox styleClass="input-form-section">
                         <Button
                                 HBox.hgrow="ALWAYS"

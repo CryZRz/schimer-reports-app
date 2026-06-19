@@ -1,5 +1,6 @@
 package com.schimer.reportsapp.models;
 
+import com.schimer.reportsapp.domain.entities.TemplatePTEntity;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,6 +37,9 @@ public class ProductFinishedForm {
     private BooleanProperty identificationReview = new SimpleBooleanProperty(false);
     private BooleanProperty packagingReview = new SimpleBooleanProperty(false);
     private StringProperty certificate = new SimpleStringProperty("");
+
+    private String reportPath;
+    private TemplatePTEntity templatePTEntity;
 }
 
 

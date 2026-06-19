@@ -89,11 +89,12 @@ public class SelectFolderDropboxController {
         });
 
         task.setOnFailed(e -> {
-            var error = task.getException();
-            error.printStackTrace();
-            lblCurrentPath.setText("Error loading Dropbox folders.");
+            var error = task.getException();;
+            lblCurrentPath.setText("Error conexion de internet");
             folderListView.setDisable(false);
             btnUp.setDisable(path.isEmpty());
+
+            WindowsUtils.showAlertBlock("Error conexion de internet");
         });
 
         new Thread(task).start();

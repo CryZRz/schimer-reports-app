@@ -233,7 +233,7 @@ public class ReleaseRawMaterialController implements WizardStepRawMaterial {
         try{
             dropboxService.uploadFileToDropbox(new File(path), dropboxPath, client);
         }catch (Exception e){
-            WindowsUtils.showAlertErrorSystem();
+            throw new RuntimeException("Error al cargar el dropbox");
         }
     }
 
@@ -251,8 +251,9 @@ public class ReleaseRawMaterialController implements WizardStepRawMaterial {
 
     private void onUpdate(){
         try{
-            rawMaterialService.update(context);
-            onClickReports();
+            var entity = rawMaterialService.update(context);
+            uploadFile(entity);
+            App.setRoot("views/guest/send-upload-report", loader -> goToSendEmails(loader, entity));
         }catch (Exception e){
             WindowsUtils.showAlertErrorSystem();
         }

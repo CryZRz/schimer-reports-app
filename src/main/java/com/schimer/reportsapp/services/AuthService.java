@@ -38,7 +38,8 @@ public class AuthService {
     public UserEntity updateDropboxInfo(UserEntity user, DropboxAccountEntity entity) {
         var dropboxAccount = user.getDropboxAccount();
         if (dropboxAccount != null){
-            user.setDropboxAccount(dropboxAccount);
+            entity.setId(dropboxAccount.getId());
+            user.setDropboxAccount(entity);
         }else {
             user.setDropboxAccount(entity);
         }

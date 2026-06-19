@@ -76,21 +76,21 @@ public class QualityLiquidSolidController implements WizardStep {
 
     private void initializeValidations() {
         FormValidators.addNotEmptyValidation(validator, solidsProperty.textProperty(), solidsProperty, "Solidos");
-        FormValidators.addNumericValidation(validator, solidsProperty.textProperty(), solidsProperty, "Solidos");
+        FormValidators.addDecimalValidation(validator, solidsProperty.textProperty(), solidsProperty, "Solidos");
 
         FormValidators.addNotEmptyValidation(validator, solidsProperty.textProperty(), solidsProperty, "Ph");
-        FormValidators.addNumericValidation(validator, phProperty.textProperty(), phProperty, "Ph");
+        FormValidators.addDecimalValidation(validator, phProperty.textProperty(), phProperty, "Ph");
 
         FormValidators.addNotEmptyValidation(validator, apparentDensityProperty.textProperty(), apparentDensityProperty, "Densidad aparente");
-        FormValidators.addNumericValidation(validator, apparentDensityProperty.textProperty(), apparentDensityProperty, "Densidad aparente");
+        FormValidators.addDecimalValidation(validator, apparentDensityProperty.textProperty(), apparentDensityProperty, "Densidad aparente");
 
         FormValidators.addNotEmptyValidation(validator, appearanceProperty.textProperty(), appearanceProperty, "Apariencia");
 
         FormValidators.addNotEmptyValidation(validator, znoProperty.textProperty(), znoProperty, "%Zno");
-        FormValidators.addNumericValidation(validator, znoProperty.textProperty(), znoProperty, "%Zno");
+        FormValidators.addDecimalValidation(validator, znoProperty.textProperty(), znoProperty, "%Zno");
 
         FormValidators.addNotEmptyValidation(validator, kilogramsProperty.textProperty(), kilogramsProperty, "Kilogramos");
-        FormValidators.addNumericValidation(validator, kilogramsProperty.textProperty(), kilogramsProperty, "Kilogramos");
+        FormValidators.addDecimalValidation(validator, kilogramsProperty.textProperty(), kilogramsProperty, "Kilogramos");
 
         FormValidators.addNotEmptyValidation(validator, packagingReviewProperty.textProperty(), packagingReviewProperty, "Revision de indentificacion");
         FormValidators.addNotEmptyValidation(validator, identificationReviewProperty.textProperty(), identificationReviewProperty, "Revision de emapque");
@@ -150,7 +150,6 @@ public class QualityLiquidSolidController implements WizardStep {
     private void saveProductFinished(){
         try {
             var entity = productFinishedService.create(context);
-            templatePTService.generateReport(entity);
             uploadReport(entity);
             App.setRoot("views/guest/send-upload-report", loader -> goToSendEmails(loader, entity));
         }catch (Exception e){
@@ -166,7 +165,7 @@ public class QualityLiquidSolidController implements WizardStep {
             var client = userSession.getClientDropbox();
             dropboxService.uploadFileToDropbox(file, path, client);
         }catch (Exception e){
-            WindowsUtils.showAlertErrorSystem();
+            throw new RuntimeException("Error al subir el archivo comprueba tus credenciales");
         }
     }
 
@@ -184,8 +183,9 @@ public class QualityLiquidSolidController implements WizardStep {
 
     private void updateProductFinished(){
         try {
-            productFinishedService.update(context);
-            onClickReports();
+            var entity = productFinishedService.update(context);
+            uploadReport(entity);
+            App.setRoot("views/guest/send-upload-report", loader -> goToSendEmails(loader, entity));
         }catch (Exception e){
             WindowsUtils.showAlertErrorSystem();
         }

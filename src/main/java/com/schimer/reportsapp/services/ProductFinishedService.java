@@ -5,6 +5,7 @@ import com.schimer.reportsapp.domain.entities.ProductFinishedEntity;
 import com.schimer.reportsapp.domain.repositories.ProductFinishedRepository;
 import com.schimer.reportsapp.domain.repositories.templates.TemplatePTRepository;
 import com.schimer.reportsapp.models.ProductFinishedForm;
+import com.schimer.reportsapp.services.admin.TemplatePTService;
 import com.schimer.reportsapp.utils.guest.ProductFinishedMapper;
 
 import java.util.List;
@@ -12,12 +13,15 @@ import java.util.List;
 public class ProductFinishedService {
     private final ProductFinishedRepository productFinishedRepository = new ProductFinishedRepository();
     private final TemplatePTRepository templatePTRepository = new TemplatePTRepository();
+    private final TemplatePTService templatePTService = new TemplatePTService();
 
     public ProductFinishedEntity create(ProductFinishedForm  productFinishedForm){
         var template = templatePTRepository.getLast();
         if(template.isPresent()){
             var data = bindProductFinishedForm(productFinishedForm);
             data.setTemplate(template.get());
+            var reportPath = templatePTService.generateReport(data, template.get().getPath());
+            data.setReportPath(reportPath);
 
             return productFinishedRepository.save(data);
         }
@@ -61,6 +65,8 @@ public class ProductFinishedService {
         productFinishedEntity.setQualityCertificate(qualityCertificateEntity);
         productFinishedEntity.setQualityIndicators(qualityIndicatorsEntity);
         productFinishedEntity.setQualitySolidLiquid(qualitySolidLiquidEntity);
+        productFinishedEntity.setReportPath(productFinishedForm.getReportPath());
+        productFinishedEntity.setTemplate(productFinishedForm.getTemplatePTEntity());
 
         return productFinishedEntity;
     }
